@@ -3,21 +3,83 @@
 
 type User @model {
   id: ID! @isUnique
-  name: String
-  dateOfBirth: DateTime
-
-  # Uncomment below - you can declare relations between models like this
-
-  # posts: [Post!]! @relation(name: "UserPosts")
+  user: String! @isUnique
+  password: String!
 }
 
+type Produto @model {
+  id: ID! @isUnique
+  nome: String!
+  preco: Float!
+  quantidadeEstoque: Int!
+  codigoDeBarras: String @isUnique
+  item: ItemVenda! @relation(name: "ProdutosOnItemVenda")
+}
 
-# Uncomment the model below as well
+type Mesa @model {
+  id: ID! @isUnique
+  vendas: [Venda!]! @relation(name: "MesaOnVendas")
+}
 
-# type Post @model {
-#   id: ID! @isUnique
-#   title: String!
-#
-#   # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
-#   author: User! @relation(name: "UserPosts")
-# }
+type Venda @model {
+  id: ID! @isUnique
+  data: DateTime!
+  finalizada: Boolean! @defaultValue(value: "false")
+  quitada: Boolean! @defaultValue(value: "false")
+  mesa: Mesa! @relation(name: "MesaOnVendas")
+  itensVenda: [ItemVenda!]! @relation(name: "ItensVendaOnVenda")
+  penduras: [Pendura!]! @relation(name: "PenduraOnVenda")
+  pagamentos: [Pagamento!]! @relation(name: "VendaOnPagamento")
+}
+
+type ItemVenda @model {
+  id: ID! @isUnique
+  quantidade: Int!
+  desconto: Float @defaultValue(value: 0.0)
+  cancelado: Boolean @defaultValue(value: false)
+  venda: Venda! @relation(name: "ItensVendaOnVenda")
+  produtos: [Produto!]! @relation(name: "ProdutosOnItemVenda") @defaultValue(value: [])
+}
+
+type Pendura @model {
+  id: ID! @isUnique
+  data: DateTime!
+  valor: Float!
+  valorPagto: Float @defaultValue(value: 0.0)
+  venda: Venda! @relation(name: "PenduraOnVenda")
+  cliente: Cliente! @relation(name: "PendurasOnCliente")
+}
+
+type Cliente @model {
+  id: ID! @isUnique
+  nome: String!
+  apelido: String!
+  cpf: String!
+  createdAt: DateTime!
+  telefone: String!
+  penduras: [Pendura!]! @relation(name: "PendurasOnCliente")
+  pagamentos: [Pagamento!]! @relation(name: "PagamentosOnCliente") @defaultValue(value: [])
+}
+
+type Pagamento @model {
+  id: ID! @isUnique
+  data: DateTime!
+  valor: Float!
+  cliente: Cliente @relation(name: "PagamentosOnCliente")
+  venda: Venda @relation(name: "VendaOnPagamento")
+  formaPagamento: FormaDePagamento!
+}
+
+enum FormaDePagamento {
+  DINHEIRO,
+  CARTAO
+}
+
+type Caixa @model {
+  id: ID! @isUnique
+  dataAbertura: DateTime!
+  dataFechamento: DateTime!
+  valorAbertura: Float!
+  valorDigitado: Float!
+  valorCalculado: Float!
+}
