@@ -1,4 +1,10 @@
 <p>
-  venda works!
+  Venda
 </p>
-{{produtos | json}}
+<div class="container">
+  <div class="row">
+    <div class="col-4" *ngFor="let produto of produtos">
+      <app-bt-card [title]="produto.nome" [subtitle]="produto.preco"></app-bt-card>
+    </div>
+  </div>
+</div>
