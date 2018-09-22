@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { VendaComponent } from './components/venda/venda.component';
 import { SharedModule } from '../shared/shared.module';
+import { VendaRoutingModule } from './venda-routing.module';
+import { PenduraComponent } from './components/pendura/pendura.component';
+import { PagarComponent } from './components/pagar/pagar.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    SharedModule
+    SharedModule,
+    VendaRoutingModule
   ],
-  declarations: [VendaComponent]
+  declarations: [VendaComponent, PenduraComponent, PagarComponent]
 })
 export class VendaModule { }

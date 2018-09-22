@@ -3,6 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: DashboardComponent,
+    children: [
+      { path: 'venda', loadChildren: './../venda/venda.module#VendaModule' },
+      { path: '', component: DashboardComponent }
+    ]
+  },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
