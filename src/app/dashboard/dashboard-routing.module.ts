@@ -6,12 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    children: [
-      { path: 'venda', loadChildren: './../venda/venda.module#VendaModule' },
-      { path: '', component: DashboardComponent }
-    ]
-  },
-  { path: 'dashboard', component: DashboardComponent }
+  }
 ];
 
 @NgModule({

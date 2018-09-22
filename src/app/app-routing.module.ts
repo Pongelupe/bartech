@@ -6,6 +6,10 @@ const routes: Routes = [
     path: '',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
   },
+  {
+    path: 'venda',
+    loadChildren: './venda/venda.module#VendaModule'
+  }
 ];
 
 @NgModule({

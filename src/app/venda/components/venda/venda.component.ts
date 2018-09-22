@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Produto } from '../../../core/model/produto';
+import { Venda } from '../../../core/model/venda';
 
 @Component({
   selector: 'app-venda',
@@ -8,7 +9,7 @@ import { Produto } from '../../../core/model/produto';
 })
 export class VendaComponent implements OnInit {
   produtos: Array<Produto> = new Array<Produto>();
-
+  venda: Venda;
   constructor() { }
 
   ngOnInit() {
@@ -29,6 +30,8 @@ export class VendaComponent implements OnInit {
 
     this.produtos.push(p);
     this.produtos.push(p2);
+    this.venda = new Venda();
+    this.venda.id = '1';
   }
 
 }

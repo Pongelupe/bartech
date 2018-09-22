@@ -7,5 +7,6 @@
       <app-bt-card [title]="produto.nome" [subtitle]="produto.preco"></app-bt-card>
     </div>
   </div>
-  <button type="button" class="btn btn-primary mt-2" routerLink="/pagar">Pagar</button>
+  <button type="button" class="btn btn-primary mt-2" [routerLink]="['pagar']">Pagar</button>
+  <button type="button" class="btn btn-danger mt-1" [routerLink]="['pendura',venda.id]">Pendura</button>
 </div>
