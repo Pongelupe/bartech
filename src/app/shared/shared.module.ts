@@ -10,7 +10,9 @@ import { BtCardComponent } from './components/bt-card/bt-card.component';
     ReactiveFormsModule,
     BtCardComponent
   ],
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   declarations: [BtCardComponent]
 })
 export class SharedModule { }
