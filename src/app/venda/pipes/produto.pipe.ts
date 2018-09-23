@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Produto } from '../../core/model/produto';
-import { forEach } from 'async';
 
 @Pipe({
   name: 'produto',
@@ -9,7 +8,6 @@ import { forEach } from 'async';
 export class ProdutoPipe implements PipeTransform {
 
   transform(produtos: Produto[], arg: string): Produto[] {
-    debugger;
     if (!produtos || !arg || !arg[0]) {
       return produtos;
     }
