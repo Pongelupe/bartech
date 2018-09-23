@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BtCardComponent } from './bt-card/bt-card.component';
+import { BtCardComponent } from './components/bt-card/bt-card.component';
 
 @NgModule({
   exports: [
