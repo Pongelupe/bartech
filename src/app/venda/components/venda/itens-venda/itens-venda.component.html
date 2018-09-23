@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" class="text-center">Quantidade</th>
+        <th scope="col">Item</th>
+        <th scope="col" class="text-right">Preço</th>
+        <th scope="col" class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of itens; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td class="text-center">{{item.quantidade}}</td>
+        <td>{{item.produto.nome}}</td>
+        <td class="text-right">{{item.valor | currency : 'BRL'}}</td>
+        <td class="text-right">{{item.total | currency : 'BRL'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
