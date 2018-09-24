@@ -13,7 +13,7 @@ type Produto @model {
   preco: Float!
   quantidadeEstoque: Int!
   codigoDeBarras: String @isUnique
-  item: ItemVenda! @relation(name: "ProdutosOnItemVenda")
+  item: ItemVenda @relation(name: "ProdutosOnItemVenda")
 }
 
 type Mesa @model {
