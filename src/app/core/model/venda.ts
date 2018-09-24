@@ -15,12 +15,12 @@ export class Venda {
 
   get total() {
     this._total = 0;
-    if (this.itensVenda != undefined) {
+    if (this.itensVenda !== undefined) {
       this.itensVenda.forEach(item => {
         this._total += item.quantidade * item.valor;
-      })
+      });
     }
 
-    return this._total
+    return this._total;
   }
 }

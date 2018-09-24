@@ -2,9 +2,10 @@ import { Venda } from './venda';
 import { Produto } from './produto';
 
 export class ItemVenda {
-    quantidade: number = 0;
+    id: string;
+    quantidade = 0;
     desconto?: number;
-    cancelado: boolean = false;
+    cancelado = false;
     produto: Produto;
     venda: Venda;
     valor: number;
@@ -12,7 +13,7 @@ export class ItemVenda {
 
     get total() {
         this._total = this.quantidade * this.valor;
-        return this._total
+        return this._total;
     }
 
 }

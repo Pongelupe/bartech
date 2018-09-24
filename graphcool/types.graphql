@@ -13,7 +13,7 @@ type Produto @model {
   preco: Float!
   quantidadeEstoque: Int!
   codigoDeBarras: String @isUnique
-  item: ItemVenda @relation(name: "ProdutosOnItemVenda")
+  itens: [ItemVenda!]! @relation(name: "ProdutosOnItemVenda") @defaultValue(value: [])
 }
 
 type Mesa @model {
@@ -38,9 +38,8 @@ type ItemVenda @model {
   desconto: Float @defaultValue(value: 0.0)
   cancelado: Boolean @defaultValue(value: false)
   venda: Venda! @relation(name: "ItensVendaOnVenda")
-  produtos: [Produto!]! @relation(name: "ProdutosOnItemVenda") @defaultValue(value: [])
+  produto: Produto! @relation(name: "ProdutosOnItemVenda")
 }
-
 type Pendura @model {
   id: ID! @isUnique
   data: DateTime!

@@ -9,7 +9,7 @@
       <h4>Produtos cadastrados</h4>
       <div class="row">
         <div class="col-4" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
-          <app-bt-card [title]="produto.nome" [subtitle]="produto.preco"></app-bt-card>
+          <app-bt-card [title]="produto.nome" [subtitle]="produto.preco" (click)="openModalItem(produto)"></app-bt-card>
         </div>
       </div>
     </div>
@@ -27,3 +27,15 @@
   <!--<button type="button" class="btn btn-primary mt-2" [routerLink]="['pagar']">Pagar</button>
   <button type="button" class="btn btn-danger mt-1" [routerLink]="['pendura',venda.id]">Pendura</button>-->
 </div>
+
+<ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
+  <h3 class="text-center">{{produto.nome}}</h3>
+  <p>{{produto.nome}} possui {{produto.quantidadeEstoque}} itens tem estoque</p>
+  <div class="form-group mt-1">
+    <label>Quantidade</label>
+    <input type="number" class="form-control" [(ngModel)]="quantidade">
+  </div>
+
+  <button type="button" class="btn btn-primary mt-2" (click)="addItemVenda()">Adicionar</button>
+  <button type="button" (click)="addModal.close()" class="btn btn-danger mr-2 mt-2">Cancelar</button>
+</ngx-smart-modal>
