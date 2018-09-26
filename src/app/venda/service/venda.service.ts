@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { Produto } from '../../core/model/produto';
-import { AllProdutosQuery, ALL_PRODUTOS_QUERY, CREATE_ITEM_VENDA_MUTATION } from './venda.graphql';
+import { AllProdutosQuery, ALL_PRODUTOS_QUERY, CREATE_ITEM_VENDA_MUTATION, VendaDetailQuery, VENDA_DETAIL_QUERY } from './venda.graphql';
 import { map } from 'rxjs/operators';
+import { Venda } from '../../core/model/venda';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,18 @@ export class VendaService {
     })
       .pipe(
         map(res => res.data.allProdutoes)
+      );
+  }
+
+  getVendaDetail(vendaId: string): Observable<Venda> {
+    return this.apollo.query<VendaDetailQuery>({
+      query: VENDA_DETAIL_QUERY,
+      variables: {
+        vendaId
+      }
+    })
+      .pipe(
+        map(res => res.data.Venda)
       );
   }
 
