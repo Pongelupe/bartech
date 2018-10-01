@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Observable } from 'rxjs';
 import { Produto } from '../../../core/model/produto';
 import { Venda } from '../../../core/model/venda';
 import { VendaService } from '../../service/venda.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
-import { ItemVenda } from '../../../core/model/itemVenda';
 
 @Component({
   selector: 'app-venda',
@@ -12,14 +12,16 @@ import { ItemVenda } from '../../../core/model/itemVenda';
   styleUrls: ['./venda.component.scss']
 })
 export class VendaComponent implements OnInit {
+
   produtos$: Observable<Produto[]>;
-  venda: Venda = new Venda();;
+  venda: Venda = new Venda();
   termoPesquisaProduto: string;
   produto: Produto = new Produto();
-  quantidade = 1;
-  totalVenda: number = 0;
+  totalVenda = 0;
+  addForm: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
     private vendaService: VendaService,
     private ngxSmartModalService: NgxSmartModalService) { }
 
@@ -29,6 +31,9 @@ export class VendaComponent implements OnInit {
       this.venda = Object.assign(Venda.prototype, res);
       this.venda.itensVenda.forEach(item => this.totalVenda += item.quantidade * item.produto.preco);
     });
+    this.addForm = this.formBuilder.group({
+      quantidade: ['', [Validators.min(1)]]
+    });
   }
 
   openModalItem(produto: Produto): void {
@@ -37,18 +42,11 @@ export class VendaComponent implements OnInit {
   }
 
   addItemVenda(): void {
-    this.vendaService.adicionarItemVenda(this.quantidade, this.produto.id, this.venda.id)
+    this.vendaService.adicionarItemVenda(this.addForm.value.quantidade, this.produto.id, this.venda.id)
       .subscribe(
-        id => {
-          let item: ItemVenda = new ItemVenda();
-          item.produto = this.produto;
-          item.quantidade = this.quantidade;
-          item.venda = this.venda;
-          item.valor = this.produto.preco;
-          if (this.venda.itensVenda == undefined)
-            this.venda.itensVenda = new Array<ItemVenda>();
-            
-          this.venda.itensVenda.push(item);
+        item => {
+          this.venda.itensVenda = [...this.venda.itensVenda, item];
+          this.addForm.setValue({ quantidade: 1 });
         });
     this.ngxSmartModalService.getModal('addModal').close();
   }

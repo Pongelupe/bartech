@@ -53,6 +53,12 @@ export const CREATE_ITEM_VENDA_MUTATION = gql`
       produtoId: $produtoId
     ) {
       id
+      quantidade
+      produto {
+        id
+        nome
+        preco
+      }
     }
   }
 `;

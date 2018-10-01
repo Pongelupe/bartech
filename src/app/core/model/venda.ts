@@ -17,7 +17,7 @@ export class Venda {
     this._total = 0;
     if (this.itensVenda !== undefined) {
       this.itensVenda.forEach(item => {
-        this._total += item.quantidade * item.valor;
+        this._total += item.quantidade * item.produto.preco;
       });
     }
 

@@ -5,6 +5,7 @@ import { Produto } from '../../core/model/produto';
 import { AllProdutosQuery, ALL_PRODUTOS_QUERY, CREATE_ITEM_VENDA_MUTATION, VendaDetailQuery, VENDA_DETAIL_QUERY } from './venda.graphql';
 import { map } from 'rxjs/operators';
 import { Venda } from '../../core/model/venda';
+import { ItemVenda } from '../../core/model/itemVenda';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class VendaService {
       );
   }
 
-  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string): Observable<string> {
+  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string): Observable<ItemVenda> {
     return this.apollo.mutate({
       mutation: CREATE_ITEM_VENDA_MUTATION,
       variables: {

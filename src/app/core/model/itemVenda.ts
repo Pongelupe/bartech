@@ -8,11 +8,10 @@ export class ItemVenda {
     cancelado = false;
     produto: Produto;
     venda: Venda;
-    valor: number;
     private _total: number;
 
     get total() {
-        this._total = this.quantidade * this.valor;
+        this._total = this.quantidade * this.produto.preco;
         return this._total;
     }
 

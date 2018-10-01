@@ -31,11 +31,18 @@
 <ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
   <h3 class="text-center">{{produto.nome}}</h3>
   <p>{{produto.nome}} possui {{produto.quantidadeEstoque}} itens tem estoque</p>
-  <div class="form-group mt-1">
-    <label>Quantidade</label>
-    <input type="number" class="form-control" [(ngModel)]="quantidade">
-  </div>
+  <form [formGroup]="addForm" (submit)="addItemVenda()">
+    <div class="form-group mt-1">
+      <label>Quantidade</label>
+      <input type="number"
+      class="form-control"
+      formControlName="quantidade"
+      placeholder="1"
+      min="0"
+      [max]="produto.quantidadeEstoque">
+    </div>
 
-  <button type="button" class="btn btn-primary mt-2" (click)="addItemVenda()">Adicionar</button>
-  <button type="button" (click)="addModal.close()" class="btn btn-danger mr-2 mt-2">Cancelar</button>
+    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary mt-2 mr-2">Adicionar</button>
+    <button type="button" (click)="addModal.close()" class="btn btn-danger mr-2 mt-2">Cancelar</button>
+  </form>
 </ngx-smart-modal>

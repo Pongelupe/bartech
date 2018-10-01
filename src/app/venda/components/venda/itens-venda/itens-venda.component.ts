@@ -7,7 +7,7 @@ import { ItemVenda } from '../../../../core/model/itemVenda';
   styleUrls: ['./itens-venda.component.scss']
 })
 export class ItensVendaComponent implements OnInit {
-  @Input() itens : ItemVenda[];
+  @Input() itens: ItemVenda[];
   constructor() { }
 
   ngOnInit() {
