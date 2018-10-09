@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { Produto } from '../../core/model/produto';
-import { AllProdutosQuery, ALL_PRODUTOS_QUERY, CREATE_ITEM_VENDA_MUTATION, VendaDetailQuery, VENDA_DETAIL_QUERY } from './venda.graphql';
+import {
+  AllProdutosQuery,
+  ALL_PRODUTOS_QUERY,
+  CREATE_ITEM_VENDA_MUTATION,
+  VendaDetailQuery,
+  VENDA_DETAIL_QUERY,
+  DELETE_ITEM_VENDA_MUTATION,
+  CREATE_VENDA_AVULSA_MUTATION
+} from './venda.graphql';
 import { map } from 'rxjs/operators';
 import { Venda } from '../../core/model/venda';
 import { ItemVenda } from '../../core/model/itemVenda';
@@ -49,6 +57,26 @@ export class VendaService {
     })
       .pipe(
         map(res => res.data.createItemVenda)
+      );
+  }
+
+  createVenda(): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: CREATE_VENDA_AVULSA_MUTATION,
+      variables: { data: new Date().toISOString() }
+    })
+      .pipe(
+        map(res => res.data.createVenda.id)
+      );
+  }
+
+  removeItem(item: ItemVenda): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: DELETE_ITEM_VENDA_MUTATION,
+      variables: { idItemVenda: item.id }
+    })
+      .pipe(
+        map(res => res.data.deleteItemVenda.id)
       );
   }
 

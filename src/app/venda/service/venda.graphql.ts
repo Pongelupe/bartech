@@ -62,3 +62,23 @@ export const CREATE_ITEM_VENDA_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_VENDA_AVULSA_MUTATION = gql`
+  mutation CreateVenda($data: DateTime!) {
+    createVenda(
+      data: $data
+  ){
+      id
+  }
+}
+`;
+
+export const DELETE_ITEM_VENDA_MUTATION = gql`
+  mutation DeleteItemVenda($idItemVenda: ID!) {
+    deleteItemVenda(
+      id: $idItemVenda
+  ){
+      id
+  }
+}
+`;

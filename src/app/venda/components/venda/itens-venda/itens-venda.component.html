@@ -5,17 +5,19 @@
         <th scope="col">#</th>
         <th scope="col" class="text-center">Quantidade</th>
         <th scope="col" class="text-center">Item</th>
-        <th scope="col" class="text-right">Preço</th>
-        <th scope="col" class="text-right">Total</th>
+        <th scope="col" class="text-center">Preço</th>
+        <th scope="col" class="text-center">Total</th>
+        <th scope="col" class="text-center"> </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of itens; let i = index">
         <th scope="row">{{i+1}}</th>
         <td class="text-center">{{item.quantidade}}</td>
-        <td>{{item.produto.nome}}</td>
-        <td class="text-right">{{item.produto.preco | currency : 'BRL'}}</td>
-        <td class="text-right">{{item.quantidade * item.produto.preco| currency : 'BRL'}}</td>
+        <td class="text-center">{{item.produto.nome}}</td>
+        <td class="text-center">{{item.produto.preco | currency : 'BRL'}}</td>
+        <td class="text-center">{{item.quantidade * item.produto.preco| currency : 'BRL'}}</td>
+        <td class="text-center"><fa name="minus-circle" (click)="deleteItem(item)"></fa></td>
       </tr>
     </tbody>
   </table>

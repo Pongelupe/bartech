@@ -1,4 +1,9 @@
 <p>
   dashboard works!
 </p>
-<a [routerLink]="['venda']">Venda</a>
+<button class="btn btn-primary mb-2 ml-2" (click)="createVendaAvulsa()">Venda Avulsa</button>
+<ul class="list-group flush">
+  <li *ngFor="let mesa of (mesas$ | async); let i = index" class="list-group-item" (click)="createVenda(mesa)">
+    <span>Mesa {{i + 1}} - {{!mesa.venda ? "Livre": "Ocupada"}}</span>
+  </li>
+</ul>
