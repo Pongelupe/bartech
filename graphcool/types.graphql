@@ -18,7 +18,7 @@ type Produto @model {
 
 type Mesa @model {
   id: ID! @isUnique
-  vendas: [Venda!]! @relation(name: "MesaOnVendas")
+  venda: Venda @relation(name: "MesaOnVenda")
 }
 
 type Venda @model {
@@ -26,7 +26,7 @@ type Venda @model {
   data: DateTime!
   finalizada: Boolean! @defaultValue(value: "false")
   quitada: Boolean! @defaultValue(value: "false")
-  mesa: Mesa! @relation(name: "MesaOnVendas")
+  mesa: Mesa @relation(name: "MesaOnVenda")
   itensVenda: [ItemVenda!]! @relation(name: "ItensVendaOnVenda")
   penduras: [Pendura!]! @relation(name: "PenduraOnVenda")
   pagamentos: [Pagamento!]! @relation(name: "VendaOnPagamento")
