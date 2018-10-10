@@ -2,13 +2,13 @@
   <button class="btn btn-primary mb-2 ml-2" (click)="createVendaAvulsa()">Venda Avulsa</button>
   <h4 class="col-12 text-center">MESAS</h4>
   <div class="row">
-    <p class="col-2">
+    <p class="col-6 col-md-3 col-lg-2">
       <i class="fa fa-circle fa-1-x text-danger mr-2"></i>
       <span>Mesas
         <strong class="bold">ocupadas</strong>
       </span>
     </p>
-    <p class="col-2">
+    <p class="col-6 col-md-3 col-lg-2">
       <i class="fa fa-circle fa-1-x text-success mr-2"></i>
       <span>Mesas
         <strong class="bold">livres</strong>
@@ -16,7 +16,7 @@
     </p>
   </div>
   <div class="row">
-    <div class="col-2 mb-4" *ngFor="let mesa of (mesas$ | async); let i = index">
+    <div class="col-6 col-md-2 mb-4" *ngFor="let mesa of (mesas$ | async); let i = index">
       <div class="card text-center" [ngClass]="!mesa.venda ? 'alert-success card-mesa-vazia' : 'alert-danger card-mesa-ocupada'"
         (click)="createVenda(mesa)">
         <div class="card-body">
