@@ -1,12 +1,12 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-7">
+      <h4>Produtos cadastrados</h4>
       <div class="form-group">
         <label for="searchProducts">Pesquisar produtos</label>
         <input type="text" class="form-control" id="searchProducts" aria-describedby="searchProductsHelp" [(ngModel)]="termoPesquisaProduto">
         <small id="searchProductsHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
       </div>
-      <h4>Produtos cadastrados</h4>
       <div class="row">
         <div class="col-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
           <app-bt-card [title]="produto.nome" [subtitle]="produto.preco" (click)="openModalItem(produto)"></app-bt-card>
@@ -14,12 +14,15 @@
       </div>
     </div>
     <div class="col-md-5 mb-3">
-      <app-itens-venda [itens]="venda.itensVenda" (itemRemoved)="onItemRemoved($event)"></app-itens-venda>
-      <hr class="m-0" />
-      <div class="col-12">
-        <div class="row bg-success text-white font-weight-bold totais">
-          <span class="col-6">Total </span>
-          <span class="col-6 text-right">{{totalVenda | currency : 'BRL'}}</span>
+      <div class="card">
+        <h4>Produtos adicionados na venda</h4>
+        <app-itens-venda [itens]="venda.itensVenda" (itemRemoved)="onItemRemoved($event)"></app-itens-venda>
+        <hr class="m-0" />
+        <div class="col-12">
+          <div class="row bg-success text-white font-weight-bold totais">
+            <span class="col-6">Total </span>
+            <span class="col-6 text-right">{{totalVenda | currency : 'BRL'}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -34,14 +37,11 @@
   <form [formGroup]="addForm" (submit)="addItemVenda()">
     <div class="form-group mt-1">
       <label>Quantidade</label>
-      <input type="number"
-      class="form-control"
-      formControlName="quantidade"
-      min="0"
-      value="1"
-      [max]="produto.quantidadeEstoque">
+      <input type="number" class="form-control" formControlName="quantidade" min="0" value="1" [max]="produto.quantidadeEstoque">
     </div>
-    <span><small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser {{addForm.get('quantidade').value}}</small></span>
+    <span>
+      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser {{addForm.get('quantidade').value}}</small>
+    </span>
 
     <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary mt-2 mr-2">Adicionar</button>
     <button type="button" (click)="addModal.close()" class="btn btn-danger mr-2 mt-2">Cancelar</button>
