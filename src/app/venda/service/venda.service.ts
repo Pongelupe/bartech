@@ -9,11 +9,14 @@ import {
   VendaDetailQuery,
   VENDA_DETAIL_QUERY,
   DELETE_ITEM_VENDA_MUTATION,
-  CREATE_VENDA_AVULSA_MUTATION
+  CREATE_VENDA_AVULSA_MUTATION,
+  DELETE_VENDA_MUTATION
 } from './venda.graphql';
 import { map } from 'rxjs/operators';
 import { Venda } from '../../core/model/venda';
 import { ItemVenda } from '../../core/model/itemVenda';
+import { DataProxy } from 'apollo-cache';
+import { AllMesas, ALL_MESAS_QUERY } from '../../shared/services/mesa.graphql';
 
 @Injectable({
   providedIn: 'root'
@@ -80,4 +83,28 @@ export class VendaService {
       );
   }
 
+  cancelVenda(venda: Venda): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: DELETE_VENDA_MUTATION,
+      variables: { idVenda: venda.id },
+      update: (store: DataProxy, id) => {
+        const idVenda = id.data.deleteVenda.id;
+        const data = store.readQuery<AllMesas>({
+          query: ALL_MESAS_QUERY
+        });
+        const mesa = data.allMesas.filter(m => m.venda && m.venda.id === idVenda)[0];
+        mesa.venda = null;
+        const mesas = [].concat(data.allMesas.filter(m => m.id !== mesa.id));
+        mesas.push(mesa);
+        data.allMesas = mesas;
+        store.writeQuery({
+          query: ALL_MESAS_QUERY,
+          data
+        });
+      }
+    })
+      .pipe(
+        map(res => res.data.deleteVenda.id)
+      );
+  }
 }

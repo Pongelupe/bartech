@@ -82,3 +82,13 @@ export const DELETE_ITEM_VENDA_MUTATION = gql`
   }
 }
 `;
+
+export const DELETE_VENDA_MUTATION = gql `
+  mutation DeleteVenda($idVenda: ID!) {
+    deleteVenda(
+      id: $idVenda
+    ){
+      id
+    }
+  }
+`;

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Observable } from 'rxjs';
 import { Produto } from '../../../core/model/produto';
 import { Venda } from '../../../core/model/venda';
 import { VendaService } from '../../service/venda.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemVenda } from '../../../core/model/itemVenda';
 import { take } from 'rxjs/operators';
 
@@ -27,11 +27,12 @@ export class VendaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private vendaService: VendaService,
     private route: ActivatedRoute,
+    private router: Router,
     private ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
     this.produtos$ = this.vendaService.getAllProdutos();
-    const vendaId = this.route.snapshot.data.vendaId ?  this.route.snapshot.data.vendaId.id : this.route.snapshot.params.id;
+    const vendaId = this.route.snapshot.data.vendaId ? this.route.snapshot.data.vendaId.id : this.route.snapshot.params.id;
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
       this.venda = Object.assign(Venda.prototype, res);
       this.updateSubtotal();
@@ -72,5 +73,11 @@ export class VendaComponent implements OnInit {
         this.venda.itensVenda = this.venda.itensVenda.filter(it => item.id !== it.id);
         this.updateSubtotal();
       });
+  }
+
+  cancelVenda(): void {
+    this.vendaService.cancelVenda(this.venda)
+      .pipe(take(1))
+      .subscribe(id => this.router.navigate(['']));
   }
 }

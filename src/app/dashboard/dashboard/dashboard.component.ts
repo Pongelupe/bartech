@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Mesa } from '../../core/model/mesa';
-import { Router } from '@angular/router';
 import { MesaService } from '../../shared/services/mesa.service';
 import { VendaService } from '../../venda/service/venda.service';
 
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
   createVendaAvulsa(): void {
     this.vendaService.createVenda()
-        .subscribe(idVenda => this.router.navigate(['venda', idVenda]));
+      .subscribe(idVenda => this.router.navigate(['venda', idVenda]));
   }
 
 }
