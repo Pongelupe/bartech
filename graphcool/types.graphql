@@ -27,7 +27,7 @@ type Venda @model {
   finalizada: Boolean! @defaultValue(value: "false")
   quitada: Boolean! @defaultValue(value: "false")
   mesa: Mesa @relation(name: "MesaOnVenda")
-  itensVenda: [ItemVenda!]! @relation(name: "ItensVendaOnVenda")
+  itensVenda: [ItemVenda!]! @relation(name: "ItensVendaOnVenda", onDelete: CASCADE)
   penduras: [Pendura!]! @relation(name: "PenduraOnVenda")
   pagamentos: [Pagamento!]! @relation(name: "VendaOnPagamento")
 }

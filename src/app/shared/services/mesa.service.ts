@@ -13,9 +13,9 @@ export class MesaService {
   constructor(private apollo: Apollo) { }
 
   getAllMesas(): Observable<Mesa[]> {
-    return this.apollo.query<AllMesas>({
+    return this.apollo.watchQuery<AllMesas>({
       query: ALL_MESAS_QUERY
-    })
+    }).valueChanges
       .pipe(
         map(res => res.data.allMesas)
       );

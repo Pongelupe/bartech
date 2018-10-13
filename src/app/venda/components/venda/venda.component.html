@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-5 mb-3">
       <div class="card">
-        <h4>Produtos adicionados na venda</h4>
+        <h4 class="mt-1 text-center">Produtos adicionados na venda</h4>
         <app-itens-venda [itens]="venda.itensVenda" (itemRemoved)="onItemRemoved($event)"></app-itens-venda>
         <hr class="m-0" />
         <div class="col-12">
@@ -25,10 +25,19 @@
           </div>
         </div>
       </div>
+        <div class="row mt-1">
+          <div class="col-6">
+            <button type="button"
+             class="btn btn-warning col-8"
+             (click)="cancelVenda()"
+             [disabled]="this.venda.itensVenda?.length !== 0">Cancelar</button>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-danger col-8 pull-right">Encerrar</button>
+        </div>
+      </div>
     </div>
   </div>
-  <!--<button type="button" class="btn btn-primary mt-2" [routerLink]="['pagar']">Pagar</button>
-  <button type="button" class="btn btn-danger mt-1" [routerLink]="['pendura',venda.id]">Pendura</button>-->
 </div>
 
 <ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
@@ -40,7 +49,8 @@
       <input type="number" class="form-control" formControlName="quantidade" min="0" value="1" [max]="produto.quantidadeEstoque">
     </div>
     <span>
-      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser {{addForm.get('quantidade').value}}</small>
+      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser
+        {{addForm.get('quantidade').value}}</small>
     </span>
 
     <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary mt-2 mr-2">Adicionar</button>
