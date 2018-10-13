@@ -4,6 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/mesas',
+    pathMatch: 'full'
+  },
+  {
+    path: 'mesas',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
   },
   {
