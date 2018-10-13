@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6 col-lg-7">
       <h4>Produtos cadastrados</h4>
       <div class="form-group">
         <label for="searchProducts">Pesquisar produtos</label>
@@ -8,12 +8,12 @@
         <small id="searchProductsHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
       </div>
       <div class="row">
-        <div class="col-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
           <app-bt-card [title]="produto.nome" [subtitle]="produto.preco" (click)="openModalItem(produto)"></app-bt-card>
         </div>
       </div>
     </div>
-    <div class="col-md-5 mb-3">
+    <div class="col-md-6 col-lg-5 mb-3">
       <div class="card">
         <h4 class="mt-1 text-center">Produtos adicionados na venda</h4>
         <app-itens-venda [itens]="venda.itensVenda" (itemRemoved)="onItemRemoved($event)"></app-itens-venda>
@@ -25,17 +25,8 @@
           </div>
         </div>
       </div>
-        <div class="row mt-1">
-          <div class="col-6">
-            <button type="button"
-             class="btn btn-warning col-8"
-             (click)="cancelVenda()"
-             [disabled]="this.venda.itensVenda?.length !== 0">Cancelar</button>
-          </div>
-          <div class="col-6">
-            <button type="button" class="btn btn-danger col-8 pull-right">Encerrar</button>
-        </div>
-      </div>
+      <button type="button" class="btn btn-danger col-md-5 ml-0" (click)="cancelVenda()" [disabled]="this.venda.itensVenda?.length !== 0">Cancelar</button>
+      <button type="button" class="btn btn-primary pull-right col-md-5 mr-0">Encerrar</button>
     </div>
   </div>
 </div>
@@ -49,11 +40,12 @@
       <input type="number" class="form-control" formControlName="quantidade" min="0" value="1" [max]="produto.quantidadeEstoque">
     </div>
     <span>
-      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser
-        {{addForm.get('quantidade').value}}</small>
+      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser {{addForm.get('quantidade').value}}
+      </small>
     </span>
-
-    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary mt-2 mr-2">Adicionar</button>
-    <button type="button" (click)="addModal.close()" class="btn btn-danger mr-2 mt-2">Cancelar</button>
+    <div class="text-right">
+      <button type="button" (click)="addModal.close()" class="btn btn-danger col-md-5 ml-0">Cancelar</button>
+      <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary col-md-5 ml-0 mr-0">Adicionar</button>
+    </div>
   </form>
 </ngx-smart-modal>
