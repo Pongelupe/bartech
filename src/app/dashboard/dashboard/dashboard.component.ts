@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Mesa } from '../../core/model/mesa';
 import { MesaService } from '../../shared/services/mesa.service';
 import { VendaService } from '../../venda/service/venda.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private mesaService: MesaService,
     private router: Router,
-    private vendaService: VendaService) { }
+    private vendaService: VendaService,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.mesas$ = this.mesaService.getAllMesas();
@@ -29,7 +31,10 @@ export class DashboardComponent implements OnInit {
 
   createVendaAvulsa(): void {
     this.vendaService.createVenda()
-      .subscribe(idVenda => this.router.navigate(['venda', idVenda]));
+      .subscribe(idVenda => { 
+        this.toastrService.success("Criado nova venda avulsa.");
+        this.router.navigate(['venda', idVenda]);
+      },err => this.toastrService.error(err.message, "Erro"));
   }
 
 }

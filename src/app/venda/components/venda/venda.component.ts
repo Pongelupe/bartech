@@ -8,6 +8,7 @@ import { VendaService } from '../../service/venda.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemVenda } from '../../../core/model/itemVenda';
 import { take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-venda',
@@ -28,7 +29,8 @@ export class VendaComponent implements OnInit {
     private vendaService: VendaService,
     private route: ActivatedRoute,
     private router: Router,
-    private ngxSmartModalService: NgxSmartModalService) { }
+    private ngxSmartModalService: NgxSmartModalService,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.produtos$ = this.vendaService.getAllProdutos();
@@ -36,7 +38,7 @@ export class VendaComponent implements OnInit {
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
       this.venda = Object.assign(Venda.prototype, res);
       this.updateSubtotal();
-    });
+    }, err => this.toastrService.error(err.message, "Erro"));
     this.addForm = this.formBuilder.group({
       quantidade: ['', [Validators.min(1), Validators.required]]
     });
@@ -55,9 +57,10 @@ export class VendaComponent implements OnInit {
           this.venda.itensVenda = [...this.venda.itensVenda, item];
           this.updateSubtotal();
           this.addForm.reset();
+          this.toastrService.success("Adicionado " + item.quantidade + "x " + item.produto.nome +" na venda.");
         },
-        err => console.log(err))
-      ;
+        err => this.toastrService.error(err.message, "Erro"));
+    ;
     this.ngxSmartModalService.getModal('addModal').close();
   }
 
@@ -72,12 +75,21 @@ export class VendaComponent implements OnInit {
       .subscribe(id => {
         this.venda.itensVenda = this.venda.itensVenda.filter(it => item.id !== it.id);
         this.updateSubtotal();
-      });
+        this.toastrService.success("Removido " + item.quantidade + "x " + item.produto.nome +" da venda.");
+      },
+        err => this.toastrService.error(err.message, "Erro"));
   }
 
   cancelVenda(): void {
     this.vendaService.cancelVenda(this.venda)
       .pipe(take(1))
-      .subscribe(id => this.router.navigate(['']));
+      .subscribe(id => 
+        {
+          this.toastrService.success("Venda cancelada.");
+          this.router.navigate(['']);
+        },
+        err => {
+          this.toastrService.error(err.message, "Erro")
+        });
   }
 }
