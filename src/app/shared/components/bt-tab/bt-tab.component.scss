@@ -1,0 +1,17 @@
+button, button:focus {
+    height: 100%;
+    color: white;
+    background-color: #0d47a1;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: unset;
+    outline: 0;
+}
+
+.btn-selected {
+    border-bottom: 2px solid #efc600;
+    color: #efc600;
+    font-weight: bold;
+}
+ 
