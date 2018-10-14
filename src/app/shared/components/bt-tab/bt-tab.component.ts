@@ -14,13 +14,9 @@ export class BtTabComponent implements OnInit {
 
   @Input() titulo: string;
 
-  constructor(private tabs: BtTabsComponent) {
+  constructor(private tabs: BtTabsComponent) {}
 
-  }
-
-  ngOnInit() {
-    console.log(this.isSelected);
-  }
+  ngOnInit() {}
 
   selecionar() {
     this.isSelected = true;

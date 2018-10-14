@@ -44,7 +44,7 @@ export class VendaComponent implements OnInit {
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
       this.venda = Object.assign(Venda.prototype, res);
       this.updateSubtotal();
-    }, err => this.toastrService.error(err.message, "Erro"));
+    }, err => this.toastrService.error(err.message, 'Erro'));
     this.addForm = this.formBuilder.group({
       quantidade: ['', [Validators.min(1), Validators.required]]
     });
@@ -77,10 +77,9 @@ export class VendaComponent implements OnInit {
           this.venda.itensVenda = [...this.venda.itensVenda, item];
           this.updateSubtotal();
           this.addForm.reset();
-          this.toastrService.success("Adicionado " + item.quantidade + "x " + item.produto.nome +" na venda.");
+          this.toastrService.success('Adicionado ' + item.quantidade + 'x ' + item.produto.nome + ' na venda.');
         },
-        err => this.toastrService.error(err.message, "Erro"));
-    ;
+        err => this.toastrService.error(err.message, 'Erro'));
     this.ngxSmartModalService.getModal('addModal').close();
   }
 
@@ -95,21 +94,20 @@ export class VendaComponent implements OnInit {
       .subscribe(id => {
         this.venda.itensVenda = this.venda.itensVenda.filter(it => item.id !== it.id);
         this.updateSubtotal();
-        this.toastrService.success("Removido " + item.quantidade + "x " + item.produto.nome +" da venda.");
+        this.toastrService.success('Removido ' + item.quantidade + 'x ' + item.produto.nome + ' da venda.');
       },
-        err => this.toastrService.error(err.message, "Erro"));
+        err => this.toastrService.error(err.message, 'Erro'));
   }
 
   cancelVenda(): void {
     this.vendaService.cancelVenda(this.venda)
       .pipe(take(1))
-      .subscribe(id => 
-        {
-          this.toastrService.success("Venda cancelada.");
+      .subscribe(id => {
+          this.toastrService.success('Venda cancelada.');
           this.router.navigate(['']);
         },
         err => {
-          this.toastrService.error(err.message, "Erro")
+          this.toastrService.error(err.message, 'Erro');
         });
   }
 }

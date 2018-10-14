@@ -17,7 +17,7 @@ import { ToastrModule} from 'ngx-toastr';
       closeButton: true,
       progressBar: true,
       tapToDismiss: false
-    }), 
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,13 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./bt-card.component.scss']
 })
 export class BtCardComponent implements OnInit {
-  @Input() title : string;
-  @Input() subtitle : string;
-  @Input() text : string;
+  @Input() title: string;
+  @Input() subtitle: string;
+  @Input() text: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

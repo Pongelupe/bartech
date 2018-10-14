@@ -21,7 +21,7 @@ export class PenduraComponent implements OnInit {
       .pipe(
         map(routeData => this.venda = routeData.venda)
       )
-      .subscribe(err => this.toastrService.error(err.message, "Erro"));
+      .subscribe(err => this.toastrService.error(err.message, 'Erro'));
   }
 
 }
