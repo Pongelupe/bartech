@@ -1,6 +1,12 @@
-<div class="container-fluid">
+<div class="col-12 p-0">
+  <app-bt-tabs>
+    <app-bt-tab class="col-6 p-0" [(isSelected)]="mostrarProdutosCadastrados" titulo="Produtos" (change)="mostrarItens = false"></app-bt-tab>
+    <app-bt-tab class="col-6 p-0" [(isSelected)]="mostrarItens" titulo="Itens" (change)="mostrarProdutosCadastrados = false"></app-bt-tab>
+  </app-bt-tabs>
+</div>
+<div class="col-12 mt-3">
   <div class="row">
-    <div class="col-md-6 col-lg-7">
+    <div class="col-md-6 col-lg-7" *ngIf="mostrarProdutosCadastrados">
       <h4>Produtos cadastrados</h4>
       <div class="form-group">
         <label for="searchProducts">Pesquisar produtos</label>
@@ -13,9 +19,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-lg-5 mb-3">
+    <div class="col-md-6 col-lg-5 mb-3" *ngIf="mostrarItens">
+      <h4>Itens adicionados na venda</h4>
       <div class="card">
-        <h4 class="mt-1 text-center">Produtos adicionados na venda</h4>
         <app-itens-venda [itens]="venda.itensVenda" (itemRemoved)="onItemRemoved($event)"></app-itens-venda>
         <hr class="m-0" />
         <div class="col-12">

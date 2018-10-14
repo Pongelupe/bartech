@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Observable } from 'rxjs';
@@ -9,12 +9,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ItemVenda } from '../../../core/model/itemVenda';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-venda',
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.scss']
 })
+
 export class VendaComponent implements OnInit {
 
   produtos$: Observable<Produto[]>;
@@ -23,6 +25,9 @@ export class VendaComponent implements OnInit {
   produto: Produto = new Produto();
   totalVenda = 0;
   addForm: FormGroup;
+  mostrarProdutosCadastrados = true;
+  mostrarItens = true;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +38,7 @@ export class VendaComponent implements OnInit {
     private toastrService: ToastrService) { }
 
   ngOnInit() {
+    this.updateShowTabs();
     this.produtos$ = this.vendaService.getAllProdutos();
     const vendaId = this.route.snapshot.data.vendaId ? this.route.snapshot.data.vendaId.id : this.route.snapshot.params.id;
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
@@ -44,6 +50,20 @@ export class VendaComponent implements OnInit {
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updateShowTabs();
+  }
+
+  updateShowTabs() {
+    if (Utils.isMobile.any()) {
+      this.mostrarProdutosCadastrados = true;
+      this.mostrarItens = false;
+    } else {
+      this.mostrarProdutosCadastrados = true;
+      this.mostrarItens = true;
+    }
+  }
   openModalItem(produto: Produto): void {
     this.produto = produto;
     this.ngxSmartModalService.getModal('addModal').open();
