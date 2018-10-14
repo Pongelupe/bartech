@@ -13,7 +13,11 @@ import { ToastrModule} from 'ngx-toastr';
     CoreModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot({
+      closeButton: true,
+      progressBar: true,
+      tapToDismiss: false
+    }), 
   ],
   providers: [],
   bootstrap: [AppComponent]
