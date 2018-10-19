@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +6,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private toastrService: ToastrService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.toastrService.info('Seja bem-vindo!');
-  }
+  ngOnInit() { }
 }
