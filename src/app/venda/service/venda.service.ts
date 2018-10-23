@@ -49,19 +49,21 @@ export class VendaService {
       );
   }
 
-  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string): Observable<ItemVenda> {
+  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string, quantidadeEstoque: number): Observable<ItemVenda> {
     return this.apollo.mutate({
       mutation: CREATE_ITEM_VENDA_MUTATION,
       variables: {
         produtoId,
         vendaId,
-        quantidade
+        quantidade,
+        quantidadeEstoque: quantidadeEstoque - quantidade
       }
     })
       .pipe(
         map(res => res.data.createItemVenda)
       );
   }
+
 
   createVenda(): Observable<string> {
     return this.apollo.mutate<string>({

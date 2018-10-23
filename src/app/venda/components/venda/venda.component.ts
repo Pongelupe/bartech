@@ -70,7 +70,7 @@ export class VendaComponent implements OnInit {
   }
 
   addItemVenda(): void {
-    this.vendaService.adicionarItemVenda(this.addForm.value.quantidade, this.produto.id, this.venda.id)
+    this.vendaService.adicionarItemVenda(this.addForm.value.quantidade, this.produto.id, this.venda.id, this.produto.quantidadeEstoque)
       .pipe(take(1))
       .subscribe(
         item => {
