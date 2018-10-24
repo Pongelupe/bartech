@@ -1,3 +1,79 @@
-<p>
-  pagamento works!
-</p>
+<div class="col-12 mt-3">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="valuePayment">Valor do Pagamento</label>
+        <input type="text" class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" [(ngModel)]="pagamento.valor">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="formasDePagamentos">Valor do Pagamento</label>
+        <select class="form-control" [(ngModel)]="pagamento.formaPagamento">
+          <option value="DINHEIRO">Dinheiro</option>
+          <option value="CARTAO">Cartão</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-primary" (click)="adicionarPagamento()">Adicionar</button>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-6">
+        <h4>Pagamentos</h4>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="text-center">Forma de Pagamento</th>
+                <th scope="col" class="text-center">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pagamento of venda.pagamentos; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td class="text-center">{{pagamento.formaPagamento}}</td>
+                <td class="text-center">{{pagamento.valor}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6">
+            <h4>Totais Venda</h4>
+            <div class="col-12">
+              Subtotal = {{venda.subtotal | currency:'BRL'}}
+            </div>
+
+            <div class="col-12">
+              Descontos = {{venda.descontos | currency:'BRL'}}
+            </div>
+
+            <div class="col-12">
+              Total = {{venda.total | currency:'BRL'}}
+            </div>
+          </div>
+          <div class="col-6">
+            <h4>Totais Pagamento</h4>
+            <div class="col-12">
+              Pagamentos = {{venda.totaisPagamentos | currency:'BRL'}}
+            </div>
+
+            <div class="col-12">
+              <span *ngIf="venda.valorRestanteVenda >= 0"> Valor a pagar {{ venda.valorRestanteVenda | currency:'BRL'}}
+              </span>
+              <span *ngIf="venda.valorRestanteVenda < 0"> Troco {{ venda.valorRestanteVenda | currency:'BRL'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

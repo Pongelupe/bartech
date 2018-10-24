@@ -110,4 +110,7 @@ export class VendaComponent implements OnInit {
           this.toastrService.error(err.message, 'Erro');
         });
   }
+  encerrarVenda(): void {
+    this.router.navigate(['/pagamento', this.venda.id]);
+  }
 }

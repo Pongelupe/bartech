@@ -37,14 +37,16 @@ export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
 `;
 
 export const CREATE_PAGAMENTO_MUTATION = gql`
-  mutation createPagamento($data: Date, $vendaId: string, $formaPagamento: string, $valor: number ) {
+  mutation createPagamento($data: DateTime!, $vendaId: ID!, $formaPagamento: FormaDePagamento!, $valor: Float! ) {
     createPagamento(
       data: $data,
       vendaId: $vendaId,
       formaPagamento: $formaPagamento,
       valor: $valor
     ){
-      id
+      id,
+      formaPagamento,
+      valor
     }
   }
 `;
