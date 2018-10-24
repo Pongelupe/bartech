@@ -1,12 +1,12 @@
 import { Venda } from '../../core/model/venda';
 import gql from 'graphql-tag';
 
-export interface VendaDetailPagamentsQuery {
+export interface VendaDetailPagamentosQuery {
   Venda: Venda;
 }
 
-export const VENDA_DETAIL_PAGAMENTS_QUERY = gql`
-  query VendaDetailPagamentsQuery($vendaId: ID!) {
+export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
+  query VendaDetailPagamentosQuery($vendaId: ID!) {
     Venda(id: $vendaId) {
       id,
       pagamentos {
