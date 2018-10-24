@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { CREATE_PAGAMENTO_MUTATION, VendaDetailPagamentosQuery, VENDA_DETAIL_PAGAMENTOS_QUERY, CREATE_PENDURA_MUTATION, CREATE_CLIENTE_MUTATION } from './pagamento.graphql';
+import { CREATE_PAGAMENTO_MUTATION, VendaDetailPagamentosQuery, VENDA_DETAIL_PAGAMENTOS_QUERY, CREATE_PENDURA_MUTATION, CREATE_CLIENTE_MUTATION, ClienteQuery, AllClientesQuery, ALL_CLIENTES_QUERY } from './pagamento.graphql';
 import { Venda } from '../../core/model/venda';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -56,6 +56,15 @@ export class PagamentoService {
     })
       .pipe(
         map(res => res.data.createCliente.id)
+      );
+  }
+
+  getAllClientes(): Observable<Cliente[]> {
+    return this.apollo.query<AllClientesQuery>({
+      query: ALL_CLIENTES_QUERY
+    })
+      .pipe(
+        map(res => res.data.allClientes)
       );
   }
 }
