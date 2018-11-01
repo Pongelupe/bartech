@@ -4,7 +4,7 @@ import { Venda } from '../../core/model/venda';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pagamento } from '../../core/model/pagamento';
-import { FormaDePagamento } from '../../core/model/formaDePagaMento';
+import { FormaDePagamento } from '../../core/model/formaDePagamento';
 import { Pendura } from '../../core/model/pendura';
 import { Cliente } from '../../core/model/cliente';
 import { VendaDetailPagamentosQuery, VENDA_DETAIL_PAGAMENTOS_QUERY, CREATE_PAGAMENTO_MUTATION, CREATE_PENDURA_MUTATION, CREATE_CLIENTE_MUTATION, AllClientesQuery, ALL_CLIENTES_QUERY } from './pagamento.graphql';

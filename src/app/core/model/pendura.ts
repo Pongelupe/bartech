@@ -1,5 +1,5 @@
 import { Venda } from './venda';
-import { FormaDePagamento } from './formaDePagaMento';
+import { FormaDePagamento } from './formaDePagamento';
 import { Cliente } from './cliente';
 
 export class Pendura {

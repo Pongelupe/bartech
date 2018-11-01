@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pagamento } from '../../../core/model/pagamento';
-import { FormaDePagamento } from '../../../core/model/formaDePagaMento';
+import { FormaDePagamento } from '../../../core/model/formaDePagamento';
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 import { Venda } from '../../../core/model/venda';
 import { Observable } from 'rxjs';
