@@ -47,7 +47,7 @@ export class Venda {
 
   get totaisPagamentos() {
     this._totaisPagamentos = 0;
-    if (this._totaisPagamentos !== undefined) {
+    if (this._totaisPagamentos !== undefined && this.pagamentos) {
       this.pagamentos.forEach(pagamento => {
         this._totaisPagamentos += pagamento.valor;
       });

@@ -1,4 +1,5 @@
 export enum FormaDePagamento {
     DINHEIRO,
-    CARTAO
+    CARTAO,
+    PENDURA
 }

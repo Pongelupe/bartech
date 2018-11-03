@@ -7,6 +7,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BtTabComponent } from './components/bt-tab/bt-tab.component';
 import { BtTabsComponent } from './components/bt-tabs/bt-tabs.component';
 import { BtHideDirective } from './directive/bt-hide.directive';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -19,11 +20,13 @@ import { BtHideDirective } from './directive/bt-hide.directive';
     BtTabComponent,
     BtTabsComponent,
     NgxSmartModalModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    NgxMaskModule
   ],
   imports: [
     CommonModule,
     NgxSmartModalModule.forRoot(),
+    NgxMaskModule.forRoot()
   ],
   declarations: [
     BtCardComponent,

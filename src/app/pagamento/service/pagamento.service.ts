@@ -4,10 +4,15 @@ import { Venda } from '../../core/model/venda';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pagamento } from '../../core/model/pagamento';
-import { FormaDePagamento } from '../../core/model/formaDePagamento';
 import { Pendura } from '../../core/model/pendura';
 import { Cliente } from '../../core/model/cliente';
-import { VendaDetailPagamentosQuery, VENDA_DETAIL_PAGAMENTOS_QUERY, CREATE_PAGAMENTO_MUTATION, CREATE_PENDURA_MUTATION, CREATE_CLIENTE_MUTATION, AllClientesQuery, ALL_CLIENTES_QUERY } from './pagamento.graphql';
+import {
+  VendaDetailPagamentosQuery,
+  VENDA_DETAIL_PAGAMENTOS_QUERY,
+  CREATE_PAGAMENTO_MUTATION, CREATE_PENDURA_MUTATION,
+  CREATE_CLIENTE_MUTATION,
+  AllClientesQuery, ALL_CLIENTES_QUERY
+} from './pagamento.graphql';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +36,12 @@ export class PagamentoService {
   createPagamento(pagamento: Pagamento): Observable<Pagamento> {
     return this.apollo.mutate<string>({
       mutation: CREATE_PAGAMENTO_MUTATION,
-      // tslint:disable-next-line:max-line-length
-      variables: { data: new Date().toISOString(), vendaId: pagamento.venda.id, formaPagamento: pagamento.formaPagamento, valor: parseFloat(pagamento.valor.toString()) }
+      variables: {
+        data: new Date().toISOString(),
+        vendaId: pagamento.venda.id,
+        formaPagamento: pagamento.formaPagamento,
+        valor: parseFloat(pagamento.valor.toString())
+      }
     })
       .pipe(
         map(res => res.data.createPagamento)
