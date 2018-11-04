@@ -1,13 +1,8 @@
-import { Venda } from '../../core/model/venda';
 import gql from 'graphql-tag';
-import { Cliente } from '../../core/model/cliente';
+import { Venda } from '../../core/model/venda';
 
 export interface VendaDetailPagamentosQuery {
   Venda: Venda;
-}
-
-export interface AllClientesQuery {
-  allClientes: Cliente[];
 }
 
 export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
@@ -61,29 +56,5 @@ export const CREATE_PENDURA_MUTATION = gql`
     ){
       id
     }
-  }
-`;
-
-
-export const CREATE_CLIENTE_MUTATION = gql`
-  mutation createCliente($nome: string, $apelido: string, $cpf: string, $telefone: string ) {
-    createCliente(
-      nome: $nome,
-      apelido: $apelido,
-      cpf: $cpf,
-      telefone: $telefone
-    ){
-      id
-    }
-  }
-`;
-
-export const ALL_CLIENTES_QUERY = gql`
-  query allClientes {
-    id,
-    nome,
-    apelido,
-    telefone,
-    cpf
   }
 `;

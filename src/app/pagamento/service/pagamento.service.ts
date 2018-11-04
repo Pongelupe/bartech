@@ -5,13 +5,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pagamento } from '../../core/model/pagamento';
 import { Pendura } from '../../core/model/pendura';
-import { Cliente } from '../../core/model/cliente';
 import {
   VendaDetailPagamentosQuery,
   VENDA_DETAIL_PAGAMENTOS_QUERY,
-  CREATE_PAGAMENTO_MUTATION, CREATE_PENDURA_MUTATION,
-  CREATE_CLIENTE_MUTATION,
-  AllClientesQuery, ALL_CLIENTES_QUERY
+  CREATE_PAGAMENTO_MUTATION,
+  CREATE_PENDURA_MUTATION,
 } from './pagamento.graphql';
 
 @Injectable({
@@ -55,25 +53,6 @@ export class PagamentoService {
     })
       .pipe(
         map(res => res.data.createPendura.id)
-      );
-  }
-
-  createCliente(cliente: Cliente): Observable<string> {
-    return this.apollo.mutate<string>({
-      mutation: CREATE_CLIENTE_MUTATION,
-      variables: { nome: cliente.nome, apelido: cliente.apelido, cpf: cliente.cpf, telefone: cliente.telefone }
-    })
-      .pipe(
-        map(res => res.data.createCliente.id)
-      );
-  }
-
-  getAllClientes(): Observable<Cliente[]> {
-    return this.apollo.query<AllClientesQuery>({
-      query: ALL_CLIENTES_QUERY
-    })
-      .pipe(
-        map(res => res.data.allClientes)
       );
   }
 }
