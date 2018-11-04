@@ -1,12 +1,11 @@
-import { Venda } from './venda';
-import { FormaDePagamento } from './formaDePagamento';
 import { Cliente } from './cliente';
+import { Venda } from './venda';
 
 export class Pendura {
   id: string;
-    data: Date;
-    valor: number;
-    valorPagto?: number;
-    cliente = new Cliente();
-    venda = new Venda();
+  data: Date;
+  valor: number;
+  valorPagto?: number;
+  cliente = new Cliente();
+  venda = new Venda();
 }

@@ -47,7 +47,7 @@ export const CREATE_PAGAMENTO_MUTATION = gql`
 `;
 
 export const CREATE_PENDURA_MUTATION = gql`
-  mutation createPendura($data: Date, $vendaId: string, $clienteId: string, $valor: number ) {
+  mutation createPendura($data: DateTime!, $vendaId: ID!, $clienteId: ID!, $valor: Float! ) {
     createPendura(
       data: $data,
       vendaId: $vendaId,

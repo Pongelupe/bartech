@@ -1,0 +1,49 @@
+<h3 class="text-center text-muted">Selecionar bêbum</h3>
+<form [formGroup]="bebumForm">
+  <div class="form-group row mt-1">
+    <label class="col-2 col-form-label">Nome*</label>
+    <div class="col-10">
+      <input class="form-control" formControlName="nome" type="text" placeholder="Senor Abravanel">
+      <app-vm-error [text]="'O campo Nome é obrigatório'" *ngIf="bebumForm.get('nome').hasError('required')"></app-vm-error>
+      <app-vm-error [text]="'O campo Nome deve conter no mínimo 3 caractes'" *ngIf="bebumForm.get('nome').hasError('minlength')"></app-vm-error>
+      <app-vm-error [text]="'O campo Nome deve conter no maxímo 50 caractes'" *ngIf="bebumForm.get('nome').hasError('maxlength')"></app-vm-error>
+    </div>
+  </div>
+  <div class="form-group row mt-1">
+    <label class="col-2 col-form-label">Apelido*</label>
+    <div class="col-10">
+      <input class="form-control" formControlName="apelido" type="text" placeholder="Silvio Santos">
+      <app-vm-error [text]="'O campo Apelido é obrigatório'" *ngIf="bebumForm.get('apelido').hasError('required')"></app-vm-error>
+      <app-vm-error [text]="'O campo Apelido deve conter no mínimo 3 caractes'" *ngIf="bebumForm.get('apelido').hasError('minlength')"></app-vm-error>
+      <app-vm-error [text]="'O campo Apelido deve conter no maxímo 50 caractes'" *ngIf="bebumForm.get('apelido').hasError('maxlength')"></app-vm-error>
+    </div>
+  </div>
+  <div class="form-group row mt-1">
+    <label class="col-2 col-form-label">CPF*</label>
+    <div class="col-10">
+      <input class="form-control" formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00">
+      <app-vm-error [text]="'O campo CPF é obrigatório'" *ngIf="bebumForm.get('cpf').hasError('required')"></app-vm-error>
+      <app-vm-error [text]="'O campo CPF deve conter 11 dígitos'" *ngIf="bebumForm.get('cpf').hasError('minlength')"></app-vm-error>
+    </div>
+  </div>
+  <div class="form-group row mt-1">
+    <label class="col-2 col-form-label">Telefone*</label>
+    <div class="col-10">
+      <input class="form-control" formControlName="telefone" mask="(00) 000-000000" placeholder="(00) 000-000000">
+      <app-vm-error [text]="'O campo Telefone é obrigatório'" *ngIf="bebumForm.get('telefone').hasError('required')"></app-vm-error>
+      <app-vm-error [text]="'O campo Telefone deve conter no mínimo 10 números'" *ngIf="bebumForm.get('telefone').hasError('minlength')"></app-vm-error>
+    </div>
+  </div>
+  <div class="row">
+    <span class="col-sm ml-0">
+      <button type="button" (click)="close()" class="btn btn-danger col-sm ml-0">Cancelar</button>
+    </span>
+    <span class="tool-tip col-sm ml-0" data-toggle="tooltip" data-placement="bottom" title="A busca de bebum é pelo CPF do indivíduo">
+      <button type="button" [disabled]="bebumForm.get('cpf').errors" (click)="getBebum(bebumForm.get('cpf').value)"
+        class="btn btn-success col-sm ml-0">
+        Buscar
+      </button>
+    </span>
+  </div>
+  <button type="button" (click)="cadastraCliente()" [disabled]="bebumForm.invalid" class="btn btn-primary col-sm ml-0 mr-0">Confirmar</button>
+</form>

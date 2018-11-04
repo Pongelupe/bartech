@@ -7,7 +7,7 @@ export interface AllClientesQuery {
 }
 
 export const CREATE_CLIENTE_MUTATION = gql`
-  mutation createCliente($nome: string, $apelido: string, $cpf: string, $telefone: string ) {
+  mutation createCliente($nome: String!, $apelido: String!, $cpf: String!, $telefone: String! ) {
     createCliente(
       nome: $nome,
       apelido: $apelido,
@@ -26,5 +26,17 @@ export const ALL_CLIENTES_QUERY = gql`
     apelido,
     telefone,
     cpf
+  }
+`;
+
+export const CLIENTE_BY_CPF_QUERY = gql`
+  query ClienteByCpfQuery($cpf: String!) {
+    Cliente(cpf: $cpf) {
+      id
+      nome
+      apelido
+      cpf
+      telefone
+    }
   }
 `;

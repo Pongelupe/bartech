@@ -46,10 +46,15 @@ export class PagamentoService {
       );
   }
 
-  createPendura(pendura: Pendura): Observable<string> {
+  pendura(pendura: Pendura): Observable<string> {
     return this.apollo.mutate<string>({
       mutation: CREATE_PENDURA_MUTATION,
-      variables: { data: new Date().toISOString(), vendaId: pendura.venda.id, clienteId: pendura.cliente.id, valor: pendura.valor }
+      variables: {
+        data: new Date().toISOString(),
+        vendaId: pendura.venda.id,
+        clienteId: pendura.cliente.id,
+        valor: parseFloat(pendura.valor.toString())
+      }
     })
       .pipe(
         map(res => res.data.createPendura.id)

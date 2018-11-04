@@ -1,25 +1,30 @@
 <div class="col-12 mt-3">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="form-group">
-        <label for="valuePayment">Valor do Pagamento</label>
-        <input type="number" class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" [(ngModel)]="pagamento.valor" mask="0*.00">
+  <form [formGroup]="pagamentoForm">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="valuePayment">Valor do Pagamento *</label>
+          <input class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" [(ngModel)]="pagamento.valor"
+            mask="0*.00" formControlName="valor">
+          <app-vm-error [text]="'O valor deve ser maior que 0'" *ngIf="pagamentoForm.get('valor').errors"></app-vm-error>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="formasDePagamentos">Forma do Pagamento *</label>
+          <select class="form-control" [(ngModel)]="pagamento.formaPagamento" formControlName="formaPagamento">
+            <option value="DINHEIRO">Dinheiro</option>
+            <option value="CARTAO">Cartão</option>
+            <option value="PENDURA">Pendura</option>
+          </select>
+          <app-vm-error [text]="'O campo Forma de Pagamento é obrigatório'" *ngIf="pagamentoForm.get('formaPagamento').errors"></app-vm-error>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="button" [disabled]="pagamentoForm.invalid" class="btn btn-primary mt-4" (click)="adicionarPagamento()">Adicionar</button>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="formasDePagamentos">Forma do Pagamento</label>
-        <select class="form-control" [(ngModel)]="pagamento.formaPagamento">
-          <option value="DINHEIRO" selected >Dinheiro</option>
-          <option value="CARTAO">Cartão</option>
-          <option value="PEDURA">Pendura</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <button type="button" class="btn btn-primary mt-4" (click)="adicionarPagamento()">Adicionar</button>
-    </div>
-  </div>
+  </form>
 </div>
 <div class="card">
   <div class="col-12 mt-2 mb-1">
@@ -32,6 +37,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col" class="text-center">Forma de Pagamento</th>
+                <th scope="col" class="text-center">Cliente</th>
                 <th scope="col" class="text-center">Valor</th>
               </tr>
             </thead>
@@ -39,7 +45,8 @@
               <tr *ngFor="let pagamento of venda.pagamentos; let i = index">
                 <th scope="row">{{i+1}}</th>
                 <td class="text-center">{{pagamento.formaPagamento}}</td>
-                <td class="text-center">{{pagamento.valor}}</td>
+                <td class="text-center">{{pagamento.cliente? pagamento.cliente.apelido : ''}}</td>
+                <td class="text-center">{{pagamento.valor | currency:'BRL'}}</td>
               </tr>
             </tbody>
           </table>
@@ -68,9 +75,9 @@
             </div>
 
             <div class="col-12">
-              <span *ngIf="venda.valorRestanteVenda >= 0"> Valor a pagar {{ venda.valorRestanteVenda | currency:'BRL'}}
+              <span>{{(venda.valorRestanteVenda < 0 ? 'Troco = ' : 'Valor a pagar = ') +
+                  venda.valorRestanteVenda}}
               </span>
-              <span *ngIf="venda.valorRestanteVenda < 0"> Troco {{ venda.valorRestanteVenda | currency:'BRL'}}</span>
             </div>
           </div>
         </div>
@@ -78,3 +85,7 @@
     </div>
   </div>
 </div>
+
+<ngx-smart-modal #addClienteModal identifier="addClienteModal" customClass="large-modal">
+  <app-bebum (closeModalBebum)="pendurar($event)" [cliente]="this.cliente"></app-bebum>
+</ngx-smart-modal>
