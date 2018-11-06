@@ -4,6 +4,7 @@ import { Cliente } from '../../../../core/model/cliente';
 import { ClienteService } from '../../../service/cliente.service';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-bebum',
@@ -33,25 +34,44 @@ export class BebumComponent implements OnInit {
 
   private isClienteNotNull(): boolean { return this.cliente !== null && this.cliente !== undefined; }
 
-  cadastraCliente(): void {
-    if (!this.cliente) {
-      this.cliente = this.bebumForm.value;
-
-      this.clienteService.createCliente(this.cliente)
-        .pipe(take(1))
-        .subscribe(id => {
-          this.cliente.id = id;
-          this.setFormDataWithBebum();
-          this.toastrService.success('Bebum cadastrado!');
-        }, err => this.toastrService.error('Atenção', 'CPF já cadastrado!'));
-    } else {
-      this.close();
-    }
+  selecionarCliente(): void {
+    this.cliente = this.bebumForm.value;
+    this.getBebumByCpf(this.cliente.cpf)
+      .subscribe(cliente => {
+        if (cliente) {
+          this.cliente = cliente;
+          this.close();
+        } else {
+          this.createCliente();
+        }
+      });
   }
 
-  getBebum(cpf: string): void {
-    this.clienteService.getClienteByCpf(cpf)
+  private createCliente(): void {
+    this.clienteService.createCliente(this.cliente)
       .pipe(take(1))
+      .subscribe(id => {
+        this.cliente.id = id;
+        this.setFormDataWithBebum();
+        this.toastrService.success('Bebum cadastrado!');
+        this.close();
+      }, err => {
+        if (err.graphQLErrors.filter(e => e.code === 3010)) {
+          this.toastrService.success('Atenção', 'Bebum selecionado');
+          this.close();
+        } else {
+          this.toastrService.error('Atenção', 'CPF já cadastrado!');
+        }
+      });
+  }
+
+  private getBebumByCpf(cpf: string): Observable<Cliente> {
+    return this.clienteService.getClienteByCpf(cpf)
+      .pipe(take(1));
+  }
+
+  retriveBebum(cpf: string): void {
+    this.getBebumByCpf(cpf)
       .subscribe(cliente => {
         this.cliente = cliente;
         if (cliente) {

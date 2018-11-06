@@ -39,11 +39,11 @@
       <button type="button" (click)="close()" class="btn btn-danger col-sm ml-0">Cancelar</button>
     </span>
     <span class="tool-tip col-sm ml-0" data-toggle="tooltip" data-placement="bottom" title="A busca de bebum é pelo CPF do indivíduo">
-      <button type="button" [disabled]="bebumForm.get('cpf').errors" (click)="getBebum(bebumForm.get('cpf').value)"
+      <button type="button" [disabled]="bebumForm.get('cpf').errors" (click)="retriveBebum(bebumForm.get('cpf').value)"
         class="btn btn-success col-sm ml-0">
         Buscar
       </button>
     </span>
   </div>
-  <button type="button" (click)="cadastraCliente()" [disabled]="bebumForm.invalid" class="btn btn-primary col-sm ml-0 mr-0">Confirmar</button>
+  <button type="button" (click)="selecionarCliente()" [disabled]="bebumForm.invalid" class="btn btn-primary col-sm ml-0 mr-0">Confirmar</button>
 </form>
