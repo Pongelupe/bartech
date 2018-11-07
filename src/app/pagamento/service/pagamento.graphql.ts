@@ -1,8 +1,13 @@
 import gql from 'graphql-tag';
 import { Venda } from '../../core/model/venda';
+import { Cliente } from '../../core/model/cliente';
 
 export interface VendaDetailPagamentosQuery {
   Venda: Venda;
+}
+
+export interface ClientesPenduradosQuery {
+  allClientes: Cliente[];
 }
 
 export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
@@ -55,6 +60,29 @@ export const CREATE_PENDURA_MUTATION = gql`
       valor: $valor
     ){
       id
+    }
+  }
+`;
+
+
+export const CLIENTES_PENDURADOS_QUERY = gql`
+  query ClientesPenduradosQuery {
+    allClientes {
+      id
+      nome
+      apelido
+      cpf
+      telefone
+      penduras {
+        data
+        valor
+        valorPagto
+      }
+      pagamentos {
+        data
+        formaPagamento
+        valor
+      }
     }
   }
 `;

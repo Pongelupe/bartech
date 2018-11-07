@@ -10,7 +10,10 @@ import {
   VENDA_DETAIL_PAGAMENTOS_QUERY,
   CREATE_PAGAMENTO_MUTATION,
   CREATE_PENDURA_MUTATION,
+  ClientesPenduradosQuery,
+  CLIENTES_PENDURADOS_QUERY,
 } from './pagamento.graphql';
+import { Cliente } from '../../core/model/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +61,15 @@ export class PagamentoService {
     })
       .pipe(
         map(res => res.data.createPendura.id)
+      );
+  }
+
+  getClientesPendurados(): Observable<Cliente[]> {
+    return this.apollo.query<ClientesPenduradosQuery>({
+      query: CLIENTES_PENDURADOS_QUERY
+    })
+      .pipe(
+        map(res => res.data.allClientes)
       );
   }
 }
