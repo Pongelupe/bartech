@@ -8,21 +8,27 @@ export interface VendaDetailPagamentosQuery {
 export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
   query VendaDetailPagamentosQuery($vendaId: ID!) {
     Venda(id: $vendaId) {
-      id,
+      id
       pagamentos {
-        valor,
+        id
+        valor
         formaPagamento
       },
       penduras {
-        valor,
+        id
+        valor
         cliente {
-          nome,
+          nome
           apelido
         }
-      }
+      },
+      mesa {
+        id
+      },
       itensVenda {
-        quantidade,
-        desconto,
+        id
+        quantidade
+        desconto
         produto {
           preco
         }

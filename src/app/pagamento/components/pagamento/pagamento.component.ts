@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../../../core/model/cliente';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Pendura } from '../../../core/model/pendura';
+import { VendaService } from '../../../venda/service/venda.service';
 
 @Component({
   selector: 'app-pagamento',
@@ -26,6 +27,7 @@ export class PagamentoComponent implements OnInit {
   bebumForm: FormGroup;
 
   constructor(private pagamentoService: PagamentoService,
+    private vendaService: VendaService,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
     private route: ActivatedRoute,
@@ -54,6 +56,8 @@ export class PagamentoComponent implements OnInit {
   }
 
   adicionarPagamento(): void {
+    this.pagamento.formaPagamento = this.pagamentoForm.value['formaPagamento'];
+    this.pagamento.valor = parseFloat(this.pagamentoForm.value['valor'].replace(',', '.'));
     if (this.pagamento.formaPagamento.toString() !== 'PENDURA') {
       this.pagar();
     } else {
@@ -69,26 +73,36 @@ export class PagamentoComponent implements OnInit {
           this.venda.pagamentos = [...this.venda.pagamentos, pagamento];
           this.pagamento = new Pagamento();
           this.toastrService.success('Recebido R$ ' + pagamento.valor);
-
+          this.pagamentoForm.reset();
         },
         err => this.toastrService.error(err.message, 'Erro'));
-      }
+  }
 
-      pendurar(cliente: Cliente) {
-        this.ngxSmartModalService.getModal('addClienteModal').close();
-        this.cliente = cliente;
-        this.pagamento.cliente = cliente;
-        const pendura = new Pendura();
-        pendura.cliente = cliente;
-        pendura.valor = this.pagamento.valor;
-        pendura.venda = this.venda;
-        this.pagamentoService.pendura(pendura)
-        .pipe(take(1))
-        .subscribe(penduraId => {
-          this.venda.pagamentos = [...this.venda.pagamentos, this.pagamento];
-          this.toastrService.success('Pendurado R$ ' + this.pagamento.valor);
-          this.pagamento = new Pagamento();
-    });
+  pendurar(cliente: Cliente) {
+    this.ngxSmartModalService.getModal('addClienteModal').close();
+    this.cliente = cliente;
+    this.pagamento.cliente = cliente;
+    const pendura = new Pendura();
+    pendura.cliente = cliente;
+    pendura.valor = this.pagamento.valor;
+    pendura.venda = this.venda;
+    this.pagamentoService.pendura(pendura)
+      .pipe(take(1))
+      .subscribe(penduraId => {
+        pendura.id = penduraId;
+        this.venda.pagamentos = [...this.venda.pagamentos, this.pagamento];
+        this.venda.penduras = [...this.venda.penduras, pendura];
+        this.toastrService.success('Pendurado R$ ' + this.pagamento.valor);
+        this.pagamento = new Pagamento();
+      });
+  }
+
+  encerrarPagamento(): void {
+    // TODO
+    // this.venda.quitada = true;
+    // this.vendaService.encerrarVenda(this.venda)
+    //   .subscribe(id => this.router.navigate(['']),
+    //     err => this.toastrService.error(err.message, 'Erro'));
   }
 
 }

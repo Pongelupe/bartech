@@ -4,15 +4,15 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="valuePayment">Valor do Pagamento *</label>
-          <input class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" [(ngModel)]="pagamento.valor"
-            mask="0*.00" formControlName="valor">
+          <input class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" mask="0*,00"
+            formControlName="valor" [dropSpecialCharacters]="false" prefix="R$ ">
           <app-vm-error [text]="'O valor deve ser maior que 0'" *ngIf="pagamentoForm.get('valor').errors"></app-vm-error>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="formasDePagamentos">Forma do Pagamento *</label>
-          <select class="form-control" [(ngModel)]="pagamento.formaPagamento" formControlName="formaPagamento">
+          <select class="form-control" formControlName="formaPagamento">
             <option value="DINHEIRO">Dinheiro</option>
             <option value="CARTAO">Cartão</option>
             <option value="PENDURA">Pendura</option>
@@ -22,6 +22,7 @@
       </div>
       <div class="col-md-3">
         <button type="button" [disabled]="pagamentoForm.invalid" class="btn btn-primary mt-4" (click)="adicionarPagamento()">Adicionar</button>
+        <button type="button" ([disabled])="venda.valorRestanteVenda > 0" class="btn btn-success mt-4" (click)="encerrarPagamento()">Encerrar</button>
       </div>
     </div>
   </form>
@@ -75,17 +76,8 @@
             </div>
 
             <div class="col-12">
-              <span>{{(venda.valorRestanteVenda < 0 ? 'Troco = ' : 'Valor a pagar = ') +
-                  venda.valorRestanteVenda}}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<ngx-smart-modal #addClienteModal identifier="addClienteModal" customClass="large-modal">
-  <app-bebum (closeModalBebum)="pendurar($event)" [cliente]="this.cliente"></app-bebum>
-</ngx-smart-modal>
+              <span>{{(venda.valorRestanteVenda < 0 ? 'Troco = ' : 'Valor a pagar = ' ) + venda.valorRestanteVenda }} </span>
+                  </div> </div> </div> </div> </div> </div> </div> <ngx-smart-modal #addClienteModal identifier="addClienteModal"
+                  customClass="large-modal">
+                  <app-bebum (closeModalBebum)="pendurar($event)" [cliente]="this.cliente"></app-bebum>
+                  </ngx-smart-modal>
