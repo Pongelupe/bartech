@@ -32,7 +32,7 @@
         </div>
       </div>
       <button type="button" class="btn btn-danger col-md-5 ml-0" (click)="cancelVenda()">Cancelar</button>
-      <button type="button" class="btn btn-primary pull-right col-md-5 mr-0" (click)="encerrarVenda()">Encerrar</button>
+      <button type="button" ([disabled])="venda.itensVenda" class="btn btn-primary pull-right col-md-5 mr-0" (click)="encerrarVenda()">Pagar</button>
     </div>
   </div>
 </div>
