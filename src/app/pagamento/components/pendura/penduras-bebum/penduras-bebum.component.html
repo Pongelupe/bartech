@@ -20,9 +20,9 @@
             <td>{{cliente.apelido}} - {{cliente.nome}}</td>
             <td class="text-center">{{cliente.cpf}}</td>
             <td class="text-center">{{cliente.telefone}}</td>
-            <td class="text-center">{{totalPenduras | currency : 'BRL'}}</td>
-            <td class="text-center">{{totalPagamentosEmPenduras | currency : 'BRL'}}</td>
-            <td class="text-center">{{saldoPendura | currency : 'BRL'}}</td>
+            <td class="text-center">{{cliente.totalPenduras | currency : 'BRL'}}</td>
+            <td class="text-center">{{cliente.totalPagamentosEmPenduras | currency : 'BRL'}}</td>
+            <td class="text-center">{{cliente.saldoPendura | currency : 'BRL'}}</td>
           </tr>
         </tbody>
       </table>

@@ -12,9 +12,6 @@ import { ArrayType } from '@angular/compiler';
 })
 export class PendurasBebumComponent implements OnInit {
   pendurados: Cliente[];
-  totalPenduras: number;
-  totalPagamentosEmPenduras: number;
-  saldoPendura: number;
 
   constructor(private pagamentoService: PagamentoService) { }
 
@@ -28,18 +25,10 @@ export class PendurasBebumComponent implements OnInit {
   }
 
   updateTotais() {
-    this.totalPenduras = 0;
-    this.totalPagamentosEmPenduras = 0;
-
-    this.pendurados.forEach(cliente => {
-      cliente = Object.assign(Cliente.prototype, cliente);
-      if (cliente.penduras !== undefined && cliente.penduras.length > 0) {
-        cliente.penduras.forEach(item => {
-          this.totalPenduras += item.valor;
-          this.totalPagamentosEmPenduras += item.valorPagto;
-        });
-      }
-      this.saldoPendura = this.totalPenduras - this.totalPagamentosEmPenduras;
-    });
+    const auxPendurados = new Array<Cliente>();
+    for (let i = 0; i < this.pendurados.length; i++) {
+      auxPendurados.push(new Cliente(this.pendurados[i].nome, this.pendurados[i].cpf, this.pendurados[i].apelido, this.pendurados[i].telefone, this.pendurados[i].penduras, this.pendurados[i].pagamentos));
+    }
+    this.pendurados = auxPendurados;
   }
 }
