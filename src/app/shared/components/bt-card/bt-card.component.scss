@@ -1,8 +1,16 @@
 .card {
-    height: 115px;
+    height: 139px;
 }
 
-.card:hover{
+.card:hover {
     background-color: #f4f4ff;
     cursor: pointer;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-text:last-child{
+    margin-bottom: 0px !important;
 }

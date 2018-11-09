@@ -15,7 +15,8 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
-          <app-bt-card [title]="produto.nome" [subtitle]="produto.preco" (click)="openModalItem(produto)"></app-bt-card>
+          <app-bt-card title="{{produto.codigo}} - {{produto.nome}}" [subtitle]="produto.preco" [text]="produto.quantidadeEstoque"
+            (click)="openModalItem(produto)"></app-bt-card>
         </div>
       </div>
     </div>
