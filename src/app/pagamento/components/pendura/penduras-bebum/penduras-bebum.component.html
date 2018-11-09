@@ -1,5 +1,14 @@
 <div class="col-12 mt-3">
-  <h4>Clientes pendurados</h4>
+  <h4> Clientes pendurados</h4>
+</div>
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="searchPendurado">Pesquisar pendurado</label>
+    <input type="text" class="form-control" id="searchPendurado" aria-describedby="searchPenduradoHelp" [(ngModel)]="termoPesquisaPendurado">
+    <small id="searchPenduradoHelp" class="form-text text-muted">Digite o nome, apelido, cpf ou telefone do pendurado</small>
+  </div>
+</div>
+<div class="col-12">
   <div class="card">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
@@ -15,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of pendurados; let i = index ">
+          <tr *ngFor="let cliente of pendurados$ | async | pendurado : [termoPesquisaPendurado]; let i = index ">
             <th scope="row">{{i+1}}</th>
             <td>{{cliente.apelido}} - {{cliente.nome}}</td>
             <td class="text-center">{{cliente.cpf}}</td>

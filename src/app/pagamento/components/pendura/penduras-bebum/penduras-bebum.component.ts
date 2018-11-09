@@ -11,15 +11,12 @@ import { ArrayType } from '@angular/compiler';
   styleUrls: ['./penduras-bebum.component.scss']
 })
 export class PendurasBebumComponent implements OnInit {
-  pendurados: Cliente[];
+  pendurados$: Observable<Cliente[]>;
+  termoPesquisaPendurado: string;
 
   constructor(private pagamentoService: PagamentoService) { }
 
   ngOnInit() {
-    this.pagamentoService.getClientesPendurados().subscribe(res => {
-      this.pendurados = res;
-    }, err => {
-      console.log('Erro : ' + err);
-    });
+    this.pendurados$ = this.pagamentoService.getClientesPendurados();
   }
 }
