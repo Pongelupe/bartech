@@ -3,7 +3,10 @@ type ClientePendurado {
     nome: String,
     apelido: String,
     cpf: String,
-    telefone: String
+    telefone: String,
+    totalPenduras: Float,
+    totalPgtosPenduras: Float,
+    saldoDevedorPendura: Float
 }
 
 extend type Query {

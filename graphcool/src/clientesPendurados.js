@@ -45,16 +45,31 @@ export default async event => {
      * Selecionando apenas os clientes pendurados.
      */
     response.data.allClientes.forEach(cliente => {
+        const totalPenduras = 0;
+        const totalPgtosPenduras = 0;
+        const saldoDevedorPendura = 0;
+        /**
+         * Soma totais de valores das penduras do cliente
+         */
         cliente.penduras.forEach(pendura => {
-            if (pendura.valor > pendura.valorPagto)
-                clientesPendurados.push({
-                    id: cliente.id,
-                    nome: cliente.nome,
-                    apelido: cliente.apelido,
-                    cpf: cliente.cpf,
-                    telefone: cliente.telefone
-                });
-        })
+            totalPenduras += pendura.valor;
+            totalPgtosPenduras += pendura.valorPagto;
+        });
+        saldoDevedorPendura = totalPenduras - totalPgtosPenduras;
+        /**
+         * Adiciona cliente na lista de pendurados caso ele não tenha quitado todo o valor pendurado 
+         */
+        if (saldoDevedorPendura > 0)
+            clientesPendurados.push({
+                id: cliente.id,
+                nome: cliente.nome,
+                apelido: cliente.apelido,
+                cpf: cliente.cpf,
+                telefone: cliente.telefone,
+                totalPenduras: totalPenduras,
+                totalPgtosPenduras: totalPgtosPenduras,
+                saldoDevedorPendura: saldoDevedorPendura
+            });
     });
 
     /**
