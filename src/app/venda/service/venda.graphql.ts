@@ -17,12 +17,13 @@ export interface CreateItemVendaMutation {
 
 export const ALL_PRODUTOS_QUERY = gql`
   query AllProdutosQuery {
-    allProdutoes {
+    allProdutoes (orderBy: codigo_ASC){
       id
       nome
       preco
       quantidadeEstoque
       codigoDeBarras
+      codigo
     }
   }
 `;
