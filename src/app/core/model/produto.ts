@@ -4,6 +4,6 @@ export class Produto {
     preco: number;
     quantidadeEstoque: number;
     codigoDeBarras: string;
-
+    codigo: string;
     constructor() {}
 }
