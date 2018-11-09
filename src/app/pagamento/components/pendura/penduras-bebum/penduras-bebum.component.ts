@@ -18,17 +18,8 @@ export class PendurasBebumComponent implements OnInit {
   ngOnInit() {
     this.pagamentoService.getClientesPendurados().subscribe(res => {
       this.pendurados = res;
-      this.updateTotais();
     }, err => {
       console.log('Erro : ' + err);
     });
-  }
-
-  updateTotais() {
-    const auxPendurados = new Array<Cliente>();
-    for (let i = 0; i < this.pendurados.length; i++) {
-      auxPendurados.push(new Cliente(this.pendurados[i].nome, this.pendurados[i].cpf, this.pendurados[i].apelido, this.pendurados[i].telefone, this.pendurados[i].penduras, this.pendurados[i].pagamentos));
-    }
-    this.pendurados = auxPendurados;
   }
 }

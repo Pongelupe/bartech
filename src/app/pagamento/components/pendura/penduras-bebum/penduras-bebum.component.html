@@ -1,17 +1,17 @@
 <div class="col-12 mt-3">
-  <h4>Clientes com penduras</h4>
+  <h4>Clientes pendurados</h4>
   <div class="card">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Cliente</th>
-            <th scope="col" class="text-center">CPF</th>
-            <th scope="col" class="text-center">Telefone</th>
-            <th scope="col" class="text-center">Total de Penduras</th>
-            <th scope="col" class="text-center">Total de Pagamentos em Penduras</th>
-            <th scope="col" class="text-center">Saldo</th>
+            <th scope="col" class="font-weight-bold">Cliente</th>
+            <th scope="col" class="text-center font-weight-bold">CPF</th>
+            <th scope="col" class="text-center font-weight-bold">Telefone</th>
+            <th scope="col" class="text-center font-weight-bold">Valor Total Pendurado</th>
+            <th scope="col" class="text-center font-weight-bold">Valor Total Pago</th>
+            <th scope="col" class="text-center font-weight-bold">Saldo Devedor</th>
           </tr>
         </thead>
         <tbody>
@@ -21,8 +21,8 @@
             <td class="text-center">{{cliente.cpf}}</td>
             <td class="text-center">{{cliente.telefone}}</td>
             <td class="text-center">{{cliente.totalPenduras | currency : 'BRL'}}</td>
-            <td class="text-center">{{cliente.totalPagamentosEmPenduras | currency : 'BRL'}}</td>
-            <td class="text-center">{{cliente.saldoPendura | currency : 'BRL'}}</td>
+            <td class="text-center">{{cliente.totalPgtosPenduras | currency : 'BRL'}}</td>
+            <td class="text-center text-danger font-weight-bold">{{cliente.saldoDevedorPendura | currency : 'BRL'}}</td>
           </tr>
         </tbody>
       </table>

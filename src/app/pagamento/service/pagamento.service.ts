@@ -69,7 +69,7 @@ export class PagamentoService {
       query: CLIENTES_PENDURADOS_QUERY
     })
       .pipe(
-        map(res => res.data.allClientes)
+        map(res => res.data.clientesPendurados)
       );
   }
 }
