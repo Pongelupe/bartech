@@ -9,6 +9,7 @@ type User @model {
 
 type Produto @model {
   id: ID! @isUnique
+  codigo: String! @isUnique
   nome: String!
   preco: Float!
   quantidadeEstoque: Int!
