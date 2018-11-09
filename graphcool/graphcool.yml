@@ -31,6 +31,11 @@ functions:
     type: resolver
     schema: src/isPenduraQuitada.graphql
 
+  clientesPendurados:
+    handler:
+      code: src/clientesPendurados.js
+    type: resolver
+    schema: src/clientesPendurados.graphql
 
 # Model/Relation permissions are used to limit the API access
 # To take the burden of thinking about those while development, we

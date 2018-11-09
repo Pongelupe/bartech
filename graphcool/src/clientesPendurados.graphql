@@ -1,0 +1,14 @@
+type ClientePendurado {
+    id: ID @isUnique,
+    nome: String,
+    apelido: String,
+    cpf: String,
+    telefone: String
+}
+
+extend type Query {
+  clientesPendurados: [ClientePendurado!]
+}
+
+
+   
