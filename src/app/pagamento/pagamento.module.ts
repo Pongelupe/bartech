@@ -4,12 +4,13 @@ import { PagamentoRoutingModule } from './pagamento-routing.module';
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { BebumComponent } from './components/pendura/bebum/bebum.component';
 import { PendurasBebumComponent } from './components/pendura/penduras-bebum/penduras-bebum.component';
+import { PenduradoPipe } from './pipes/pendurado.pipe';
 
 @NgModule({
   imports: [
     SharedModule,
     PagamentoRoutingModule
   ],
-  declarations: [PagamentoComponent, BebumComponent, PendurasBebumComponent]
+  declarations: [PagamentoComponent, BebumComponent, PendurasBebumComponent, PenduradoPipe]
 })
 export class PagamentoModule { }
