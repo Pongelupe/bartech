@@ -1,0 +1,9 @@
+type PenduraQuitadaPayload {
+  quitada: Boolean!,
+  valor: Float!, 
+  valorPagto: Float!
+}
+
+extend type Query {
+  isPenduraQuitada(valor: Float!, valorPagto: Float!): PenduraQuitadaPayload
+}
