@@ -26,7 +26,7 @@
             <th scope="col" class="font-weight-bold">Nome</th>
             <th scope="col" class="font-weight-bold">Apelido</th>
             <th scope="col" class="text-center font-weight-bold">CPF</th>
-            <th scope="col" class="text-center font-weight-bold">Telefone</th>
+            <th scope="col" class="text-center font-weight-bold">Celular</th>
           </tr>
         </thead>
         <tbody>
@@ -34,8 +34,8 @@
             <th scope="row">{{i+1}}</th>
             <td>{{cliente.nome}}</td>
             <td>{{cliente.apelido}}</td>
-            <td class="text-center">{{cliente.cpf}}</td>
-            <td class="text-center">{{cliente.telefone}}</td>
+            <td class="text-center">{{cliente.cpf | mask: '000.000.000-00'}}</td>
+            <td class="text-center">{{cliente.telefone | mask: '(00) 00000-0000'}}</td>
           </tr>
         </tbody>
       </table>

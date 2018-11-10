@@ -17,7 +17,7 @@
             <th scope="col">#</th>
             <th scope="col" class="font-weight-bold">Cliente</th>
             <th scope="col" class="text-center font-weight-bold">CPF</th>
-            <th scope="col" class="text-center font-weight-bold">Telefone</th>
+            <th scope="col" class="text-center font-weight-bold">Celular</th>
             <th scope="col" class="text-center font-weight-bold">Valor Total Pendurado</th>
             <th scope="col" class="text-center font-weight-bold">Valor Total Pago</th>
             <th scope="col" class="text-center font-weight-bold">Saldo Devedor</th>
@@ -27,8 +27,8 @@
           <tr *ngFor="let cliente of pendurados$ | async | pendurado : [termoPesquisaPendurado]; let i = index ">
             <th scope="row">{{i+1}}</th>
             <td>{{cliente.apelido}} - {{cliente.nome}}</td>
-            <td class="text-center">{{cliente.cpf}}</td>
-            <td class="text-center">{{cliente.telefone}}</td>
+            <td class="text-center">{{cliente.cpf | mask: '000.000.000-00'}}</td>
+            <td class="text-center">{{cliente.telefone | mask: '(00) 00000-0000'}}</td>
             <td class="text-center">{{cliente.totalPenduras | currency : 'BRL'}}</td>
             <td class="text-center">{{cliente.totalPgtosPenduras | currency : 'BRL'}}</td>
             <td class="text-center text-danger font-weight-bold">{{cliente.saldoDevedorPendura | currency : 'BRL'}}</td>
