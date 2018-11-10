@@ -1,11 +1,19 @@
 <div class="col-12 mt-3">
   <h4> Clientes cadastrados</h4>
 </div>
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="searchCliente">Pesquisar cliente</label>
-    <input type="text" class="form-control" id="searchCliente" aria-describedby="searchClienteHelp" [(ngModel)]="termoPesquisaCliente">
-    <small id="searchClienteHelp" class="form-text text-muted">Digite o nome ou código do cliente</small>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="searchCliente">Pesquisar cliente</label>
+        <input type="text" class="form-control" id="searchCliente" aria-describedby="searchClienteHelp" [(ngModel)]="termoPesquisaCliente">
+        <small id="searchClienteHelp" class="form-text text-muted">Digite o nome ou código do cliente</small>
+      </div>
+    </div>
+    <div class="offset-md-3 col-md-3 text-right">
+      <button type="button" class="btn btn-primary mt-4 mr-0" (click)="openModalCliente()">
+        <i class="fa fa-plus"></i> Cadastrar cliente</button>
+    </div>
   </div>
 </div>
 <div class="col-12">
@@ -22,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of clientes$ | async | pendurado : [termoPesquisaCliente]; let i = index ">
+          <tr *ngFor="let cliente of clientes | pendurado : [termoPesquisaCliente]; let i = index ">
             <th scope="row">{{i+1}}</th>
             <td>{{cliente.nome}}</td>
             <td>{{cliente.apelido}}</td>
@@ -34,3 +42,12 @@
     </div>
   </div>
 </div>
+
+<ngx-smart-modal #clienteModal identifier="clienteModal" customClass="medium-modal">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="modal-title">Cadastrar cliente</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    <app-bebum (closeModalBebum)="cadastrarCliente($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente" operacaoDesejada="Criacao"></app-bebum>
+  </div>
+</ngx-smart-modal>
