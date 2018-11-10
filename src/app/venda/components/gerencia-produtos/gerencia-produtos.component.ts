@@ -11,6 +11,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 })
 export class GerenciaProdutosComponent implements OnInit {
   produtos$: Observable<Produto[]>;
+  produto: Produto;
   termoPesquisaProduto: string;
 
   constructor(private vendaService: VendaService, private ngxSmartModalService: NgxSmartModalService) { }
@@ -20,7 +21,7 @@ export class GerenciaProdutosComponent implements OnInit {
   }
 
   openModalProduto(): void {
-    this.Produto = new Produto();
+    this.produto = new Produto();
     this.ngxSmartModalService.getModal('produtoModal').open();
   }
 
