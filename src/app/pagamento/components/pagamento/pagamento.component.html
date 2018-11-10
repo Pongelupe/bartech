@@ -4,8 +4,8 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="valuePayment">Valor do Pagamento *</label>
-          <input class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" mask="0*,00"
-            formControlName="valor" [dropSpecialCharacters]="false" prefix="R$ ">
+          <input class="form-control" id="valuePayment" aria-describedby="valuePaymentHelp" placeholder="0" mask="0*,00" formControlName="valor"
+            [dropSpecialCharacters]="false" prefix="R$ ">
           <app-vm-error [text]="'O valor deve ser maior que 0'" *ngIf="pagamentoForm.get('valor').errors"></app-vm-error>
         </div>
       </div>
@@ -76,8 +76,21 @@
             </div>
 
             <div class="col-12">
-              <span>{{(venda.valorRestanteVenda < 0 ? 'Troco = ' : 'Valor a pagar = ' ) + venda.valorRestanteVenda }} </span>
-                  </div> </div> </div> </div> </div> </div> </div> <ngx-smart-modal #addClienteModal identifier="addClienteModal"
-                  customClass="large-modal">
-                  <app-bebum (closeModalBebum)="pendurar($event)" [cliente]="this.cliente"></app-bebum>
-                  </ngx-smart-modal>
+              <span>{{(venda.valorRestanteVenda
+                < 0 ? 'Troco = ' : 'Valor a pagar = ' ) + venda.valorRestanteVenda }} </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-smart-modal #addClienteModal identifier="addClienteModal" customClass="medium-modal">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="modal-title">Selecionar bêbum</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    <app-bebum (closeModalBebum)="pendurar($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente"></app-bebum>
+  </div>
+</ngx-smart-modal>

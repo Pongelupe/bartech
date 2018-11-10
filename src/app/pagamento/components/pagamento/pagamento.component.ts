@@ -79,7 +79,7 @@ export class PagamentoComponent implements OnInit {
   }
 
   pendurar(cliente: Cliente) {
-    this.ngxSmartModalService.getModal('addClienteModal').close();
+    this.fecharModal();
     this.cliente = cliente;
     this.pagamento.cliente = cliente;
     const pendura = new Pendura();
@@ -103,6 +103,10 @@ export class PagamentoComponent implements OnInit {
     // this.vendaService.encerrarVenda(this.venda)
     //   .subscribe(id => this.router.navigate(['']),
     //     err => this.toastrService.error(err.message, 'Erro'));
+  }
+
+  fecharModal(): void {
+    this.ngxSmartModalService.getModal('addClienteModal').close();
   }
 
 }
