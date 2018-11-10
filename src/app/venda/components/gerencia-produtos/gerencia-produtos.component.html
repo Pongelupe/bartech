@@ -1,11 +1,19 @@
 <div class="col-12 mt-3">
   <h4> Produtos cadastrados</h4>
 </div>
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="searchProduto">Pesquisar produto</label>
-    <input type="text" class="form-control" id="searchProduto" aria-describedby="searchProdutoHelp" [(ngModel)]="termoPesquisaProduto">
-    <small id="searchProdutoHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="searchProduto">Pesquisar produto</label>
+        <input type="text" class="form-control" id="searchProduto" aria-describedby="searchProdutoHelp" [(ngModel)]="termoPesquisaProduto">
+        <small id="searchProdutoHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
+      </div>
+    </div>
+    <div class="offset-md-3 col-md-3 text-right">
+      <button type="button" class="btn btn-primary mt-4 mr-0" (click)="openModalProduto()">
+        <i class="fa fa-plus"></i> Cadastrar produto</button>
+    </div>
   </div>
 </div>
 <div class="col-12">
@@ -34,3 +42,12 @@
     </div>
   </div>
 </div>
+
+<ngx-smart-modal #produtoModal identifier="produtoModal" customClass="medium-modal">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="modal-title">Cadastrar produto</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    Corpo modal
+  </div>
+</ngx-smart-modal>
