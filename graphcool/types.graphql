@@ -53,10 +53,10 @@ type Pendura @model {
 type Cliente @model {
   id: ID! @isUnique
   nome: String!
-  apelido: String!
-  cpf: String!
+  apelido: String
+  cpf: String! @isUnique
   createdAt: DateTime!
-  telefone: String!
+  telefone: String
   penduras: [Pendura!]! @relation(name: "PendurasOnCliente")
   pagamentos: [Pagamento!]! @relation(name: "PagamentosOnCliente") @defaultValue(value: [])
 }
