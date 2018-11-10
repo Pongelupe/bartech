@@ -16,6 +16,7 @@ export class BebumComponent implements OnInit {
   bebumForm: FormGroup;
   @Input() cliente: Cliente;
   @Output() closeModalBebum = new EventEmitter();
+  @Output() cancelarOperacao = new EventEmitter();
   @Input() hideButtonSearch: false;
 
   constructor(private formBuilder: FormBuilder, private clienteService: ClienteService, private toastrService: ToastrService) { }
@@ -94,6 +95,10 @@ export class BebumComponent implements OnInit {
 
   close(): void {
     this.closeModalBebum.emit(this.cliente);
+  }
+
+  cancelar(): void {
+    this.cancelarOperacao.emit();
   }
 
 }
