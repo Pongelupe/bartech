@@ -1,9 +1,9 @@
 export class Produto {
     id: string;
-    nome: string;
-    preco: number;
-    quantidadeEstoque: number;
-    codigoDeBarras: string;
-    codigo: string;
-    constructor() {}
+    nome = '';
+    preco = 0;
+    quantidadeEstoque = 0;
+    codigoDeBarras = '';
+    codigo = 0;
+    constructor() { }
 }
