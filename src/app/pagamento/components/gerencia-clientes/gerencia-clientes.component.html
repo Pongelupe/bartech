@@ -1,3 +1,36 @@
-<p>
-  gerencia-clientes works!
-</p>
+<div class="col-12 mt-3">
+  <h4> Clientes cadastrados</h4>
+</div>
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="searchCliente">Pesquisar cliente</label>
+    <input type="text" class="form-control" id="searchCliente" aria-describedby="searchClienteHelp" [(ngModel)]="termoPesquisaCliente">
+    <small id="searchClienteHelp" class="form-text text-muted">Digite o nome ou código do cliente</small>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="font-weight-bold">Nome</th>
+            <th scope="col" class="font-weight-bold">Apelido</th>
+            <th scope="col" class="text-center font-weight-bold">CPF</th>
+            <th scope="col" class="text-center font-weight-bold">Telefone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes$ | async | pendurado : [termoPesquisaCliente]; let i = index ">
+            <th scope="row">{{i+1}}</th>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.apelido}}</td>
+            <td class="text-center">{{cliente.cpf}}</td>
+            <td class="text-center">{{cliente.telefone}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
