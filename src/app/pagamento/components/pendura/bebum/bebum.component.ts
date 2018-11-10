@@ -18,6 +18,7 @@ export class BebumComponent implements OnInit {
   @Output() closeModalBebum = new EventEmitter();
   @Output() cancelarOperacao = new EventEmitter();
   @Input() hideButtonSearch: false;
+  @Input() operacaoDesejada: OperacoesBebum;
 
   constructor(private formBuilder: FormBuilder, private clienteService: ClienteService, private toastrService: ToastrService) { }
 
@@ -36,15 +37,24 @@ export class BebumComponent implements OnInit {
 
   private isClienteNotNull(): boolean { return this.cliente !== null && this.cliente !== undefined; }
 
-  selecionarCliente(): void {
+  private selecionarCliente(): void {
     this.cliente = this.bebumForm.value;
     this.getBebumByCpf(this.cliente.cpf)
       .subscribe(cliente => {
         if (cliente) {
-          this.cliente = cliente;
-          this.close();
+          if (this.operacaoDesejada !== OperacoesBebum.Criacao) {
+            this.cliente = cliente;
+            this.close();
+          } else {
+            this.toastrService.error('O cliente já está cadastrado!');
+          }
+
         } else {
-          this.createCliente();
+          if (this.operacaoDesejada !== OperacoesBebum.Edicao) {
+            this.createCliente();
+          } else {
+            this.toastrService.error('O cliente não está cadastrado!');
+          }
         }
       });
   }
@@ -93,12 +103,25 @@ export class BebumComponent implements OnInit {
     });
   }
 
-  close(): void {
+  private cleanFormData(): void {
+    this.cliente = new Cliente();
+    this.setFormDataWithBebum();
+  }
+
+  private close(): void {
     this.closeModalBebum.emit(this.cliente);
+    this.cleanFormData();
   }
 
-  cancelar(): void {
+  private cancelar(): void {
     this.cancelarOperacao.emit();
+    this.cleanFormData();
   }
 
+}
+
+enum OperacoesBebum {
+  Criacao = 'Criacao',
+  Edicao = 'Edicao',
+  Pendura = 'Pendura'
 }

@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="col-md-12 p-0 pt-3 footer">
-    <div class="tool-tip" data-toggle="tooltip" data-placement="bottom" title="A busca de bebum é pelo CPF do indivíduo" [hidden]="hideButtonSearch">
+    <div class="tool-tip" data-toggle="tooltip" data-placement="bottom" title="A busca de bebum é pelo CPF do indivíduo" [hidden]="operacaoDesejada !== 'Pendura'">
       <button type="button" [disabled]="bebumForm.get('cpf').errors" (click)="retriveBebum(bebumForm.get('cpf').value)" class="btn btn-success col-12 m-0">
         Buscar
       </button>
