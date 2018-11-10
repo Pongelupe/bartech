@@ -12,7 +12,7 @@ export class ProdutoPipe implements PipeTransform {
       return produtos;
     }
     return produtos.filter(produto => produto.nome.toLowerCase().indexOf(arg[0].toLowerCase()) !== -1
-      || produto.id.toString().toLowerCase().indexOf(arg[0].toLowerCase()) !== -1
+      || produto.codigo.toString().toLowerCase().indexOf(arg[0].toLowerCase()) !== -1
       || produto.codigoDeBarras.toString().toLowerCase().indexOf(arg[0].toLowerCase()) !== -1);
   }
 }
