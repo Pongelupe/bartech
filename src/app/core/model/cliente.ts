@@ -3,11 +3,11 @@ import { Pagamento } from './pagamento';
 
 export class Cliente {
     id: string;
-    nome: string;
-    apelido: string;
-    cpf: string;
+    nome = '';
+    apelido = '';
+    cpf = '';
     createdAt: Date;
-    telefone: string;
+    telefone = '';
     penduras = new Array<Pendura>();
     pagamentos = new Array<Pagamento>();
     totalPenduras: number;
