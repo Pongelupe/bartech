@@ -20,12 +20,14 @@ export const CREATE_CLIENTE_MUTATION = gql`
 `;
 
 export const ALL_CLIENTES_QUERY = gql`
-  query allClientes {
-    id,
-    nome,
-    apelido,
-    telefone,
-    cpf
+  query AllClientesQuery {
+      allClientes {
+        id,
+        nome,
+        apelido,
+        telefone,
+        cpf
+    }
   }
 `;
 
