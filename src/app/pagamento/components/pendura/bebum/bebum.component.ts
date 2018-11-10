@@ -16,15 +16,16 @@ export class BebumComponent implements OnInit {
   bebumForm: FormGroup;
   @Input() cliente: Cliente;
   @Output() closeModalBebum = new EventEmitter();
+  @Input() hideButtonSearch: false;
 
   constructor(private formBuilder: FormBuilder, private clienteService: ClienteService, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.bebumForm = this.formBuilder.group({
       nome: ['', [Validators.minLength(3), Validators.maxLength(50), Validators.required]],
-      apelido: ['', [Validators.minLength(3), Validators.maxLength(50), Validators.required]],
-      cpf: ['', [Validators.minLength(11), Validators.required]],
-      telefone: ['', [Validators.required, Validators.minLength(10)]],
+      apelido: ['', [Validators.minLength(2), Validators.maxLength(50)]],
+      cpf: ['', [Validators.minLength(11), Validators.maxLength(11), Validators.required]],
+      telefone: ['', [Validators.minLength(11), Validators.maxLength(11)]],
     });
 
     if (this.isClienteNotNull()) {
@@ -53,7 +54,7 @@ export class BebumComponent implements OnInit {
       .subscribe(id => {
         this.cliente.id = id;
         this.setFormDataWithBebum();
-        this.toastrService.success('Bebum cadastrado!');
+        this.toastrService.success('Cliente cadastrado com sucesso.');
         this.close();
       }, err => {
         if (err.graphQLErrors.filter(e => e.code === 3010)) {
