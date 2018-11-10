@@ -1,3 +1,36 @@
-<p>
-  gerencia-produtos works!
-</p>
+<div class="col-12 mt-3">
+  <h4> Produtos cadastrados</h4>
+</div>
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="searchProduto">Pesquisar produto</label>
+    <input type="text" class="form-control" id="searchProduto" aria-describedby="searchProdutoHelp" [(ngModel)]="termoPesquisaProduto">
+    <small id="searchProdutoHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="font-weight-bold">Código</th>
+            <th scope="col" class="font-weight-bold">Nome</th>
+            <th scope="col" class="text-center font-weight-bold">Qtde em Estoque</th>
+            <th scope="col" class="text-center font-weight-bold">Código de Barras</th>
+            <th scope="col" class="text-center font-weight-bold">Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]; let i = index ">
+            <td>{{produto.codigo}}</td>
+            <td>{{produto.nome}}</td>
+            <td class="text-center">{{produto.quantidadeEstoque}}</td>
+            <td class="text-center">{{produto.codigoDeBarras}}</td>
+            <td class="text-center">{{produto.preco | currency : 'BRL'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
