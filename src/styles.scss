@@ -8,3 +8,9 @@ body{
 .navbar > .container, .navbar > .container-fluid{
     margin: 0px;
 }
+
+.line-modal-footer {
+    border-top: 1px solid #e9ecef;
+    border-bottom-left-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+}

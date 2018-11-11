@@ -31,7 +31,7 @@
       <app-vm-error [text]="'O campo Celular deve conter no mínimo 10 números'" *ngIf="bebumForm.get('telefone').hasError('minlength')"></app-vm-error>
     </div>
   </div>
-  <div class="col-md-12 p-0 pt-3 footer">
+  <div class="col-md-12 p-0 pt-3 line-modal-footer">
     <div class="tool-tip" data-toggle="tooltip" data-placement="bottom" title="A busca de bebum é pelo CPF do indivíduo" [hidden]="operacaoDesejada !== 'Pendura'">
       <button type="button" [disabled]="bebumForm.get('cpf').errors" (click)="retriveBebum(bebumForm.get('cpf').value)" class="btn btn-success col-12 m-0">
         Buscar
