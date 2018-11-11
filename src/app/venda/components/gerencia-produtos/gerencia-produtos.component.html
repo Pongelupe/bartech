@@ -43,11 +43,11 @@
   </div>
 </div>
 
-<ngx-smart-modal #produtoModal identifier="produtoModal" customClass="medium-modal">
+<ngx-smart-modal #produtoModal identifier="produtoModal">
   <div class="modal-header pt-0 pl-0 pr-0">
     <h5 class="modal-title">Cadastrar produto</h5>
   </div>
   <div class="modal-body pl-0 pr-0">
-    Corpo modal
+    <app-produto [produto]="produto" (cancelOperation)="fecharModal()"></app-produto>
   </div>
 </ngx-smart-modal>
