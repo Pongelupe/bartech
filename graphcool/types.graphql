@@ -12,7 +12,8 @@ type Produto @model {
   codigo: Int! @isUnique
   nome: String!
   preco: Float!
-  quantidadeEstoque: Int!
+  quantidadeEstoque: Int
+  temControleEstoque: Boolean! @defaultValue(value: "true")
   codigoDeBarras: String
   itens: [ItemVenda!]! @relation(name: "ProdutosOnItemVenda") @defaultValue(value: [])
 }

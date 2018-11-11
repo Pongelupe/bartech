@@ -24,18 +24,20 @@
           <tr>
             <th scope="col" class="font-weight-bold">Código</th>
             <th scope="col" class="font-weight-bold">Nome</th>
-            <th scope="col" class="text-center font-weight-bold">Qtde em Estoque</th>
-            <th scope="col" class="text-center font-weight-bold">Código de Barras</th>
             <th scope="col" class="text-center font-weight-bold">Preço</th>
+            <th scope="col" class="text-center font-weight-bold">Tem Controle de Estoque</th>
+            <th scope="col" class="text-center font-weight-bold">EAN</th>
+            <th scope="col" class="text-center font-weight-bold">Qtde em Estoque</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index ">
             <td>{{produto.codigo}}</td>
             <td>{{produto.nome}}</td>
-            <td class="text-center">{{produto.quantidadeEstoque}}</td>
-            <td class="text-center">{{produto.codigoDeBarras}}</td>
             <td class="text-center">{{produto.preco | currency : 'BRL'}}</td>
+            <td class="text-center">{{produto.temControleEstoque ? 'Sim' : 'Não'}}</td>
+            <td class="text-center">{{produto.codigoDeBarras}}</td>
+            <td class="text-center">{{produto.quantidadeEstoque}}</td>
           </tr>
         </tbody>
       </table>

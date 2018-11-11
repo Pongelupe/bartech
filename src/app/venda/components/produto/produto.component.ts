@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { INPUT_VALUE_DEFINITION } from 'graphql/language/kinds';
 import { Operacao } from '../../../core/enum/operacoes.enum';
 import { ToastrService } from 'ngx-toastr';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-produto',
@@ -19,7 +20,7 @@ export class ProdutoComponent implements OnInit {
   @Output() produtoChange = new EventEmitter();
   @Output() cancelOperation = new EventEmitter();
   @Input() operacaoDesejada: Operacao;
-  customPatternProductName = {'0': { pattern: new RegExp('[A-z0-9 ]')}};
+  customPatternProductName = { '0': { pattern: new RegExp('[A-z0-9 ]') } };
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, private toastrService: ToastrService) { }
 
@@ -29,9 +30,11 @@ export class ProdutoComponent implements OnInit {
       codigo: ['', [Validators.minLength(1), Validators.required]],
       codigoDeBarras: ['', [Validators.minLength(8), Validators.maxLength(13)]],
       preco: ['', [Validators.min(0), Validators.required]],
-      quantidadeEstoque: ['', [Validators.min(0), Validators.required]]
+      quantidadeEstoque: ['', [Validators.min(0)]],
+      temControleEstoque: ['', [Validators.required]]
     });
 
+    this.cleanFormData();
     if (this.isProductNotNull()) {
       this.setFormDataWithProduct();
     }
@@ -45,16 +48,20 @@ export class ProdutoComponent implements OnInit {
       codigo: this.produto.codigo,
       codigoDeBarras: this.produto.codigoDeBarras,
       preco: this.produto.preco,
-      quantidadeEstoque: this.produto.quantidadeEstoque
+      quantidadeEstoque: this.produto.quantidadeEstoque,
+      temControleEstoque: this.produto.temControleEstoque
     });
   }
 
   private cleanFormData(): void {
-    this.produto = new Produto();
-    this.produto.codigo = null;
-    this.produto.preco = null;
-    this.produto.quantidadeEstoque = null;
-    this.setFormDataWithProduct();
+    this.produtoForm.setValue({
+      nome: null,
+      codigo: null,
+      codigoDeBarras: null,
+      preco: null,
+      quantidadeEstoque: null,
+      temControleEstoque: true
+    });
   }
 
   private cancel(): void {
@@ -80,14 +87,16 @@ export class ProdutoComponent implements OnInit {
         this.setFormDataWithProduct();
         this.toastrService.success('Produto cadastrado com sucesso.');
         this.emitProdutoChange();
-      }, err => this.toastrService.error('O produto já está cadastrado!'));
+      }, err => this.toastrService.error(err.message));
   }
 
   private confirm(): void {
     this.produto = this.produtoForm.value;
-    this.produto.preco = parseFloat(this.produtoForm.value['preco'].replace(',', '.'));
-    this.produto.quantidadeEstoque = parseInt(this.produtoForm.value['quantidadeEstoque'], 10);
+    this.produto.preco = parseFloat(this.produtoForm.value['preco'].toString().replace(',', '.'));
     this.produto.codigo = parseInt(this.produtoForm.value['codigo'], 10);
+    this.produto.quantidadeEstoque = Utils.isNullUndefinedOrEmpty(this.produto.quantidadeEstoque) ? null :
+      parseInt(this.produtoForm.value['quantidadeEstoque'], 10);
+
     this.getProdutoByCodigo(this.produto.codigo)
       .subscribe(produto => {
         if (produto) {

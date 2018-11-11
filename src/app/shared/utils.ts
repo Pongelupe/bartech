@@ -21,5 +21,7 @@ export class Utils {
         }
 
     };
+
+    public static isNullUndefinedOrEmpty(text: any): boolean { return text === null || text === undefined || text === ''; }
 }
 

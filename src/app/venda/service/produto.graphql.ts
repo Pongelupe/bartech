@@ -6,13 +6,15 @@ export interface AllProdutosQuery {
 }
 
 export const CREATE_PRODUTO_MUTATION = gql`
-  mutation createProduto($nome: String!, $codigo: Int!, $codigoDeBarras: String, $preco: Float!, $quantidadeEstoque: Int! ) {
+  mutation createProduto($nome: String!, $codigo: Int!, $codigoDeBarras: String, $preco: Float!,
+  $temControleEstoque: Boolean, $quantidadeEstoque: Int ) {
     createProduto(
       nome: $nome,
       codigo: $codigo,
       codigoDeBarras: $codigoDeBarras,
       preco: $preco,
-      quantidadeEstoque: $quantidadeEstoque
+      quantidadeEstoque: $quantidadeEstoque,
+      temControleEstoque: $temControleEstoque
     ){
       id
     }
@@ -26,8 +28,9 @@ export const PRODUTO_BY_CODIGO_QUERY = gql`
       nome
       codigo
       codigoDeBarras
-      preco,
+      preco
       quantidadeEstoque
+      temControleEstoque
     }
   }
 `;

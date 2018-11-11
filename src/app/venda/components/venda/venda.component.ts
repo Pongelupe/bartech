@@ -25,6 +25,7 @@ export class VendaComponent implements OnInit {
   produto: Produto = new Produto();
   totalVenda = 0;
   addForm: FormGroup;
+  quantidade = 1;
   mostrarProdutosCadastrados = true;
   mostrarItens = true;
 
@@ -70,7 +71,7 @@ export class VendaComponent implements OnInit {
   }
 
   addItemVenda(): void {
-    this.vendaService.adicionarItemVenda(this.addForm.value.quantidade, this.produto.id, this.venda.id, this.produto.quantidadeEstoque)
+    this.vendaService.adicionarItemVenda(this.quantidade, this.produto.id, this.venda.id, this.produto.quantidadeEstoque)
       .pipe(take(1))
       .subscribe(
         item => {
@@ -103,9 +104,9 @@ export class VendaComponent implements OnInit {
     this.vendaService.cancelVenda(this.venda)
       .pipe(take(1))
       .subscribe(id => {
-          this.toastrService.success('Venda cancelada.');
-          this.router.navigate(['']);
-        },
+        this.toastrService.success('Venda cancelada.');
+        this.router.navigate(['']);
+      },
         err => {
           this.toastrService.error(err.message, 'Erro');
         });

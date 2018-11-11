@@ -2,34 +2,23 @@
   <!--Campo para informar nome do produto-->
   <div class="form-group">
     <label>Nome*</label>
-    <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml" [patterns]="customPatternProductName" mask="0*">
+    <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml" [patterns]="customPatternProductName"
+      mask="0*" [dropSpecialCharacters]="false">
     <app-vm-error [text]="'O campo Nome é obrigatório'" *ngIf="produtoForm.get('nome').hasError('required')"></app-vm-error>
     <app-vm-error [text]="'O campo Nome deve conter no mínimo 3 caracteres'" *ngIf="produtoForm.get('nome').hasError('minlength')"></app-vm-error>
     <app-vm-error [text]="'O campo Nome deve conter no maxímo 50 caracteres'" *ngIf="produtoForm.get('nome').hasError('maxlength')"></app-vm-error>
   </div>
-  <!--Campos para informar os códigos-->
+  <!--Campos para informar código e preço do produto-->
   <div class="row">
     <!--Campo para informar código interno-->
     <div class="col-md-6">
       <div class="form-group">
         <label>Código*</label>
-        <input class="form-control" formControlName="codigo" type="text"  mask="0?000000000000" placeholder="1">
+        <input class="form-control" formControlName="codigo" type="text" mask="0?000000000000" placeholder="1">
         <app-vm-error [text]="'O campo Código é obrigatório'" *ngIf="produtoForm.get('codigo').hasError('required')"></app-vm-error>
         <app-vm-error [text]="'O campo Código deve conter no mínimo 1 caractere'" *ngIf="produtoForm.get('codigo').hasError('minlength')"></app-vm-error>
       </div>
     </div>
-    <!--Campo para informar código de barras-->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>EAN</label>
-        <input class="form-control" formControlName="codigoDeBarras" type="text" mask="00000000?00000" placeholder="7891149200504">
-        <app-vm-error [text]="'O campo EAN deve conter no mínimo 8 caracteres'" *ngIf="produtoForm.get('codigoDeBarras').hasError('minlength')"></app-vm-error>
-        <app-vm-error [text]="'O campo EAN deve conter no máximo 13 caracteres'" *ngIf="produtoForm.get('codigoDeBarras').hasError('maxlength')"></app-vm-error>
-      </div>
-    </div>
-  </div>
-  <!--Campos para informar o preço e quantidade em estoque do produto-->
-  <div class="row">
     <!--Campo para informar o preço do produto-->
     <div class="col-md-6">
       <div class="form-group">
@@ -39,12 +28,27 @@
         <app-vm-error [text]="'O campo Preço deve ser no mínimo R$ 0,00'" *ngIf="produtoForm.get('preco').hasError('min')"></app-vm-error>
       </div>
     </div>
+  </div>
+  <!--Campos para informar dados de estoque-->
+  <div class="custom-control custom-checkbox form-group">
+    <input type="checkbox" class="custom-control-input" formControlName="temControleEstoque" id="checkTemControleEstoque">
+    <label class="custom-control-label" for="checkTemControleEstoque">Este produto deve ter controle de estoque</label>
+  </div>
+  <div class="row">
+    <!--Campo para informar código de barras-->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>EAN</label>
+        <input class="form-control" formControlName="codigoDeBarras" type="text" mask="00000000?00000" placeholder="7891149200504">
+        <app-vm-error [text]="'O campo EAN deve conter no mínimo 8 caracteres'" *ngIf="produtoForm.get('codigoDeBarras').hasError('minlength')"></app-vm-error>
+        <app-vm-error [text]="'O campo EAN deve conter no máximo 13 caracteres'" *ngIf="produtoForm.get('codigoDeBarras').hasError('maxlength')"></app-vm-error>
+      </div>
+    </div>
     <!--Campo para informar a quantidade em estoque do produto-->
     <div class="col-md-6">
       <div class="form-group">
-        <label>Qtde em Estoque*</label>
+        <label>Qtde em Estoque</label>
         <input class="form-control" formControlName="quantidadeEstoque" type="text" placeholder="0" mask="0?000000000">
-        <app-vm-error [text]="'O campo Qtde em Estoque é obrigatório'" *ngIf="produtoForm.get('quantidadeEstoque').hasError('required')"></app-vm-error>
         <app-vm-error [text]="'O campo Qtde em Estoque deve ser no mínimo 0'" *ngIf="produtoForm.get('quantidadeEstoque').hasError('min')"></app-vm-error>
       </div>
     </div>

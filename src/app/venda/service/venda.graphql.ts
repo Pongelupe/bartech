@@ -21,6 +21,7 @@ export const ALL_PRODUTOS_QUERY = gql`
       id
       nome
       preco
+      temControleEstoque
       quantidadeEstoque
       codigoDeBarras
       codigo

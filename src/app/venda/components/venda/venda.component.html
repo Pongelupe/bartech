@@ -39,20 +39,26 @@
 </div>
 
 <ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
-  <h3 class="text-center">{{produto.nome}}</h3>
-  <p>{{produto.nome}} possui {{produto.quantidadeEstoque}} itens tem estoque</p>
-  <form [formGroup]="addForm" (submit)="addItemVenda()">
-    <div class="form-group mt-1">
-      <label>Quantidade</label>
-      <input type="number" class="form-control" formControlName="quantidade" min="0" value="1" [max]="produto.quantidadeEstoque">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="text-center">Adicionar {{produto.nome}} à venda</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    <div *ngIf="produto.temControleEstoque">
+      <span>Este produto possui </span>
+      <span class="font-weight-bold" ngClass="{{produto.quantidadeEstoque > 10 ? 'text-success' : 'text-danger'}}">
+        {{produto.quantidadeEstoque || 0}} itens em estoque.</span>
     </div>
-    <span>
-      <small class="text-danger d-block mt-2" *ngIf="addForm.get('quantidade').errors">A quantidade não pode ser {{addForm.get('quantidade').value}}
-      </small>
-    </span>
-    <div class="text-right">
-      <button type="button" (click)="addModal.close()" class="btn btn-danger col-md-5 ml-0">Cancelar</button>
-      <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary col-md-5 ml-0 mr-0">Adicionar</button>
-    </div>
-  </form>
+    <span *ngIf="!produto.temControleEstoque">Este produto não possui controle de estoque. </span>
+    <form [formGroup]="addForm">
+      <div class="form-group mt-1">
+        <label>Quantidade</label>
+        <input type="text" class="form-control" formControlName="quantidade" [(ngModel)]="quantidade" mask="0?000000000" />
+        <app-vm-error text="O campo Quantidade deve ser maior que 0" *ngIf="addForm.get('quantidade').errors"></app-vm-error>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer pb-0 pl-0 pr-0">
+    <button type="button" (click)="addModal.close()" class="btn btn-danger">Cancelar</button>
+    <button type="button" (click)="addItemVenda()" [disabled]="addForm.invalid" class="btn btn-primary mr-0">Adicionar</button>
+  </div>
 </ngx-smart-modal>
