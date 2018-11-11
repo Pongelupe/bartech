@@ -10,14 +10,14 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
   styleUrls: ['./gerencia-produtos.component.scss']
 })
 export class GerenciaProdutosComponent implements OnInit {
-  produtos$: Observable<Produto[]>;
+  produtos: Produto[];
   produto: Produto;
   termoPesquisaProduto: string;
 
   constructor(private vendaService: VendaService, private ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
-    this.produtos$ = this.vendaService.getAllProdutos();
+    this.vendaService.getAllProdutos().subscribe(res => this.produtos = res);
   }
 
   openModalProduto(): void {
@@ -29,4 +29,8 @@ export class GerenciaProdutosComponent implements OnInit {
     this.ngxSmartModalService.getModal('produtoModal').close();
   }
 
+  novoProdutoCadastrado(produto: Produto) {
+    this.produtos = [...this.produtos, produto];
+    this.fecharModal();
+  }
 }
