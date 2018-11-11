@@ -26,7 +26,7 @@ export class GerenciaProdutosComponent implements OnInit {
   }
 
   fecharModal(): void {
-    this.ngxSmartModalService.getModal('clienteModal').close();
+    this.ngxSmartModalService.getModal('produtoModal').close();
   }
 
 }
