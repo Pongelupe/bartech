@@ -2,7 +2,7 @@
   <!--Campo para informar nome do produto-->
   <div class="form-group">
     <label>Nome*</label>
-    <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml">
+    <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml" [patterns]="customPatternProductName" mask="0*">
     <app-vm-error [text]="'O campo Nome é obrigatório'" *ngIf="produtoForm.get('nome').hasError('required')"></app-vm-error>
     <app-vm-error [text]="'O campo Nome deve conter no mínimo 3 caracteres'" *ngIf="produtoForm.get('nome').hasError('minlength')"></app-vm-error>
     <app-vm-error [text]="'O campo Nome deve conter no maxímo 50 caracteres'" *ngIf="produtoForm.get('nome').hasError('maxlength')"></app-vm-error>

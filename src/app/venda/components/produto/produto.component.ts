@@ -19,6 +19,7 @@ export class ProdutoComponent implements OnInit {
   @Output() produtoChange = new EventEmitter();
   @Output() cancelOperation = new EventEmitter();
   @Input() operacaoDesejada: Operacao;
+  customPatternProductName = {'0': { pattern: new RegExp('[A-z0-9 ]')}};
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, private toastrService: ToastrService) { }
 
