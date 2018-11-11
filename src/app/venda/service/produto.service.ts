@@ -25,7 +25,7 @@ export class ProdutoService {
       );
   }
 
-  getProdutoByCodigo(codigo: string): Observable<Produto> {
+  getProdutoByCodigo(codigo: number): Observable<Produto> {
     return this.apollo.query<{ Produto: Produto }>({
       query: PRODUTO_BY_CODIGO_QUERY,
       variables: { codigo }

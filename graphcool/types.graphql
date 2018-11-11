@@ -9,11 +9,11 @@ type User @model {
 
 type Produto @model {
   id: ID! @isUnique
-  codigo: String! @isUnique
+  codigo: Int! @isUnique
   nome: String!
   preco: Float!
   quantidadeEstoque: Int!
-  codigoDeBarras: String @isUnique
+  codigoDeBarras: String
   itens: [ItemVenda!]! @relation(name: "ProdutosOnItemVenda") @defaultValue(value: [])
 }
 
