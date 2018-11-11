@@ -10,7 +10,8 @@ import {
   VENDA_DETAIL_QUERY,
   DELETE_ITEM_VENDA_MUTATION,
   CREATE_VENDA_AVULSA_MUTATION,
-  DELETE_VENDA_MUTATION
+  DELETE_VENDA_MUTATION,
+  CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION
 } from './venda.graphql';
 import { map } from 'rxjs/operators';
 import { Venda } from '../../core/model/venda';
@@ -49,9 +50,10 @@ export class VendaService {
       );
   }
 
-  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string, quantidadeEstoque: number): Observable<ItemVenda> {
+  private adicionarItemVendaEAtualizarEstoque(quantidade: number, produtoId: string, vendaId: string, quantidadeEstoque: number)
+    : Observable<ItemVenda> {
     return this.apollo.mutate({
-      mutation: CREATE_ITEM_VENDA_MUTATION,
+      mutation: CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION,
       variables: {
         produtoId,
         vendaId,
@@ -62,6 +64,26 @@ export class VendaService {
       .pipe(
         map(res => res.data.createItemVenda)
       );
+  }
+
+  adicionarItemVenda(quantidade: number, produtoId: string, vendaId: string, quantidadeEstoque: number, temControleEstoque: boolean)
+    : Observable<ItemVenda> {
+    if (temControleEstoque) {
+      return this.adicionarItemVendaEAtualizarEstoque(quantidade, produtoId, vendaId, quantidadeEstoque);
+    } else {
+      return this.apollo.mutate({
+        mutation: CREATE_ITEM_VENDA_MUTATION,
+        variables: {
+          produtoId,
+          vendaId,
+          quantidade
+        }
+      })
+        .pipe(
+          map(res => res.data.createItemVenda)
+        );
+    }
+
   }
 
 

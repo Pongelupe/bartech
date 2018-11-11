@@ -47,7 +47,7 @@ export const VENDA_DETAIL_QUERY = gql`
   }
 `;
 
-export const CREATE_ITEM_VENDA_MUTATION = gql`
+export const CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION = gql`
   mutation CreateItemVenda($vendaId: ID!, $produtoId: ID!, $quantidade: Int!, $quantidadeEstoque: Int!) {
     createItemVenda(
       vendaId: $vendaId
@@ -61,6 +61,9 @@ export const CREATE_ITEM_VENDA_MUTATION = gql`
         nome
         preco
         quantidadeEstoque
+        codigo
+        codigoDeBarras
+        temControleEstoque
       }
     }
     updateProduto(
@@ -70,6 +73,28 @@ export const CREATE_ITEM_VENDA_MUTATION = gql`
     id,
     quantidadeEstoque
   }
+  }
+`;
+
+export const CREATE_ITEM_VENDA_MUTATION = gql`
+  mutation CreateItemVenda($vendaId: ID!, $produtoId: ID!, $quantidade: Int!) {
+    createItemVenda(
+      vendaId: $vendaId
+      quantidade: $quantidade
+      produtoId: $produtoId
+    ) {
+      id
+      quantidade
+      produto {
+        id
+        nome
+        preco
+        quantidadeEstoque
+        codigo
+        codigoDeBarras
+        temControleEstoque
+      }
+    }
   }
 `;
 
@@ -94,7 +119,7 @@ export const DELETE_ITEM_VENDA_MUTATION = gql`
 }
 `;
 
-export const DELETE_VENDA_MUTATION = gql `
+export const DELETE_VENDA_MUTATION = gql`
   mutation DeleteVenda($idVenda: ID!) {
     deleteVenda(
       id: $idVenda

@@ -71,13 +71,14 @@ export class VendaComponent implements OnInit {
   }
 
   addItemVenda(): void {
-    this.vendaService.adicionarItemVenda(this.quantidade, this.produto.id, this.venda.id, this.produto.quantidadeEstoque)
+    this.vendaService.adicionarItemVenda(this.quantidade, this.produto.id, this.venda.id,
+      this.produto.quantidadeEstoque, this.produto.temControleEstoque)
       .pipe(take(1))
       .subscribe(
         item => {
           this.venda.itensVenda = [...this.venda.itensVenda, item];
           this.updateSubtotal();
-          this.addForm.reset();
+          this.quantidade = 1;
           this.toastrService.success('Adicionado ' + item.quantidade + 'x ' + item.produto.nome + ' na venda.');
         },
         err => this.toastrService.error(err.message, 'Erro'));
