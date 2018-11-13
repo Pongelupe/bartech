@@ -35,6 +35,7 @@ export const VENDA_DETAIL_PAGAMENTOS_QUERY = gql`
         quantidade
         desconto
         produto {
+          id
           preco
         }
       }
