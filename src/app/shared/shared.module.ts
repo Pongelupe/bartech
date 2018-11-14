@@ -9,6 +9,7 @@ import { BtTabsComponent } from './components/bt-tabs/bt-tabs.component';
 import { BtHideDirective } from './directive/bt-hide.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { VmErrorComponent } from './components/vm-error/vm-error.component';
+import { AbsPipe } from './pipes/abs.pipe';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { VmErrorComponent } from './components/vm-error/vm-error.component';
     NgxSmartModalModule,
     AngularFontAwesomeModule,
     NgxMaskModule,
-    VmErrorComponent
+    VmErrorComponent,
+    AbsPipe
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { VmErrorComponent } from './components/vm-error/vm-error.component';
     BtTabComponent,
     BtTabsComponent,
     BtHideDirective,
-    VmErrorComponent]
+    VmErrorComponent,
+    AbsPipe]
 })
 export class SharedModule { }
