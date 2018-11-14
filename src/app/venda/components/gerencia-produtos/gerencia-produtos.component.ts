@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { VendaService } from '../../service/venda.service';
-import { Observable } from 'rxjs';
-import { Produto } from '../../../core/model/produto';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { Produto } from '../../../core/model/produto';
+import { VendaService } from '../../service/venda.service';
 
 @Component({
   selector: 'app-gerencia-produtos',
