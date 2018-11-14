@@ -11,7 +11,8 @@ import {
   DELETE_ITEM_VENDA_MUTATION,
   CREATE_VENDA_AVULSA_MUTATION,
   DELETE_VENDA_MUTATION,
-  CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION
+  CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION,
+  ENCERRAR_VENDA_MUTATION
 } from './venda.graphql';
 import { map } from 'rxjs/operators';
 import { Venda } from '../../core/model/venda';
@@ -131,4 +132,15 @@ export class VendaService {
         map(res => res.data.deleteVenda.id)
       );
   }
+
+  encerrarVenda(idVenda: number, quitada: boolean): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: ENCERRAR_VENDA_MUTATION,
+      variables: { idVenda, quitada }
+    })
+      .pipe(
+        map(res => res.data.updateVenda.id)
+      );
+  }
+
 }

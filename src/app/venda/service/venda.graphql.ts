@@ -128,3 +128,16 @@ export const DELETE_VENDA_MUTATION = gql`
     }
   }
 `;
+
+export const ENCERRAR_VENDA_MUTATION = gql`
+  mutation EncerrarVenda($idVenda: ID!,$quitada: Boolean! ) {
+    updateVenda(
+      id: $idVenda
+      quitada: $quitada
+      finalizada: true
+      mesaId: null
+  ){
+    id
+  }
+}
+`;
