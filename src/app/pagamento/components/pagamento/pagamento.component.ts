@@ -50,7 +50,7 @@ export class PagamentoComponent implements OnInit {
     }, err => this.toastrService.error(err.message, 'Erro'));
 
     this.pagamentoForm = this.formBuilder.group({
-      valor: ['', [Validators.min(1), Validators.required]],
+      valor: ['', [Validators.min(0), Validators.required]],
       formaPagamento: ['', [Validators.required]],
     });
   }
