@@ -6,12 +6,13 @@ import { BebumComponent } from './components/pendura/bebum/bebum.component';
 import { PendurasBebumComponent } from './components/pendura/penduras-bebum/penduras-bebum.component';
 import { PenduradoPipe } from './pipes/pendurado.pipe';
 import { GerenciaClientesComponent } from './components/gerencia-clientes/gerencia-clientes.component';
+import { PenduradetailsComponent } from './components/pendura/penduradetails/penduradetails.component';
 
 @NgModule({
   imports: [
     SharedModule,
     PagamentoRoutingModule
   ],
-  declarations: [PagamentoComponent, BebumComponent, PendurasBebumComponent, PenduradoPipe, GerenciaClientesComponent]
+  declarations: [PagamentoComponent, BebumComponent, PendurasBebumComponent, PenduradoPipe, GerenciaClientesComponent, PenduradetailsComponent]
 })
 export class PagamentoModule { }

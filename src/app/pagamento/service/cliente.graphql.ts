@@ -42,3 +42,27 @@ export const CLIENTE_BY_CPF_QUERY = gql`
     }
   }
 `;
+
+export const CLIENTE_PENDURAS_BY_ID_QUERY = gql`
+  query ClientePendurasByIdQuery($idCliente: ID!) {
+  Cliente(
+    id: $idCliente
+  ) {
+    nome
+    apelido
+    cpf
+    penduras {
+      valor
+      valorPagto
+      data
+      venda {
+        itensVenda {
+          produto {
+            nome
+          }
+        }
+      }
+    }
+  }
+}
+`;

@@ -37,7 +37,7 @@ export class BebumComponent implements OnInit {
 
   private isClienteNotNull(): boolean { return this.cliente !== null && this.cliente !== undefined; }
 
-  private selecionarCliente(): void {
+  public selecionarCliente(): void {
     this.cliente = this.bebumForm.value;
     this.getBebumByCpf(this.cliente.cpf)
       .subscribe(cliente => {
@@ -113,7 +113,7 @@ export class BebumComponent implements OnInit {
     this.cleanFormData();
   }
 
-  private cancelar(): void {
+  public cancelar(): void {
     this.cancelarOperacao.emit();
     this.cleanFormData();
   }

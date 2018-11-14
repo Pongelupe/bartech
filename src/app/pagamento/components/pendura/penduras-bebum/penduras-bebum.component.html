@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of pendurados$ | async | pendurado : [termoPesquisaPendurado]; let i = index ">
+          <tr *ngFor="let cliente of pendurados$ | async | pendurado : [termoPesquisaPendurado]; let i = index " (click)="showPenduraDetails(cliente)">
             <th scope="row">{{i+1}}</th>
             <td>{{cliente.apelido}} - {{cliente.nome}}</td>
             <td class="text-center">{{cliente.cpf | mask: '000.000.000-00'}}</td>

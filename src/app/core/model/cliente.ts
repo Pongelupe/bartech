@@ -8,7 +8,7 @@ export class Cliente {
     cpf = '';
     createdAt: Date;
     telefone = '';
-    penduras = new Array<Pendura>();
+    penduras: Array<Pendura>;
     pagamentos = new Array<Pagamento>();
     totalPenduras: number;
     totalPgtosPenduras: number;

@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="col-12 mt-2 mb-1">
+    <div class="row">
+      <div class="col-6">
+        <h4>Itens Pendurados na conta de {{cliente ? cliente.apelido : 'Cliente'}}</h4>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="text-center">Produto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let produto of produtosPendurados; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td class="text-center">{{produto.nome}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="text-center">Resumo de sua Pendura</h4>
+            <div class="row">
+
+              <div class="col-4">
+                <h5>Total pago: <span class="text-success">{{totalPago | currency:'BRL'}}</span></h5>
+                <h5>Dívida: <span class="text-danger">{{divida | currency:'BRL'}}</span></h5>
+              </div>
+              <div class="col-8">
+                  <div class="table-responsive" *ngIf="this.cliente && getPagamentos().length > 0; else melao">
+                      <table class="table table-sm table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="text-center">Valor Pago</th>
+                            <th scope="col" class="text-center">Pago em</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let pendura of getPagamentos(); let i = index">
+                            <th scope="row">{{i+1}}</th>
+                            <td class="text-center">{{pendura.valorPagto}}</td>
+                            <td class="text-center">{{pendura.data | date}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <button class="btn btn-success">Pagar</button>
+              </div>
+              <ng-template #melao>
+                <div class="col-6">
+                  <h5 class="text-center">Você ainda não fez nenhum pagamento!</h5>
+                  <img class="img-thumbnail w-75 p-3" src="/src/assets/img/sad.png" alt="sad">
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
