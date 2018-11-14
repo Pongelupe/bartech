@@ -46,7 +46,8 @@
               <tr *ngFor="let pagamento of venda.pagamentos; let i = index">
                 <th scope="row">{{i+1}}</th>
                 <td class="text-center">{{pagamento.formaPagamento}}</td>
-                <td class="text-center">{{pagamento.cliente? pagamento.cliente.apelido : ''}}</td>
+                <td class="text-center">{{pagamento.cliente ? pagamento.cliente.apelido + ' - ' 
+                  + pagamento.cliente.nome: ''}}</td>
                 <td class="text-center">{{pagamento.valor | currency:'BRL'}}</td>
               </tr>
             </tbody>
