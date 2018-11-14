@@ -75,10 +75,9 @@
             <div class="col-12">
               Pagamentos = {{venda.totaisPagamentos | currency:'BRL'}}
             </div>
-
             <div class="col-12">
-              <span>{{(venda.valorRestanteVenda
-                < 0 ? 'Troco = ' : 'Valor a pagar = ' ) + venda.valorRestanteVenda }} </span>
+              {{venda.valorRestanteVenda < 0 ? 'Troco = ' : 'Valor a pagar = '}}
+              {{venda.valorRestanteVenda | abs | currency : 'BRL'}}
             </div>
           </div>
         </div>
