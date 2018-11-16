@@ -1,0 +1,36 @@
+<ngx-smart-modal #penduraPaymentModal [identifier]="'penduraPaymentModal'">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="modal-title">Pagamento de Pendura de - {{this.cliente? this.cliente.apelido : 'Cliente'}}</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    <div class="row">
+      <div class="col-6">
+        <h5>Já Pago: <span class="text-success">{{totalPago | currency:'BRL'}}</span></h5>
+      </div>
+      <div class="col-6">
+        <h5>Dívida: <span class="text-danger">{{divida | currency:'BRL'}}</span></h5>
+      </div>
+      <form [formGroup]="penduraPaymentForm">
+        <div class="form-group row mt-1 ml-1">
+          <label class="col-2 col-form-label">Valor*</label>
+          <div class="col-10">
+            <input class="form-control" placeholder="R$ 0,00" mask="0*,00" formControlName="valor"
+              [dropSpecialCharacters]="false" prefix="R$ ">
+            <app-vm-error [text]="'O campo Valor é obrigatório'"
+              *ngIf="penduraPaymentForm.get('valor').hasError('required')"></app-vm-error>
+            <app-vm-error [text]="'O campo Valor deve ser menor que ' + ((divida - totalPago) | currency:'BRL')"
+              *ngIf="penduraPaymentForm.get('valor').hasError('max')"></app-vm-error>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <button type="button" (click)="penduraPaymentModal.close()" class="btn btn-danger col-md-12 ml-0">Cancelar</button>
+    </div>
+    <div class="col-6">
+      <button type="button" [disabled]="penduraPaymentForm.invalid" (click)="pagarPenduras()" class="btn btn-primary col-md-12 ml-0">Pagar</button>
+    </div>
+  </div>
+</ngx-smart-modal>

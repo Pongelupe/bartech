@@ -52,10 +52,12 @@ export const CLIENTE_PENDURAS_BY_ID_QUERY = gql`
     apelido
     cpf
     penduras {
+      id
       valor
       valorPagto
       data
       venda {
+        data
         itensVenda {
           produto {
             nome

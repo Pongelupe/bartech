@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
+import { Cliente } from '../../../core/model/cliente';
 import { FormaDePagamento } from '../../../core/model/formaDePagamento';
 import { Pagamento } from '../../../core/model/pagamento';
-import { Venda } from '../../../core/model/venda';
-import { PagamentoService } from '../../service/pagamento.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cliente } from '../../../core/model/cliente';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Pendura } from '../../../core/model/pendura';
+import { Venda } from '../../../core/model/venda';
 import { VendaService } from '../../../venda/service/venda.service';
+import { PagamentoService } from '../../service/pagamento.service';
 
 @Component({
   selector: 'app-pagamento',
