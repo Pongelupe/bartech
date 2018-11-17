@@ -87,7 +87,6 @@ export class VendaService {
 
   }
 
-
   createVenda(): Observable<string> {
     return this.apollo.mutate<string>({
       mutation: CREATE_VENDA_AVULSA_MUTATION,

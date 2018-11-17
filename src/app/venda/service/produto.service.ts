@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Produto } from '../../core/model/produto';
 import { Observable } from 'rxjs';
-import { CREATE_PRODUTO_MUTATION, PRODUTO_BY_CODIGO_QUERY, UPDATE_OR_CREATE_PRODUTO_MUTATION } from './produto.graphql';
+import { CREATE_PRODUTO_MUTATION,
+  PRODUTO_BY_CODIGO_QUERY,
+  UPDATE_OR_CREATE_PRODUTO_MUTATION,
+  DELETE_PRODUTO_MUTATION } from './produto.graphql';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -44,4 +47,15 @@ export class ProdutoService {
         map(res => res.data.updateOrCreateProduto.id)
       );
   }
+
+  deleteProduto(id: string): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: DELETE_PRODUTO_MUTATION,
+      variables: { id }
+    })
+      .pipe(
+        map(res => res.data.deleteProduto.id)
+      );
+  }
+
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Produto } from '../../../core/model/produto';
 import { VendaService } from '../../service/venda.service';
+import { ProdutoService } from '../../service/produto.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gerencia-produtos',
@@ -13,7 +15,11 @@ export class GerenciaProdutosComponent implements OnInit {
   produto: Produto;
   termoPesquisaProduto: string;
 
-  constructor(private vendaService: VendaService, private ngxSmartModalService: NgxSmartModalService) { }
+  constructor(
+    private vendaService: VendaService,
+    private produtoService: ProdutoService,
+    private toastrService: ToastrService,
+    private ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
     this.vendaService.getAllProdutos().subscribe(res => this.produtos = res);
@@ -40,5 +46,14 @@ export class GerenciaProdutosComponent implements OnInit {
     }
     this.produtos = [...this.produtos, produtoVO.produto];
     this.fecharModal();
+  }
+
+  deleteProduto(produto: Produto): void {
+    this.produtoService.deleteProduto(produto.id)
+      .subscribe(id => {
+        this.produtos = this.produtos.filter(p => p.id !== id);
+        this.toastrService.success(`Produto ${produto.nome} foi excluído com sucesso!`);
+      },
+        err => this.toastrService.error(`Produto ${produto.nome} não pode ser excluído!`));
   }
 }

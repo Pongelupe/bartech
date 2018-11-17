@@ -28,16 +28,20 @@
             <th scope="col" class="text-center font-weight-bold">Tem Controle de Estoque</th>
             <th scope="col" class="text-center font-weight-bold">EAN</th>
             <th scope="col" class="text-center font-weight-bold">Qtde em Estoque</th>
+            <th scope="col" class="text-center font-weight-bold"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index " (click)="editarProduto(produto)">
+          <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index ">
             <td>{{produto.codigo}}</td>
-            <td>{{produto.nome}}</td>
-            <td class="text-center">{{produto.preco | currency : 'BRL'}}</td>
-            <td class="text-center">{{produto.temControleEstoque ? 'Sim' : 'Não'}}</td>
-            <td class="text-center">{{produto.codigoDeBarras ? produto.codigoDeBarras : '-'}}</td>
-            <td class="text-center">{{produto.quantidadeEstoque ? produto.quantidadeEstoque : '-'}}</td>
+            <td (click)="editarProduto(produto)">{{produto.nome}}</td>
+            <td (click)="editarProduto(produto)" class="text-center">{{produto.preco | currency : 'BRL'}}</td>
+            <td (click)="editarProduto(produto)" class="text-center">{{produto.temControleEstoque ? 'Sim' : 'Não'}}</td>
+            <td (click)="editarProduto(produto)" class="text-center">{{produto.codigoDeBarras ? produto.codigoDeBarras : '-'}}</td>
+            <td (click)="editarProduto(produto)" class="text-center">{{produto.quantidadeEstoque ? produto.quantidadeEstoque : '-'}}</td>
+            <td class="text-center">
+              <fa name="minus-circle" (click)="deleteProduto(produto)"></fa>
+            </td>
           </tr>
         </tbody>
       </table>

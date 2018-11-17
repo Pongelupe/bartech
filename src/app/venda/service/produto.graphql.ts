@@ -61,3 +61,13 @@ export const PRODUTO_BY_CODIGO_QUERY = gql`
     }
   }
 `;
+
+export const DELETE_PRODUTO_MUTATION = gql `
+  mutation DeleteProdutoMutation($id: ID!) {
+    deleteProduto(
+      id: $id
+    ) {
+      id
+    }
+  }
+`;
