@@ -107,7 +107,9 @@ export class PagamentoComponent implements OnInit {
 
     this.vendaService.encerrarVenda(this.venda.id, this.venda.quitada)
       .subscribe(() => {
-        this.toastrService.success('Troco: R$ ' + Math.abs(this.venda.valorRestanteVenda), 'Venda encerrada');
+        this.toastrService.success('Troco: R$ ' + Math.abs(this.venda.valorRestanteVenda),
+          'Venda encerrada',
+          { timeOut: 15000, extendedTimeOut: 5000 });
         this.router.navigate(['mesas']);
       }, err => this.toastrService.error(err.message, 'Erro'));
   }
