@@ -1,28 +1,30 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Produto } from '../../../core/model/produto';
-import { Observable } from 'rxjs';
-import { ProdutoService } from '../../service/produto.service';
-import { take } from 'rxjs/operators';
-import { INPUT_VALUE_DEFINITION } from 'graphql/language/kinds';
-import { Operacao } from '../../../core/enum/operacoes.enum';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Operacao } from '../../../core/enum/operacoes.enum';
+import { Produto } from '../../../core/model/produto';
 import { Utils } from '../../../shared/utils';
+import { ProdutoService } from '../../service/produto.service';
 
 @Component({
   selector: 'app-produto',
   templateUrl: './produto.component.html',
   styleUrls: ['./produto.component.scss']
 })
-export class ProdutoComponent implements OnInit {
+export class ProdutoComponent implements OnInit, OnChanges {
   produtoForm: FormGroup;
   @Input() produto: Produto;
-  @Output() produtoChange = new EventEmitter();
+  @Output() produtoChange = new EventEmitter<{ produto: Produto, isEdicao: boolean }>();
   @Output() cancelOperation = new EventEmitter();
   @Input() operacaoDesejada: Operacao;
   customPatternProductName = { '0': { pattern: new RegExp('[A-z0-9 ]') } };
 
-  constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, private toastrService: ToastrService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private produtoService: ProdutoService,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.produtoForm = this.formBuilder.group({
@@ -34,11 +36,19 @@ export class ProdutoComponent implements OnInit {
       temControleEstoque: ['', [Validators.required]]
     });
 
-    this.cleanFormData();
+    this.produtoForm.reset();
     if (this.isProductNotNull()) {
       this.setFormDataWithProduct();
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.produto = changes.produto.currentValue;
+    if (this.produto) {
+      this.setFormDataWithProduct();
+    }
+  }
+
 
   private isProductNotNull(): boolean { return this.produto !== null && this.produto !== undefined; }
 
@@ -47,31 +57,20 @@ export class ProdutoComponent implements OnInit {
       nome: this.produto.nome,
       codigo: this.produto.codigo,
       codigoDeBarras: this.produto.codigoDeBarras,
-      preco: this.produto.preco,
+      preco: this.produto.preco.toString().replace('.', ','),
       quantidadeEstoque: this.produto.quantidadeEstoque,
       temControleEstoque: this.produto.temControleEstoque
     });
   }
 
-  private cleanFormData(): void {
-    this.produtoForm.setValue({
-      nome: null,
-      codigo: null,
-      codigoDeBarras: null,
-      preco: null,
-      quantidadeEstoque: null,
-      temControleEstoque: true
-    });
-  }
-
   private cancel(): void {
     this.cancelOperation.emit();
-    this.cleanFormData();
+    this.produtoForm.reset();
   }
 
-  private emitProdutoChange(): void {
-    this.produtoChange.emit(this.produto);
-    this.cleanFormData();
+  private emitProdutoChange(isEdicao: boolean): void {
+    this.produtoChange.emit({ produto: this.produto, isEdicao });
+    this.produtoForm.reset();
   }
 
   private getProdutoByCodigo(codigo: number): Observable<Produto> {
@@ -86,34 +85,24 @@ export class ProdutoComponent implements OnInit {
         this.produto.id = id;
         this.setFormDataWithProduct();
         this.toastrService.success('Produto cadastrado com sucesso.');
-        this.emitProdutoChange();
+        this.emitProdutoChange(false);
       }, err => this.toastrService.error(err.message));
   }
 
   private confirm(): void {
+    const produtoId = this.produto.id ? this.produto.id : '';
     this.produto = this.produtoForm.value;
+    this.produto.id = produtoId;
     this.produto.preco = parseFloat(this.produtoForm.value['preco'].toString().replace(',', '.'));
     this.produto.codigo = parseInt(this.produtoForm.value['codigo'], 10);
     this.produto.quantidadeEstoque = Utils.isNullUndefinedOrEmpty(this.produto.quantidadeEstoque) ? null :
       parseInt(this.produtoForm.value['quantidadeEstoque'], 10);
 
-    this.getProdutoByCodigo(this.produto.codigo)
-      .subscribe(produto => {
-        if (produto) {
-          if (this.operacaoDesejada !== Operacao.CRIACAO) {
-            this.produto = produto;
-            this.emitProdutoChange();
-          } else {
-            this.toastrService.error('O produto já está cadastrado!');
-          }
-
-        } else {
-          if (this.operacaoDesejada !== Operacao.EDICAO) {
-            this.createProduto();
-          } else {
-            this.toastrService.error('O produto não está cadastrado!');
-          }
-        }
+    this.produtoService.updateOrCreateProduto(this.produto)
+      .subscribe(id => {
+        this.produto.id = id;
+        this.toastrService.success(`Produto ${produtoId ? 'editado' : 'criado'} com sucesso.`);
+        this.emitProdutoChange(produtoId !== '');
       });
   }
 }

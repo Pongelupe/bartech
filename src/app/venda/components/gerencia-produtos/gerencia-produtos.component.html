@@ -31,13 +31,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index ">
+          <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index " (click)="editarProduto(produto)">
             <td>{{produto.codigo}}</td>
             <td>{{produto.nome}}</td>
             <td class="text-center">{{produto.preco | currency : 'BRL'}}</td>
             <td class="text-center">{{produto.temControleEstoque ? 'Sim' : 'Não'}}</td>
-            <td class="text-center">{{produto.codigoDeBarras}}</td>
-            <td class="text-center">{{produto.quantidadeEstoque}}</td>
+            <td class="text-center">{{produto.codigoDeBarras ? produto.codigoDeBarras : '-'}}</td>
+            <td class="text-center">{{produto.quantidadeEstoque ? produto.quantidadeEstoque : '-'}}</td>
           </tr>
         </tbody>
       </table>
@@ -45,11 +45,4 @@
   </div>
 </div>
 
-<ngx-smart-modal #produtoModal identifier="produtoModal">
-  <div class="modal-header pt-0 pl-0 pr-0">
-    <h5 class="modal-title">Cadastrar produto</h5>
-  </div>
-  <div class="modal-body pl-0 pr-0">
-    <app-produto [produto]="produto" operacaoDesejada="CRIACAO" (cancelOperation)="fecharModal()" (produtoChange)="novoProdutoCadastrado($event)"></app-produto>
-  </div>
-</ngx-smart-modal>
+<app-produto [produto]="produto" operacaoDesejada="CRIACAO" (cancelOperation)="fecharModal()" (produtoChange)="novoProdutoCadastrado($event)"></app-produto>

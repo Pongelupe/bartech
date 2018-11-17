@@ -24,12 +24,21 @@ export class GerenciaProdutosComponent implements OnInit {
     this.ngxSmartModalService.getModal('produtoModal').open();
   }
 
+  editarProduto(produto: Produto): void {
+    this.produto = produto;
+    this.ngxSmartModalService.open('produtoModal');
+  }
+
   fecharModal(): void {
+    this.produto = null;
     this.ngxSmartModalService.getModal('produtoModal').close();
   }
 
-  novoProdutoCadastrado(produto: Produto) {
-    this.produtos = [...this.produtos, produto];
+  novoProdutoCadastrado(produtoVO: { produto: Produto, isEdicao: boolean }) {
+    if (produtoVO.isEdicao) {
+      this.produtos = this.produtos.filter(p => p.id !== produtoVO.produto.id);
+    }
+    this.produtos = [...this.produtos, produtoVO.produto];
     this.fecharModal();
   }
 }
