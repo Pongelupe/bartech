@@ -1,3 +1,4 @@
+<app-pendura-payment (penduraPagaEvent)="onPenduraPaga($event)"></app-pendura-payment>
 <div class="card">
   <div class="col-12 mt-2 mb-1">
     <div class="row">
@@ -31,27 +32,29 @@
                 <h5>Dívida: <span class="text-danger">{{divida | currency:'BRL'}}</span></h5>
               </div>
               <div class="col-8">
-                  <div class="table-responsive" *ngIf="this.cliente && getPagamentos().length > 0; else melao">
-                      <table class="table table-sm table-hover">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" class="text-center">Valor Pago</th>
-                            <th scope="col" class="text-center">Pago em</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let pendura of getPagamentos(); let i = index">
-                            <th scope="row">{{i+1}}</th>
-                            <td class="text-center">{{pendura.valorPagto}}</td>
-                            <td class="text-center">{{pendura.data | date}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <button class="btn btn-success">Pagar</button>
+                <div class="table-responsive" *ngIf="this.cliente && getPagamentos().length > 0; else noPayments">
+                  <table class="table table-sm table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="text-center">Valor Pago</th>
+                        <th scope="col" class="text-center">Pago em</th>
+                        <th scope="col" class="text-center">Pendura do dia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pendura of getPagamentos(); let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td class="text-center">{{pendura.valorPagto | currency:'BRL'}}</td>
+                        <td class="text-center">{{pendura.data | date}}</td>
+                        <td class="text-center">{{pendura.venda.data | date}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="btn btn-success" ([disabled])="totalPago !== divida" (click)="openModalPayment()">Pagar</button>
               </div>
-              <ng-template #melao>
+              <ng-template #noPayments>
                 <div class="col-6">
                   <h5 class="text-center">Você ainda não fez nenhum pagamento!</h5>
                   <img class="img-thumbnail w-75 p-3" src="/src/assets/img/sad.png" alt="sad">
