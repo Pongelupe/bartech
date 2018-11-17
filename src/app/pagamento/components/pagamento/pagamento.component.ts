@@ -98,11 +98,18 @@ export class PagamentoComponent implements OnInit {
   }
 
   encerrarPagamento(): void {
-    // TODO
-    // this.venda.quitada = true;
-    // this.vendaService.encerrarVenda(this.venda)
-    //   .subscribe(id => this.router.navigate(['']),
-    //     err => this.toastrService.error(err.message, 'Erro'));
+    if (this.venda.valorRestanteVenda > 0) {
+      this.toastrService.error('Falta registrar R$ ' + this.venda.valorRestanteVenda + ' de pagamento.');
+      return;
+    }
+    this.venda.quitada = this.venda.pagamentos.filter(pgto => pgto.formaPagamento === FormaDePagamento.PENDURA).length <= 0;
+    this.venda.finalizada = true;
+
+    this.vendaService.encerrarVenda(this.venda.id, this.venda.quitada)
+      .subscribe(() => {
+        this.toastrService.success('Troco: R$ ' + Math.abs(this.venda.valorRestanteVenda), 'Venda encerrada');
+        this.router.navigate(['mesas']);
+      }, err => this.toastrService.error(err.message, 'Erro'));
   }
 
   fecharModal(): void {

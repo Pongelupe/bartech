@@ -133,7 +133,7 @@ export class VendaService {
       );
   }
 
-  encerrarVenda(idVenda: number, quitada: boolean): Observable<string> {
+  encerrarVenda(idVenda: String, quitada: boolean): Observable<string> {
     return this.apollo.mutate<string>({
       mutation: ENCERRAR_VENDA_MUTATION,
       variables: { idVenda, quitada }
