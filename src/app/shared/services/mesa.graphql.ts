@@ -26,3 +26,11 @@ export const CREATE_VENDA_BY_MESA_MUTATION = gql`
   }
 }
 `;
+
+export const CREATE_MESA_MUTATION = gql`
+  mutation CreateMesaMutation {
+    createMesa {
+      id
+    }
+  }
+`;

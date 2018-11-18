@@ -1,21 +1,25 @@
 <div class="container-fluid">
-  <h4 class="col-12 text-center">MESAS</h4>
+  <h4 class="col-12 text-center mt-2">MESAS</h4>
   <div class="row">
-    <p class="col-6 col-md-3 col-lg-2">
+    <p class="col-4 col-md-3 col-lg-2">
       <i class="fa fa-circle fa-1-x text-danger mr-2"></i>
       <span>Mesas
         <strong class="bold">ocupadas</strong>
       </span>
     </p>
-    <p class="col-6 col-md-3 col-lg-2">
+    <p class="col-4 col-md-3 col-lg-2">
       <i class="fa fa-circle fa-1-x text-success mr-2"></i>
       <span>Mesas
         <strong class="bold">livres</strong>
       </span>
     </p>
+    <div class="col-4 col-md-3 col-lg-2" (click)="createMesa()">
+      <span>Nova mesa</span>
+      <i class="fa fa-beer ml-2"></i>
+    </div>
   </div>
   <div class="row">
-    <div class="col-6 col-md-2 mb-4" *ngFor="let mesa of (mesas$ | async); let i = index">
+    <div class="col-6 col-md-2 mb-4" *ngFor="let mesa of mesas; let i = index">
       <div class="card text-center" [ngClass]="!mesa.venda ? 'alert-success card-mesa-vazia' : 'alert-danger card-mesa-ocupada'"
         (click)="createVenda(mesa)">
         <div class="card-body">

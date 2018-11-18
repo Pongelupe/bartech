@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { Mesa } from '../../core/model/mesa';
-import { AllMesas, ALL_MESAS_QUERY, CREATE_VENDA_BY_MESA_MUTATION } from './mesa.graphql';
+import { AllMesas, ALL_MESAS_QUERY, CREATE_VENDA_BY_MESA_MUTATION, CREATE_MESA_MUTATION } from './mesa.graphql';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -20,6 +20,16 @@ export class MesaService {
         map(res => res.data.allMesas)
       );
   }
+
+  createMesa(): Observable<Mesa> {
+    return this.apollo.mutate<Mesa>({
+      mutation: CREATE_MESA_MUTATION
+    })
+      .pipe(
+        map(res => res.data.createMesa)
+      );
+  }
+
   createVendaByMesaId(mesaId: string): Observable<string> {
     return this.apollo.mutate<string>({
       mutation: CREATE_VENDA_BY_MESA_MUTATION,
