@@ -29,12 +29,4 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(mesa.venda ? ['venda', mesa.venda.id] : ['venda/mesa', mesa.id]);
   }
 
-  createVendaAvulsa(): void {
-    this.vendaService.createVenda()
-      .subscribe(idVenda => { 
-        this.toastrService.success("Criado nova venda avulsa.");
-        this.router.navigate(['venda', idVenda]);
-      },err => this.toastrService.error(err.message, "Erro"));
-  }
-
 }
