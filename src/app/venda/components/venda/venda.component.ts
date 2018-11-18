@@ -1,15 +1,15 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { ItemVenda } from '../../../core/model/itemVenda';
 import { Produto } from '../../../core/model/produto';
 import { Venda } from '../../../core/model/venda';
-import { VendaService } from '../../service/venda.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ItemVenda } from '../../../core/model/itemVenda';
-import { take } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
 import { Utils } from '../../../shared/utils';
+import { VendaService } from '../../service/venda.service';
 
 @Component({
   selector: 'app-venda',
@@ -67,6 +67,8 @@ export class VendaComponent implements OnInit {
   }
   openModalItem(produto: Produto): void {
     this.produto = produto;
+    this.addForm.controls['quantidade']
+          .setValidators([Validators.min(1), Validators.required, Validators.max(produto.quantidadeEstoque)]);
     this.ngxSmartModalService.getModal('addModal').open();
   }
 

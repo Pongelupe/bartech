@@ -53,7 +53,8 @@
       <div class="form-group mt-1">
         <label>Quantidade</label>
         <input type="text" class="form-control" formControlName="quantidade" [(ngModel)]="quantidade" mask="0?000000000" />
-        <app-vm-error text="O campo Quantidade deve ser maior que 0" *ngIf="addForm.get('quantidade').errors"></app-vm-error>
+        <app-vm-error text="O campo Quantidade deve ser maior que 0" *ngIf="addForm.get('quantidade').hasError('min')"></app-vm-error>
+        <app-vm-error [text]='"O campo Quantidade deve ser menor ou igual a que " + produto.quantidadeEstoque' *ngIf="addForm.get('quantidade').hasError('max')"></app-vm-error>
       </div>
     </form>
   </div>
