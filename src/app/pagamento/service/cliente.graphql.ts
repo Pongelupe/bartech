@@ -9,9 +9,9 @@ export interface AllClientesQuery {
 export const CREATE_CLIENTE_MUTATION = gql`
   mutation createCliente($nome: String!, $apelido: String!, $cpf: String!, $telefone: String! ) {
     createCliente(
-      nome: $nome,
-      apelido: $apelido,
-      cpf: $cpf,
+      nome: $nome
+      apelido: $apelido
+      cpf: $cpf
       telefone: $telefone
     ){
       id
@@ -67,4 +67,36 @@ export const CLIENTE_PENDURAS_BY_ID_QUERY = gql`
     }
   }
 }
+`;
+
+export const UPDATE_OR_CREATE_CLIENTE_MUTATION = gql`
+mutation CreateOrUpdateClienteMutation($id: ID!, $nome: String!, $apelido: String!, $cpf: String!, $telefone: String!) {
+    updateOrCreateCliente (
+      update: {
+          id: $id
+          nome: $nome
+          apelido: $apelido
+          cpf: $cpf
+          telefone: $telefone
+        }
+        create: {
+          nome: $nome
+          apelido: $apelido
+          cpf: $cpf
+          telefone: $telefone
+        }
+    ) {
+      id
+    }
+  }
+`;
+
+export const DELETE_CLIENTE_MUTATION = gql`
+  mutation DeleteClienteMutation($id: ID!) {
+    deleteCliente(
+      id: $id
+    ) {
+      id
+    }
+  }
 `;

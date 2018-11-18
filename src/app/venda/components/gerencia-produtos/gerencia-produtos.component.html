@@ -33,7 +33,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let produto of produtos | produto : [termoPesquisaProduto]; let i = index ">
-            <td>{{produto.codigo}}</td>
+            <td (click)="editarProduto(produto)">{{produto.codigo}}</td>
             <td (click)="editarProduto(produto)">{{produto.nome}}</td>
             <td (click)="editarProduto(produto)" class="text-center">{{produto.preco | currency : 'BRL'}}</td>
             <td (click)="editarProduto(produto)" class="text-center">{{produto.temControleEstoque ? 'Sim' : 'Não'}}</td>

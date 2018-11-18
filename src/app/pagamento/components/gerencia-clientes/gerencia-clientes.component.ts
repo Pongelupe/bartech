@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Cliente } from '../../../core/model/cliente';
 import { ClienteService } from '../../service/cliente.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-gerencia-clientes',
@@ -26,8 +25,13 @@ export class GerenciaClientesComponent implements OnInit {
     });
   }
 
-  cadastrarCliente(cliente: Cliente) {
-    this.clientes = [...this.clientes, cliente];
+  onClienteEvent(clienteVO: { cliente: Cliente, isEdicao: boolean }) {
+    if (!clienteVO.isEdicao) {
+      this.clientes = [...this.clientes, clienteVO.cliente];
+    } else {
+      this.clientes = this.clientes.filter(c => c.id !== clienteVO.cliente.id);
+      this.clientes = [...this.clientes, clienteVO.cliente];
+    }
     this.fecharModal();
   }
 
@@ -37,7 +41,22 @@ export class GerenciaClientesComponent implements OnInit {
   }
 
   fecharModal(): void {
+    this.cliente = null;
     this.ngxSmartModalService.getModal('clienteModal').close();
+  }
+
+  editarCliente(cliente: Cliente): void {
+    this.cliente = cliente;
+    this.ngxSmartModalService.getModal('clienteModal').open();
+  }
+
+  deleteCliente(cliente: Cliente): void {
+    this.clienteService.deleteCliente(cliente.id)
+      .subscribe(id => {
+        this.clientes = this.clientes.filter(c => c.id !== id);
+        this.toastrService.success(`Cliente ${cliente.nome} foi removido com sucesso!`);
+      },
+        err => this.toastrService.error(`Cliente ${cliente.nome} não pode ser removido!`));
   }
 
 }

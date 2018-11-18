@@ -1,17 +1,17 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cliente } from '../../../../core/model/cliente';
-import { ClienteService } from '../../../service/cliente.service';
-import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Cliente } from '../../../../core/model/cliente';
+import { ClienteService } from '../../../service/cliente.service';
 
 @Component({
   selector: 'app-bebum',
   templateUrl: './bebum.component.html',
   styleUrls: ['./bebum.component.scss']
 })
-export class BebumComponent implements OnInit {
+export class BebumComponent implements OnInit, OnChanges {
 
   bebumForm: FormGroup;
   @Input() cliente: Cliente;
@@ -20,7 +20,10 @@ export class BebumComponent implements OnInit {
   @Input() hideButtonSearch: false;
   @Input() operacaoDesejada: OperacoesBebum;
 
-  constructor(private formBuilder: FormBuilder, private clienteService: ClienteService, private toastrService: ToastrService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private clienteService: ClienteService,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.bebumForm = this.formBuilder.group({
@@ -35,27 +38,31 @@ export class BebumComponent implements OnInit {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.cliente = changes.cliente.currentValue;
+    if (this.cliente && this.cliente.cpf) {
+      this.setFormDataWithBebum();
+      this.bebumForm.controls['cpf'].disable();
+    } else {
+      if (this.bebumForm) {
+        this.bebumForm.controls['cpf'].enable();
+      }
+    }
+  }
+
   private isClienteNotNull(): boolean { return this.cliente !== null && this.cliente !== undefined; }
 
-  public selecionarCliente(): void {
-    this.cliente = this.bebumForm.value;
-    this.getBebumByCpf(this.cliente.cpf)
-      .subscribe(cliente => {
-        if (cliente) {
-          if (this.operacaoDesejada !== OperacoesBebum.Criacao) {
-            this.cliente = cliente;
-            this.close();
-          } else {
-            this.toastrService.error('O cliente já está cadastrado!');
-          }
+  public confirmarCliente(): void {
+    const clienteId = this.cliente.id ? this.cliente.id : '';
+    this.cliente = this.bebumForm.getRawValue();
+    this.cliente.id = clienteId;
 
-        } else {
-          if (this.operacaoDesejada !== OperacoesBebum.Edicao) {
-            this.createCliente();
-          } else {
-            this.toastrService.error('O cliente não está cadastrado!');
-          }
-        }
+    this.clienteService.updateOrCreateCliente(this.cliente)
+      .subscribe(id => {
+        this.cliente.id = id;
+        this.toastrService.success(`Cliente ${clienteId ? 'editado' : 'criado'} com sucesso.`);
+        this.bebumForm.reset();
+        this.close(clienteId !== '');
       });
   }
 
@@ -66,11 +73,11 @@ export class BebumComponent implements OnInit {
         this.cliente.id = id;
         this.setFormDataWithBebum();
         this.toastrService.success('Cliente cadastrado com sucesso.');
-        this.close();
+        this.close(false);
       }, err => {
         if (err.graphQLErrors.filter(e => e.code === 3010)) {
           this.toastrService.success('Atenção', 'Bebum selecionado');
-          this.close();
+          this.close(false);
         } else {
           this.toastrService.error('Atenção', 'CPF já cadastrado!');
         }
@@ -108,8 +115,8 @@ export class BebumComponent implements OnInit {
     this.setFormDataWithBebum();
   }
 
-  private close(): void {
-    this.closeModalBebum.emit(this.cliente);
+  private close(isEdicao: boolean): void {
+    this.closeModalBebum.emit({ cliente: this.cliente, isEdicao });
     this.cleanFormData();
   }
 

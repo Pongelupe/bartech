@@ -27,15 +27,19 @@
             <th scope="col" class="font-weight-bold">Apelido</th>
             <th scope="col" class="text-center font-weight-bold">CPF</th>
             <th scope="col" class="text-center font-weight-bold">Celular</th>
+            <th scope="col" class="text-center font-weight-bold"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let cliente of clientes | pendurado : [termoPesquisaCliente]; let i = index ">
-            <th scope="row">{{i+1}}</th>
-            <td>{{cliente.nome}}</td>
-            <td>{{cliente.apelido}}</td>
-            <td class="text-center">{{cliente.cpf | mask: '000.000.000-00'}}</td>
-            <td class="text-center">{{cliente.telefone | mask: '(00) 00000-0000'}}</td>
+            <th scope="row" (click)="editarCliente(cliente)">{{i+1}}</th>
+            <td (click)="editarCliente(cliente)">{{cliente.nome}}</td>
+            <td (click)="editarCliente(cliente)">{{cliente.apelido}}</td>
+            <td class="text-center" (click)="editarCliente(cliente)">{{cliente.cpf | mask: '000.000.000-00'}}</td>
+            <td class="text-center" (click)="editarCliente(cliente)">{{cliente.telefone | mask: '(00) 00000-0000'}}</td>
+            <td class="text-center">
+                <fa name="minus-circle" (click)="deleteCliente(cliente)"></fa>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -43,11 +47,4 @@
   </div>
 </div>
 
-<ngx-smart-modal #clienteModal identifier="clienteModal" customClass="medium-modal">
-  <div class="modal-header pt-0 pl-0 pr-0">
-    <h5 class="modal-title">Cadastrar cliente</h5>
-  </div>
-  <div class="modal-body pl-0 pr-0">
-    <app-bebum (closeModalBebum)="cadastrarCliente($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente" operacaoDesejada="Criacao"></app-bebum>
-  </div>
-</ngx-smart-modal>
+<app-bebum (closeModalBebum)="onClienteEvent($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente" operacaoDesejada="Criacao"></app-bebum>

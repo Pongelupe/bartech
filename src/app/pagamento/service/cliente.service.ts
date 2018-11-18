@@ -7,7 +7,9 @@ import {
   CREATE_CLIENTE_MUTATION,
   ALL_CLIENTES_QUERY, AllClientesQuery,
   CLIENTE_BY_CPF_QUERY,
-  CLIENTE_PENDURAS_BY_ID_QUERY
+  CLIENTE_PENDURAS_BY_ID_QUERY,
+  UPDATE_OR_CREATE_CLIENTE_MUTATION,
+  DELETE_CLIENTE_MUTATION
 } from './cliente.graphql';
 
 @Injectable({
@@ -53,6 +55,26 @@ export class ClienteService {
     })
       .pipe(
         map(res => res.data.Cliente)
+      );
+  }
+
+  updateOrCreateCliente(cliente: Cliente): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: UPDATE_OR_CREATE_CLIENTE_MUTATION,
+      variables: { ...cliente }
+    })
+      .pipe(
+        map(res => res.data.updateOrCreateCliente.id)
+      );
+  }
+
+  deleteCliente(id: string): Observable<string> {
+    return this.apollo.mutate<string>({
+      mutation: DELETE_CLIENTE_MUTATION,
+      variables: { id }
+    })
+      .pipe(
+        map(res => res.data.deleteCliente.id)
       );
   }
 }

@@ -86,11 +86,4 @@
   </div>
 </div>
 
-<ngx-smart-modal #addClienteModal identifier="addClienteModal" customClass="medium-modal">
-  <div class="modal-header pt-0 pl-0 pr-0">
-    <h5 class="modal-title">Selecionar bêbum</h5>
-  </div>
-  <div class="modal-body pl-0 pr-0">
-    <app-bebum (closeModalBebum)="pendurar($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente" operacaoDesejada="Pendura"></app-bebum>
-  </div>
-</ngx-smart-modal>
+<app-bebum (closeModalBebum)="pendurar($event)" (cancelarOperacao)="fecharModal()" [cliente]="cliente" operacaoDesejada="Pendura"></app-bebum>

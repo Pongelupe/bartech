@@ -44,8 +44,13 @@ export class ProdutoComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.produto = changes.produto.currentValue;
-    if (this.produto) {
+    if (this.produto && this.produto.codigo) {
       this.setFormDataWithProduct();
+      this.produtoForm.controls['codigo'].disable();
+    } else {
+      if (this.produtoForm) {
+        this.produtoForm.controls['codigo'].enable();
+      }
     }
   }
 
@@ -91,7 +96,7 @@ export class ProdutoComponent implements OnInit, OnChanges {
 
   private confirm(): void {
     const produtoId = this.produto.id ? this.produto.id : '';
-    this.produto = this.produtoForm.value;
+    this.produto = this.produtoForm.getRawValue();
     this.produto.id = produtoId;
     this.produto.preco = parseFloat(this.produtoForm.value['preco'].toString().replace(',', '.'));
     this.produto.codigo = parseInt(this.produtoForm.value['codigo'], 10);
