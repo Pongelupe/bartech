@@ -16,7 +16,13 @@
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
           <app-bt-card title="{{produto.codigo}} - {{produto.nome}}" [subtitle]="produto.preco" [text]="produto.quantidadeEstoque"
-            (click)="openModalItem(produto)"></app-bt-card>
+            (click)="openModalItem(produto)">
+            <div class="card-subtitle mb-2 text-success">{{produto.preco | currency : 'BRL'}}</div>
+            <div *ngIf="produto.temControleEstoque; else semControleEstoque" class="card-text">Qtde em Estoque: {{produto.quantidadeEstoque}}</div>
+            <ng-template #semControleEstoque>
+              <div class="card-text">Não possui controle de estoque</div>
+            </ng-template>
+          </app-bt-card>
         </div>
       </div>
     </div>
