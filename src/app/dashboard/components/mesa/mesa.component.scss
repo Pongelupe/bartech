@@ -1,0 +1,19 @@
+.card-mesa-ocupada{
+  border: 1px solid #ef5350 ;
+}
+.card-mesa-vazia{
+  border: 1px solid #66bb6a ;
+}
+.card-mesa-ocupada:hover{
+  cursor: pointer;
+  background-color: #dc3545;
+}
+
+.card-mesa-vazia:hover{
+  cursor: pointer;
+  background-color: #28a745;
+}
+
+.card {
+  min-height: 122px;
+}

@@ -34,3 +34,31 @@ export const CREATE_MESA_MUTATION = gql`
     }
   }
 `;
+
+export const ITEM_VENDA_CREATED_ON_VENDA_SUBSCRIPTION = gql `
+subscription ItemVendaCreatedOnVendaSubscription ($mesaId: ID!) {
+  ItemVenda (
+    filter: {
+      mutation_in: [ CREATED ]
+      node: {
+        venda: {
+          mesa: {
+            id: $mesaId
+          }
+        }
+      }
+    }
+  ) {
+    node {
+      venda {
+        mesa {
+          id
+        }
+      }
+      produto {
+        nome
+      }
+    }
+  }
+}
+`;

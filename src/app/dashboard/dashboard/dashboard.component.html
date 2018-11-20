@@ -20,12 +20,7 @@
   </div>
   <div class="row">
     <div class="col-6 col-md-2 mb-4" *ngFor="let mesa of mesas; let i = index">
-      <div class="card text-center" [ngClass]="!mesa.venda ? 'alert-success card-mesa-vazia' : 'alert-danger card-mesa-ocupada'"
-        (click)="createVenda(mesa)">
-        <div class="card-body">
-          <h5 class="card-title m-0 p-3">MESA {{i + 1}}</h5>
-        </div>
-      </div>
+      <app-mesa [mesa]="mesa" [numMesa]="i"></app-mesa>
     </div>
   </div>
 </div>

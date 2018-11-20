@@ -2,8 +2,15 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { Mesa } from '../../core/model/mesa';
-import { AllMesas, ALL_MESAS_QUERY, CREATE_VENDA_BY_MESA_MUTATION, CREATE_MESA_MUTATION } from './mesa.graphql';
+import {
+  AllMesas,
+  ALL_MESAS_QUERY,
+  CREATE_VENDA_BY_MESA_MUTATION,
+  CREATE_MESA_MUTATION,
+  ITEM_VENDA_CREATED_ON_VENDA_SUBSCRIPTION
+} from './mesa.graphql';
 import { map } from 'rxjs/operators';
+import { ItemVenda } from 'src/app/core/model/itemVenda';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +45,15 @@ export class MesaService {
       .pipe(
         map(res => res.data.createVenda)
       );
+  }
+
+  subscribeToItensVenda(mesaId: string): Observable<ItemVenda> {
+    return this.apollo.subscribe({
+      query: ITEM_VENDA_CREATED_ON_VENDA_SUBSCRIPTION,
+      variables: { mesaId }
+    }).pipe(
+      map(res => res.data.ItemVenda.node)
+    );
   }
 
 }
