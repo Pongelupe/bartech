@@ -1,6 +1,6 @@
 <ngx-smart-modal #clienteModal identifier="clienteModal" customClass="medium-modal">
   <div class="modal-header pt-0 pl-0 pr-0">
-    <h5 class="modal-title">{{cliente && cliente.apelido ? 'Editar Cliente - ' + cliente.apelido : 'Cadastrar cliente' }}</h5>
+    <h5 class="modal-title">{{getModalTitle()}}</h5>
   </div>
   <div class="modal-body pl-0 pr-0">
     <form [formGroup]="bebumForm">

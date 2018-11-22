@@ -46,7 +46,7 @@ export class MesaComponent implements OnInit {
 
   createVenda(): void {
     this.router.navigate(this.mesa.venda ? ['venda', this.mesa.venda.id] : ['venda/mesa', this.mesa.id]);
-    this.startTimer(null);
+    this.startTimer(new Venda());
   }
 
 }

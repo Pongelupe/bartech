@@ -15,7 +15,7 @@ export class BebumComponent implements OnInit, OnChanges {
 
   bebumForm: FormGroup;
   @Input() cliente: Cliente;
-  @Output() closeModalBebum = new EventEmitter();
+  @Output() closeModalBebum = new EventEmitter<{ cliente: Cliente, isEdicao: boolean }>();
   @Output() cancelarOperacao = new EventEmitter();
   @Input() hideButtonSearch: false;
   @Input() operacaoDesejada: OperacoesBebum;
@@ -53,17 +53,21 @@ export class BebumComponent implements OnInit, OnChanges {
   private isClienteNotNull(): boolean { return this.cliente !== null && this.cliente !== undefined; }
 
   public confirmarCliente(): void {
-    const clienteId = this.cliente.id ? this.cliente.id : '';
-    this.cliente = this.bebumForm.getRawValue();
-    this.cliente.id = clienteId;
+    if (this.operacaoDesejada === OperacoesBebum.Pendura) {
+      this.closeModalBebum.emit({ cliente: this.cliente, isEdicao: false });
+    } else {
+      const clienteId = this.cliente.id ? this.cliente.id : '';
+      this.cliente = this.bebumForm.getRawValue();
+      this.cliente.id = clienteId;
 
-    this.clienteService.updateOrCreateCliente(this.cliente)
-      .subscribe(id => {
-        this.cliente.id = id;
-        this.toastrService.success(`Cliente ${clienteId ? 'editado' : 'criado'} com sucesso.`);
-        this.bebumForm.reset();
-        this.close(clienteId !== '');
-      });
+      this.clienteService.updateOrCreateCliente(this.cliente)
+        .subscribe(id => {
+          this.cliente.id = id;
+          this.toastrService.success(`Cliente ${clienteId ? 'editado' : 'criado'} com sucesso.`);
+          this.bebumForm.reset();
+          this.close(clienteId !== '');
+        });
+    }
   }
 
   private createCliente(): void {
@@ -123,6 +127,14 @@ export class BebumComponent implements OnInit, OnChanges {
   public cancelar(): void {
     this.cancelarOperacao.emit();
     this.cleanFormData();
+  }
+
+  getModalTitle(): string {
+    if (this.operacaoDesejada !== OperacoesBebum.Pendura) {
+      return this.cliente && this.cliente.apelido ? 'Editar Cliente - ' + this.cliente.apelido : 'Cadastrar cliente';
+    } else {
+      return 'Pendurar Conta';
+    }
   }
 
 }

@@ -1,11 +1,10 @@
 import { Mesa } from './mesa';
 import { Pendura } from './pendura';
 import { ItemVenda } from './itemVenda';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export class Venda {
   id: string;
-  data?: Date;
+  data = new Date();
   finalizada?: boolean;
   quitada?: boolean;
   mesa?: Mesa;

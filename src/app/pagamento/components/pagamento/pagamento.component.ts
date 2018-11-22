@@ -61,7 +61,7 @@ export class PagamentoComponent implements OnInit {
     if (this.pagamento.formaPagamento.toString() !== 'PENDURA') {
       this.pagar();
     } else {
-      this.ngxSmartModalService.getModal('addClienteModal').open();
+      this.ngxSmartModalService.getModal('clienteModal').open();
     }
   }
 
@@ -78,7 +78,8 @@ export class PagamentoComponent implements OnInit {
         err => this.toastrService.error(err.message, 'Erro'));
   }
 
-  pendurar(cliente: Cliente) {
+  pendurar(clienteVO: { cliente: Cliente, isEdicao: boolean }) {
+    const cliente = clienteVO.cliente;
     this.fecharModal();
     this.cliente = cliente;
     this.pagamento.cliente = cliente;
@@ -115,7 +116,7 @@ export class PagamentoComponent implements OnInit {
   }
 
   fecharModal(): void {
-    this.ngxSmartModalService.getModal('addClienteModal').close();
+    this.ngxSmartModalService.getModal('clienteModal').close();
   }
 
 }
