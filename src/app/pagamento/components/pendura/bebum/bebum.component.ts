@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Cliente } from '../../../../core/model/cliente';
 import { ClienteService } from '../../../service/cliente.service';
+import { OperacoesBebum } from 'src/app/core/enum/OperacoesBebum.enum';
 
 @Component({
   selector: 'app-bebum',
@@ -137,10 +138,4 @@ export class BebumComponent implements OnInit, OnChanges {
     }
   }
 
-}
-
-enum OperacoesBebum {
-  Criacao = 'Criacao',
-  Edicao = 'Edicao',
-  Pendura = 'Pendura'
 }

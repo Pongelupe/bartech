@@ -1,14 +1,13 @@
 <ngx-smart-modal #produtoModal identifier="produtoModal">
   <div class="modal-header pt-0 pl-0 pr-0">
-      <h5 class="modal-title">{{produto && produto.nome ? 'Editar Produto - ' + produto.nome : 'Cadastrar produto' }}</h5>
+    <h5 class="modal-title">{{produto && produto.nome ? 'Editar Produto - ' + produto.nome : 'Cadastrar produto' }}</h5>
   </div>
   <div class="modal-body pl-0 pr-0">
     <form [formGroup]="produtoForm">
       <!--Campo para informar nome do produto-->
       <div class="form-group">
         <label>Nome*</label>
-        <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml" [patterns]="customPatternProductName"
-          mask="0*" [dropSpecialCharacters]="false">
+        <input class="form-control" formControlName="nome" type="text" placeholder="Cerveja Skol 350ml">
         <app-vm-error [text]="'O campo Nome é obrigatório'" *ngIf="produtoForm.get('nome').hasError('required')"></app-vm-error>
         <app-vm-error [text]="'O campo Nome deve conter no mínimo 3 caracteres'" *ngIf="produtoForm.get('nome').hasError('minlength')"></app-vm-error>
         <app-vm-error [text]="'O campo Nome deve conter no maxímo 50 caracteres'" *ngIf="produtoForm.get('nome').hasError('maxlength')"></app-vm-error>

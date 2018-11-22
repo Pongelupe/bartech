@@ -99,9 +99,6 @@ export class ProdutoComponent implements OnInit, OnChanges {
     this.produto = this.produtoForm.getRawValue();
     this.produto.id = produtoId;
     this.produto.preco = parseFloat(this.produtoForm.value['preco'].toString().replace(',', '.'));
-    this.produto.codigo = parseInt(this.produtoForm.value['codigo'], 10);
-    this.produto.quantidadeEstoque = Utils.isNullUndefinedOrEmpty(this.produto.quantidadeEstoque) ? null :
-      parseInt(this.produtoForm.value['quantidadeEstoque'], 10);
 
     this.produtoService.updateOrCreateProduto(this.produto)
       .subscribe(id => {

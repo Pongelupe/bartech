@@ -44,7 +44,7 @@ export class GerenciaProdutosComponent implements OnInit {
     if (produtoVO.isEdicao) {
       this.produtos = this.produtos.filter(p => p.id !== produtoVO.produto.id);
     }
-    this.produtos = [...this.produtos, produtoVO.produto];
+    this.produtos = [...this.produtos, produtoVO.produto].sort((a, b) => a.codigo - b.codigo);
     this.fecharModal();
   }
 
