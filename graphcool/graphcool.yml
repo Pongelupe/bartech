@@ -19,12 +19,6 @@ types: ./types.graphql
 
 
 functions:
-  hello:
-    handler:
-      code: src/hello.js
-    type: resolver
-    schema: src/hello.graphql
-
   isPenduraQuitada:
     handler:
       code: src/isPenduraQuitada.js

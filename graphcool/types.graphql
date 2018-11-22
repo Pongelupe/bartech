@@ -38,6 +38,7 @@ type ItemVenda @model {
   id: ID! @isUnique
   quantidade: Int!
   desconto: Float @defaultValue(value: 0.0)
+  data: DateTime! @migrationValue(value: "42")
   cancelado: Boolean @defaultValue(value: false)
   venda: Venda! @relation(name: "ItensVendaOnVenda")
   produto: Produto! @relation(name: "ProdutosOnItemVenda")
