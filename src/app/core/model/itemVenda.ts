@@ -8,6 +8,7 @@ export class ItemVenda {
     cancelado = false;
     produto: Produto;
     venda: Venda;
+    data: Date;
     private _total: number;
     private _subtotal: number;
 

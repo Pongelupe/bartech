@@ -11,6 +11,9 @@ export const ALL_MESAS_QUERY = gql`
       id
       venda {
         id
+        itensVenda (last: 1) {
+          data
+        }
       }
     }
   }

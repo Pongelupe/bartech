@@ -48,11 +48,12 @@ export const VENDA_DETAIL_QUERY = gql`
 `;
 
 export const CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION = gql`
-  mutation CreateItemVenda($vendaId: ID!, $produtoId: ID!, $quantidade: Int!, $quantidadeEstoque: Int!) {
+  mutation CreateItemVenda($vendaId: ID!, $produtoId: ID!, $quantidade: Int!, $quantidadeEstoque: Int!, $data: DateTime!) {
     createItemVenda(
       vendaId: $vendaId
       quantidade: $quantidade
       produtoId: $produtoId
+      data: $data
     ) {
       id
       quantidade

@@ -57,6 +57,7 @@ export class VendaService {
       mutation: CREATE_ITEM_VENDA_UPDATE_PRODUTO_MUTATION,
       variables: {
         produtoId,
+        data: new Date().toISOString(),
         vendaId,
         quantidade,
         quantidadeEstoque: quantidadeEstoque - quantidade

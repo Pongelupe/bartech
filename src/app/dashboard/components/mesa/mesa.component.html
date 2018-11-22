@@ -5,7 +5,7 @@ class="card text-center"
     <div class="card-body">
       <h5 class="card-title m-0 p-3">MESA {{numMesa + 1}}</h5>
     </div>
-    <i *ngIf="mesa.venda" [ngClass]="['fa fa-circle fa-1-xmr-2 text-right mr-2 mb-1',
-      timeWithoutAttendance < 60 ?
-      (timeWithoutAttendance < 30 ? 'text-danger' : 'text-warning') : 'text-success' ]"></i>
+    <i *ngIf="mesa.venda" [ngClass]="['fa fa-bell fa-1-xmr-2 text-right mr-2 mb-1',
+      timeWithoutAttendance > 30 ?
+      (timeWithoutAttendance > 60 ? 'text-danger' : 'text-warning') : 'text-success' ]"></i>
 </div>
