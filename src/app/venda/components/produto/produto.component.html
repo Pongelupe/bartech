@@ -36,7 +36,8 @@
       </div>
       <!--Campos para informar dados de estoque-->
       <div class="custom-control custom-checkbox form-group">
-        <input type="checkbox" class="custom-control-input" formControlName="temControleEstoque" id="checkTemControleEstoque">
+        <input type="checkbox" (change)="onControleEstoqueCheckboxEvent($event)" class="custom-control-input"
+          formControlName="temControleEstoque" id="checkTemControleEstoque" checked>
         <label class="custom-control-label" for="checkTemControleEstoque">Este produto deve ter controle de estoque</label>
       </div>
       <div class="row">
@@ -54,6 +55,7 @@
           <div class="form-group">
             <label>Qtde em Estoque</label>
             <input class="form-control" formControlName="quantidadeEstoque" type="text" placeholder="0" mask="0?000000000">
+            <app-vm-error [text]="'O campo Qtde em Estoque é obrigatório'" *ngIf="produtoForm.get('quantidadeEstoque').hasError('required')"></app-vm-error>
             <app-vm-error [text]="'O campo Qtde em Estoque deve ser no mínimo 0'" *ngIf="produtoForm.get('quantidadeEstoque').hasError('min')"></app-vm-error>
           </div>
         </div>

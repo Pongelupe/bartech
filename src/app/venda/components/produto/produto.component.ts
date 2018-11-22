@@ -32,9 +32,11 @@ export class ProdutoComponent implements OnInit, OnChanges {
       codigo: ['', [Validators.minLength(1), Validators.required]],
       codigoDeBarras: ['', [Validators.minLength(8), Validators.maxLength(13)]],
       preco: ['', [Validators.min(0), Validators.required]],
-      quantidadeEstoque: ['', [Validators.min(0)]],
+      quantidadeEstoque: ['', [Validators.min(0), Validators.required]],
       temControleEstoque: ['', [Validators.required]]
     });
+
+    // TODO - set checkbox marcado como valor inicial
 
     this.produtoForm.reset();
     if (this.isProductNotNull()) {
@@ -66,6 +68,23 @@ export class ProdutoComponent implements OnInit, OnChanges {
       quantidadeEstoque: this.produto.quantidadeEstoque,
       temControleEstoque: this.produto.temControleEstoque
     });
+    if (!this.produtoForm.controls['temControleEstoque'].value) {
+      this.produtoForm.controls['quantidadeEstoque'].disable();
+    }
+  }
+
+  onControleEstoqueCheckboxEvent(event) {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      this.produtoForm.controls['quantidadeEstoque']
+        .setValidators([Validators.min(1), Validators.required]);
+      this.produtoForm.controls['quantidadeEstoque'].enable();
+    } else {
+      this.produtoForm.controls['quantidadeEstoque']
+        .setValidators([Validators.min(1)]);
+      this.produtoForm.controls['quantidadeEstoque'].disable();
+    }
+    this.produtoForm.controls['quantidadeEstoque'].updateValueAndValidity();
   }
 
   private cancel(): void {
