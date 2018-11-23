@@ -32,11 +32,11 @@ export class ProdutoComponent implements OnInit, OnChanges {
       codigo: ['', [Validators.minLength(1), Validators.required]],
       codigoDeBarras: ['', [Validators.minLength(8), Validators.maxLength(13)]],
       preco: ['', [Validators.min(0), Validators.required]],
-      quantidadeEstoque: ['', [Validators.min(0), Validators.required]],
+      quantidadeEstoque: ['', []],
       temControleEstoque: ['', [Validators.required]]
     });
 
-    // TODO - set checkbox marcado como valor inicial
+    this.produtoForm.controls['quantidadeEstoque'].disable();
 
     this.produtoForm.reset();
     if (this.isProductNotNull()) {
