@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Mesa } from '../../core/model/mesa';
 import { MesaService } from '../../shared/services/mesa.service';
@@ -18,7 +18,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.mesaService.getAllMesas()
-      .subscribe(mesas => this.mesas = mesas);
+      .subscribe(mesas => {
+        this.mesas = mesas;
+      });
   }
 
   createMesa(): void {

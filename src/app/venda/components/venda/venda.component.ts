@@ -1,9 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ItemVenda } from '../../../core/model/itemVenda';
 import { Produto } from '../../../core/model/produto';
@@ -19,19 +18,17 @@ import { VendaService } from '../../service/venda.service';
 
 export class VendaComponent implements OnInit {
 
-  produtos$: Observable<Produto[]>;
+  produtos: Produto[];
   venda: Venda = new Venda();
   termoPesquisaProduto: string;
   produto: Produto = new Produto();
   totalVenda = 0;
   addForm: FormGroup;
-  quantidade = 1;
   mostrarProdutosCadastrados = true;
   mostrarItens = true;
 
 
   constructor(
-    private formBuilder: FormBuilder,
     private vendaService: VendaService,
     private route: ActivatedRoute,
     private router: Router,
@@ -40,15 +37,13 @@ export class VendaComponent implements OnInit {
 
   ngOnInit() {
     this.updateShowTabs();
-    this.produtos$ = this.vendaService.getAllProdutos();
+    this.vendaService.getAllProdutos().subscribe(produtos => this.produtos = produtos);
     const vendaId = this.route.snapshot.data.vendaId ? this.route.snapshot.data.vendaId.id : this.route.snapshot.params.id;
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
       this.venda = Object.assign(Venda.prototype, res);
       this.updateSubtotal();
     }, err => this.toastrService.error(err.message, 'Erro'));
-    this.addForm = this.formBuilder.group({
-      quantidade: ['', [Validators.min(1), Validators.required]]
-    });
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -67,24 +62,17 @@ export class VendaComponent implements OnInit {
   }
   openModalItem(produto: Produto): void {
     this.produto = produto;
-    this.addForm.controls['quantidade']
-          .setValidators([Validators.min(1), Validators.required, Validators.max(produto.quantidadeEstoque)]);
     this.ngxSmartModalService.getModal('addModal').open();
   }
 
-  addItemVenda(): void {
-    this.vendaService.adicionarItemVenda(this.quantidade, this.produto.id, this.venda.id,
-      this.produto.quantidadeEstoque, this.produto.temControleEstoque)
-      .pipe(take(1))
-      .subscribe(
-        item => {
-          this.venda.itensVenda = [...this.venda.itensVenda, item];
-          this.updateSubtotal();
-          this.quantidade = 1;
-          this.toastrService.success('Adicionado ' + item.quantidade + 'x ' + item.produto.nome + ' na venda.');
-        },
-        err => this.toastrService.error(err.message, 'Erro'));
-    this.ngxSmartModalService.getModal('addModal').close();
+  onItemAdded(itemVendaVO: { item: ItemVenda, quantidade: number }) {
+    const item = itemVendaVO.item;
+    item.produto.quantidadeEstoque -= itemVendaVO.quantidade;
+    this.venda.itensVenda = [...this.venda.itensVenda, item];
+    this.produtos = this.produtos.filter(p => p.id !== item.produto.id);
+    this.produtos = [...this.produtos, item.produto].sort((a, b) => a.codigo - b.codigo);
+    this.updateSubtotal();
+    this.toastrService.success('Adicionado ' + item.quantidade + 'x ' + item.produto.nome + ' na venda.');
   }
 
   private updateSubtotal(): void {

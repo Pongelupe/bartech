@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Mesa } from 'src/app/core/model/mesa';
@@ -10,7 +10,7 @@ import { MesaService } from 'src/app/shared/services/mesa.service';
   templateUrl: './mesa.component.html',
   styleUrls: ['./mesa.component.scss']
 })
-export class MesaComponent implements OnInit {
+export class MesaComponent implements OnInit, OnChanges {
 
   @Input() mesa: Mesa;
   @Input() numMesa: number;
@@ -33,6 +33,8 @@ export class MesaComponent implements OnInit {
         this.timeWithoutAttendance = 0;
       });
   }
+
+  ngOnChanges() { }
 
   private startTimer(venda: Venda) {
     const itemVenda = venda.itensVenda ? venda.itensVenda[0] : null;

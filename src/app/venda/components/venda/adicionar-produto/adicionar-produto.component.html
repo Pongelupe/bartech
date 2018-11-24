@@ -1,0 +1,25 @@
+<ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
+  <div class="modal-header pt-0 pl-0 pr-0">
+    <h5 class="text-center">Adicionar {{produto.nome}} à venda</h5>
+  </div>
+  <div class="modal-body pl-0 pr-0">
+    <div *ngIf="produto.temControleEstoque">
+      <span>Este produto possui </span>
+      <span class="font-weight-bold" ngClass="{{produto.quantidadeEstoque > 10 ? 'text-success' : 'text-danger'}}">
+        {{produto.quantidadeEstoque || 0}} itens em estoque.</span>
+    </div>
+    <span *ngIf="!produto.temControleEstoque">Este produto não possui controle de estoque.</span>
+    <form [formGroup]="addForm">
+      <div class="form-group mt-1">
+        <label>Quantidade</label>
+        <input type="text" class="form-control" formControlName="quantidade" mask="0?000000000"  placeholder="1"/>
+        <app-vm-error text="O campo Quantidade deve ser maior que 0" *ngIf="addForm.get('quantidade').hasError('min')"></app-vm-error>
+        <app-vm-error [text]='"O campo Quantidade deve ser menor ou igual a que " + produto.quantidadeEstoque' *ngIf="addForm.get('quantidade').hasError('max')"></app-vm-error>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer pb-0 pl-0 pr-0">
+    <button type="button" (click)="close()" class="btn btn-danger">Cancelar</button>
+    <button type="button" (click)="addItem()" [disabled]="addForm.invalid" class="btn btn-primary mr-0">Adicionar</button>
+  </div>
+</ngx-smart-modal>

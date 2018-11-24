@@ -1,3 +1,4 @@
+<app-adicionar-produto (itemAddedEvent)="onItemAdded($event)" [produto]="produto" [idVenda]="venda.id"></app-adicionar-produto>
 <div class="col-12 p-0">
   <app-bt-tabs>
     <app-bt-tab class="col-6 p-0" [(isSelected)]="mostrarProdutosCadastrados" titulo="Produtos" (change)="mostrarItens = false"></app-bt-tab>
@@ -14,13 +15,14 @@
         <small id="searchProductsHelp" class="form-text text-muted">Digite o nome ou código do produto</small>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let produto of produtos$ | async | produto : [termoPesquisaProduto]">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let produto of produtos | produto : [termoPesquisaProduto]">
           <app-bt-card title="{{produto.codigo}} - {{produto.nome}}" [subtitle]="produto.preco" [text]="produto.quantidadeEstoque"
             (click)="openModalItem(produto)">
             <div class="card-subtitle mb-2 text-success">{{produto.preco | currency : 'BRL'}}</div>
-            <div *ngIf="produto.temControleEstoque; else semControleEstoque" class="card-text">Qtde em Estoque: {{produto.quantidadeEstoque}}</div>
+            <div *ngIf="produto.temControleEstoque; else semControleEstoque" class="card-text">Qtde em Estoque:
+              {{produto.quantidadeEstoque}}</div>
             <ng-template #semControleEstoque>
-              <div class="card-text">Não possui controle de estoque</div>
+              <div class="card-text">Sem controle de estoque</div>
             </ng-template>
           </app-bt-card>
         </div>
@@ -39,33 +41,7 @@
         </div>
       </div>
       <button type="button" class="btn btn-danger col-md-5 ml-0" (click)="cancelVenda()">Cancelar</button>
-      <button type="button" ([disabled])="venda.itensVenda" class="btn btn-primary pull-right col-md-5 mr-0" (click)="encerrarVenda()">Pagar</button>
+      <button type="button" [disabled]="!venda.itensVenda" class="btn btn-primary pull-right col-md-5 mr-0" (click)="encerrarVenda()">Pagar</button>
     </div>
   </div>
 </div>
-
-<ngx-smart-modal #addModal identifier="addModal" customClass="medium-modal">
-  <div class="modal-header pt-0 pl-0 pr-0">
-    <h5 class="text-center">Adicionar {{produto.nome}} à venda</h5>
-  </div>
-  <div class="modal-body pl-0 pr-0">
-    <div *ngIf="produto.temControleEstoque">
-      <span>Este produto possui </span>
-      <span class="font-weight-bold" ngClass="{{produto.quantidadeEstoque > 10 ? 'text-success' : 'text-danger'}}">
-        {{produto.quantidadeEstoque || 0}} itens em estoque.</span>
-    </div>
-    <span *ngIf="!produto.temControleEstoque">Este produto não possui controle de estoque. </span>
-    <form [formGroup]="addForm">
-      <div class="form-group mt-1">
-        <label>Quantidade</label>
-        <input type="text" class="form-control" formControlName="quantidade" [(ngModel)]="quantidade" mask="0?000000000" />
-        <app-vm-error text="O campo Quantidade deve ser maior que 0" *ngIf="addForm.get('quantidade').hasError('min')"></app-vm-error>
-        <app-vm-error [text]='"O campo Quantidade deve ser menor ou igual a que " + produto.quantidadeEstoque' *ngIf="addForm.get('quantidade').hasError('max')"></app-vm-error>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer pb-0 pl-0 pr-0">
-    <button type="button" (click)="addModal.close()" class="btn btn-danger">Cancelar</button>
-    <button type="button" (click)="addItemVenda()" [disabled]="addForm.invalid" class="btn btn-primary mr-0">Adicionar</button>
-  </div>
-</ngx-smart-modal>

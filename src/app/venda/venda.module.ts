@@ -6,12 +6,13 @@ import { ProdutoPipe } from './pipes/produto.pipe';
 import { ItensVendaComponent } from './components/venda/itens-venda/itens-venda.component';
 import { GerenciaProdutosComponent } from './components/gerencia-produtos/gerencia-produtos.component';
 import { ProdutoComponent } from './components/produto/produto.component';
+import { AdicionarProdutoComponent } from './components/venda/adicionar-produto/adicionar-produto.component';
 
 @NgModule({
   imports: [
     SharedModule,
     VendaRoutingModule
   ],
-  declarations: [VendaComponent, ProdutoPipe, ItensVendaComponent, GerenciaProdutosComponent, ProdutoComponent]
+  declarations: [VendaComponent, ProdutoPipe, ItensVendaComponent, GerenciaProdutosComponent, ProdutoComponent, AdicionarProdutoComponent]
 })
 export class VendaModule { }

@@ -78,6 +78,7 @@ export class VendaService {
         variables: {
           produtoId,
           vendaId,
+          data: new Date().toISOString(),
           quantidade
         }
       })
