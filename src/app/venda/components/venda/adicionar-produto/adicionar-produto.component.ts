@@ -6,11 +6,13 @@ import { take } from 'rxjs/operators';
 import { ItemVenda } from 'src/app/core/model/itemVenda';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { SlideInOutAnimation } from 'src/app/shared/utils/animations';
 
 @Component({
   selector: 'app-adicionar-produto',
   templateUrl: './adicionar-produto.component.html',
-  styleUrls: ['./adicionar-produto.component.scss']
+  styleUrls: ['./adicionar-produto.component.scss'],
+  animations: [SlideInOutAnimation]
 })
 export class AdicionarProdutoComponent implements OnInit, AfterViewInit {
 
@@ -18,6 +20,7 @@ export class AdicionarProdutoComponent implements OnInit, AfterViewInit {
   @Input() produto: Produto;
   @Input() idVenda: string;
   @Output() itemAddedEvent = new EventEmitter<{ item: ItemVenda, quantidade: number }>();
+  animationState = 'out';
 
   constructor(
     private vendaService: VendaService,
@@ -27,7 +30,7 @@ export class AdicionarProdutoComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
-      quantidade: [1, [Validators.min(1), Validators.required]]
+      quantidade: ['', [Validators.min(1), Validators.required]]
     });
 
   }
@@ -48,6 +51,10 @@ export class AdicionarProdutoComponent implements OnInit, AfterViewInit {
             .setValidators([Validators.min(1), Validators.required, Validators.max(this.produto.quantidadeEstoque)]);
         }
       });
+  }
+
+  toggleBarCode() {
+    this.animationState = this.animationState === 'out' ? 'in' : 'out';
   }
 
   addItem() {

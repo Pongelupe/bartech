@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BtCardComponent } from './components/bt-card/bt-card.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BtTabComponent } from './components/bt-tab/bt-tab.component';
@@ -22,6 +23,7 @@ import { AbsPipe } from './pipes/abs.pipe';
     BtTabComponent,
     BtTabsComponent,
     NgxSmartModalModule,
+    NgxBarcodeModule,
     AngularFontAwesomeModule,
     NgxMaskModule,
     VmErrorComponent,

@@ -20,7 +20,7 @@
             (click)="openModalItem(produto)">
             <div class="card-subtitle mb-2 text-success">{{produto.preco | currency : 'BRL'}}</div>
             <div *ngIf="produto.temControleEstoque; else semControleEstoque" class="card-text">Qtde em Estoque:
-              {{produto.quantidadeEstoque}}</div>
+              {{produto.quantidadeEstoque}} <i *ngIf="produto.codigoDeBarras" class="fa fa-barcode text-right ml-1"></i></div>
             <ng-template #semControleEstoque>
               <div class="card-text">Sem controle de estoque</div>
             </ng-template>
