@@ -72,6 +72,7 @@ export class AdicionarProdutoComponent implements OnInit, AfterViewInit {
   }
 
   close(): void {
+    this.animationState = 'out';
     this.addForm.reset();
     this.ngxSmartModalService.getModal('addModal').close();
   }
