@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSmartModalService } from 'ngx-smart-modal';
@@ -9,6 +9,8 @@ import { Produto } from '../../../core/model/produto';
 import { Venda } from '../../../core/model/venda';
 import { Utils } from '../../../shared/utils';
 import { VendaService } from '../../service/venda.service';
+import { MesaService } from 'src/app/shared/services/mesa.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-venda',
@@ -16,7 +18,7 @@ import { VendaService } from '../../service/venda.service';
   styleUrls: ['./venda.component.scss']
 })
 
-export class VendaComponent implements OnInit {
+export class VendaComponent implements OnInit, OnDestroy {
 
   produtos: Produto[];
   venda: Venda = new Venda();
@@ -26,6 +28,7 @@ export class VendaComponent implements OnInit {
   addForm: FormGroup;
   mostrarProdutosCadastrados = true;
   mostrarItens = true;
+  private subscriptions: Subscription[] = [];
 
 
   constructor(
@@ -33,6 +36,7 @@ export class VendaComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngxSmartModalService: NgxSmartModalService,
+    private mesaService: MesaService,
     private toastrService: ToastrService) { }
 
   ngOnInit() {
@@ -42,8 +46,20 @@ export class VendaComponent implements OnInit {
     this.vendaService.getVendaDetail(vendaId).subscribe(res => {
       this.venda = Object.assign(Venda.prototype, res);
       this.updateSubtotal();
+      this.subscriptions.push(this.mesaService.subscribeToItensVenda(this.venda.mesa.id)
+        .subscribe(itemVenda => {
+          const modal = this.ngxSmartModalService.getModal('addModal');
+          if (modal.isVisible) {
+            modal.close();
+          }
+          this.onItemAdded({ item: itemVenda, quantidade: 1 });
+        }));
     }, err => this.toastrService.error(err.message, 'Erro'));
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   @HostListener('window:resize', ['$event'])

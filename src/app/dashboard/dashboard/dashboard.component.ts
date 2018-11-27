@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Mesa } from '../../core/model/mesa';
 import { MesaService } from '../../shared/services/mesa.service';

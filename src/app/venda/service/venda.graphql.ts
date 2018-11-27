@@ -33,6 +33,9 @@ export const VENDA_DETAIL_QUERY = gql`
   query VendaDetailQuery($vendaId: ID!) {
     Venda(id: $vendaId) {
       id
+      mesa {
+        id
+      }
       itensVenda {
         id
         quantidade

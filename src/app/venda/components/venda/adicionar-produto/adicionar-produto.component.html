@@ -20,7 +20,7 @@
     <button *ngIf="produto.codigoDeBarras" class="btn btn-primary btn-sm btn-block" (click)="toggleBarCode()">Ver
       código de barra</button>
     <div [@slideInOut]="animationState" class="barcode">
-      <ngx-barcode bc-value="{{produto.codigoDeBarras + '||' + idVenda}}" [bc-display-value]="false" [bc-width]="1" bc-format="CODE128"></ngx-barcode>
+      <ngx-barcode bc-value="{{produto.codigoDeBarras + '#' + idVenda}}" [bc-display-value]="false" [bc-width]="1" bc-format="CODE128"></ngx-barcode>
     </div>
   </div>
   <div class="modal-footer pb-0 pl-0 pr-0">
